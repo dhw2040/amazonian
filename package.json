@@ -1,0 +1,29 @@
+{
+  "name": "amazonian",
+  "type": "module",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --watch backend --exec node --experimental-modules backend/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dhw2040/amazonian.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dhw2040/amazonian/issues"
+  },
+  "homepage": "https://github.com/dhw2040/amazonian#readme",
+  "dependencies": {
+    "axios": "^0.26.1",
+    "express": "^4.17.3"
+  },
+  "devDependencies": {
+    "eslint": "^8.11.0",
+    "eslint-plugin-react": "^7.29.4",
+    "nodemon": "^2.0.15"
+  },
+  "description": ""
+}
