@@ -1,12 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Rating from "../components/Rating";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import { detailsProduct } from "../actions/productActions";
 
 export default function ProductPage() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const param = useParams();
   let { id: productId } = param;
   // const product = data.products.find((x) => x._id === param.id); showing product from static data
@@ -14,23 +17,25 @@ export default function ProductPage() {
   //   return <div>Product Not found!</div>;
   // }
   // const productId = props.match.params.id; // get the id inside the url
-
-  const dispatch = useDispatch();
   const productDetails = useSelector((state) => state.productDetails); // returns the state from store
   const { loading, error, product } = productDetails; // return props from reducers
+  const [qty, setQty] = useState(1);
+
+  const addToCartHandler = () => {
+    navigate(`/cart/${productId}/?qty=${qty}`);
+  };
 
   //dispatch detail product in useEffect, only one time before return is run
   useEffect(() => {
     dispatch(detailsProduct(productId));
   }, [dispatch, productId]);
-
   return (
     <div>
       {loading ? (
         <LoadingBox></LoadingBox>
       ) : error ? (
         // content of messsage box has children {error} available to MB.js
-        <MessageBox>{error}</MessageBox>
+        <MessageBox variants="danger">{error}</MessageBox>
       ) : (
         <div>
           <Link to="/">Back to Result</Link>
@@ -40,25 +45,31 @@ export default function ProductPage() {
             </div>
             <div className="col-2">
               <div className="row hr">
-                <h1>{product.name}</h1>
-                <div>
-                  <Rating
-                    rating={product.rating}
-                    numReviews={product.numReviews}
-                  ></Rating>
-                </div>
+                <ul className="no-list-style">
+                  <li>
+                    <h1>{product.name}</h1>
+                  </li>
+                  <li>
+                    <Rating
+                      rating={product.rating}
+                      numReviews={product.numReviews}
+                    ></Rating>
+                  </li>
+                </ul>
               </div>
               <div className="row hr">
                 <ul className="no-list-style">
                   <li>
-                    <span className="grey">List Price: </span>{" "}
+                    <span className="grey">List Price: </span>
                     <span className="price">${product.price}</span>
                   </li>
                   <li>
-                    <span className="grey">Deal Price: </span>{" "}
+                    <span className="grey">Deal Price: </span>
                     <span className="price">${product.price}</span>
                   </li>
-                  <li>FREE Delivery on your first order.</li>
+                  <li>
+                    <strong>FREE Delivery </strong> on your first order.
+                  </li>
                 </ul>
               </div>
               <div className="row hr">
@@ -93,24 +104,54 @@ export default function ProductPage() {
                       </div>
                     </li>
                     <li>
-                      {product.countInStock > 0 ? (
+                      <span>
+                        <i className="fa fa-map-o" aria-hidden="true"></i>
+                      </span>
+                      <a href="/location"> Select delivery location</a>
+                    </li>
+                    <li>
+                      {product.stock > 0 ? (
                         <h2 className="success">In Stock.</h2>
                       ) : (
                         <h2 className="danger">Out of Stock.</h2>
                       )}
                     </li>
+
+                    {product.stock > 0 && (
+                      <li>
+                        <div>
+                          Quantity:
+                          <span>
+                            <select
+                              value={qty}
+                              onChange={(e) => setQty(e.target.value)}
+                            >
+                              {[...Array(Number(product.maxQty)).keys()].map(
+                                (x) => (
+                                  <option key={x + 1} value={x + 1}>
+                                    {x + 1}
+                                  </option>
+                                )
+                              )}
+                            </select>
+                          </span>
+                        </div>
+                      </li>
+                    )}
                     <li>
                       <div>
-                        <button className="block primary">Add to Cart</button>
+                        <button
+                          onClick={addToCartHandler}
+                          className="block primary"
+                        >
+                          Add to Cart
+                        </button>
                       </div>
                       <div>
                         <button className="block buy">Buy Now</button>
                       </div>
                     </li>
                   </ul>
-
-                  <div></div>
-                  <div></div>
                 </div>
               </div>
             </div>

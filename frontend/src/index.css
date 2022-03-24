@@ -62,14 +62,15 @@ footer {
 }
 
 .row.center {
+  padding: 0 20rem;
   justify-content: center;
 }
 
 .col-1 {
-  flex: 0 0 28rem;
+  flex: 1 1 28rem;
 }
 .col-2 {
-  flex: 0 0 50rem;
+  flex: 2 1 50rem;
 }
 
 /* Common */
@@ -117,17 +118,14 @@ header a {
 /* Card */
 .card {
   margin: 2rem 1rem;
+  padding: 0.5rem;
   border: 0.1rem #c0c0c0 solid;
   border-radius: 0.5rem;
   /* background-color: #f8f8f8; */
 }
 
-.card-body {
-  padding: 1rem;
-}
-
 .card-body > * {
-  margin: 0.5rem;
+  margin-bottom: 0.5rem;
   word-wrap: break-word;
 }
 
@@ -135,15 +133,19 @@ header a {
 .col-1 ul {
   margin: 0;
   padding: 0;
-  list-style-type: none;
+}
+
+.col-1 li,
+.col-2 li {
+  padding: 0.3rem;
+}
+
+.card li {
+  padding: 1rem;
 }
 
 .no-list-style {
   list-style-type: none;
-}
-
-li {
-  padding: 0.4rem;
 }
 
 .grey {
@@ -152,7 +154,6 @@ li {
 
 .price {
   font-size: 160%;
-  margin: 0.2rem;
   color: #b82525;
 }
 
@@ -175,6 +176,13 @@ select:hover,
 textarea:hover,
 button:hover {
   border: 0.1rem #404040 solid;
+}
+
+select {
+  margin: 0 0.7rem;
+  padding: 0.5rem;
+  font-size: 1.5rem;
+  width: 25%;
 }
 
 button {
@@ -227,7 +235,6 @@ img.md {
   max-width: 40rem;
   min-height: 35rem;
   max-height: 35rem;
-  width: 100%;
 }
 
 img.lg {

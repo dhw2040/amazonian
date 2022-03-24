@@ -18,6 +18,7 @@ const data = {
         "【Touch Screen & Comfortable Wearing】This smartwatch is equipped with a 1.4-inch color touch screen and 5 watch faces to choose from, making it easy to operate and read the data. The adjustable wristband of this light-weight watch fits a wrist between 6.1 to 9.3 inches (perimeter), suitable for men, women, and teens. Perfect for Thanksgiving, Christmas and Birthday gifts.",
       ],
       stock: "23",
+      maxQty: "5",
     },
     {
       _id: "2",
@@ -37,6 +38,7 @@ const data = {
         "ULTRA LIGHTWEIGHT: Listen in comfort, the SOUNDPEATS wireless headphones have been designed for comfort and ease of use. Ultra-lightweight material and a slick in ear design make the ear buds supremely comfortable to wear, especially for long periods of time.",
       ],
       stock: "0",
+      maxQty: "5",
     },
     {
       _id: "3",
@@ -56,6 +58,7 @@ const data = {
         "2.2L EXTRA LARGE WATER TANK – FILTER FREE- FEATURES A LIFTIME WARRENTY! Made with an impressive 2.2L super large water tank that keeps your Room-Humidifier right on chugging for over 24 hours on a single fill! Designed ",
       ],
       stock: "72",
+      maxQty: "15",
     },
     {
       _id: "4",
@@ -75,6 +78,7 @@ const data = {
         "Ultra comfortable, soft knit waistband with internal drawcord.",
       ],
       stock: "36",
+      maxQty: "20",
     },
     {
       _id: "5",
@@ -94,6 +98,7 @@ const data = {
         "Ultra comfortable, soft knit waistband with internal drawcord.",
       ],
       stock: "50",
+      maxQty: "20",
     },
     {
       _id: "6",
@@ -117,6 +122,7 @@ const data = {
         "USB-C connector for charging and accessories",
       ],
       stock: "0",
+      maxQty: "3",
     },
   ],
 };
