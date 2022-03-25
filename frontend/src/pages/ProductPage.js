@@ -40,7 +40,7 @@ export default function ProductPage() {
         <div>
           <Link to="/">Back to Result</Link>
           <div className="row top center hr">
-            <div className="col-2">
+            <div className="col-1">
               <img className="md" src={product.image} alt={product.name} />
             </div>
             <div className="col-2">
@@ -73,8 +73,9 @@ export default function ProductPage() {
                 </ul>
               </div>
               <div className="row hr">
-                <h2>About this item</h2>
-                <ul>
+                <ul className="no-list-style">
+                  <h2>About this item</h2>
+                  <li></li>
                   {product.description.map((d, idx) => (
                     <li key={idx}>{d}</li>
                   ))}

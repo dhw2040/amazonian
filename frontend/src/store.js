@@ -4,11 +4,11 @@ import { cartReducers } from "./reducers/cartReducers";
 import { listReducer, detailsReducer } from "./reducers/productReducers";
 
 const initialState = {
-  cart: {
-    cartItems: localStorage.getItem("cartItems")
-      ? JSON.parse(localStorage.getItem("cartItems"))
-      : [],
-  },
+  // cart: {
+  //   cartItems: localStorage.getItem("cartItems")
+  //     ? JSON.parse(localStorage.getItem("cartItems"))
+  //     : [],
+  // },
 };
 
 const reducer = combineReducers({
