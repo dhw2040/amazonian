@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import ProductPage from "./pages/ProductPage";
 import { useSelector } from "react-redux";
+import CartPage from "./pages/CartPage";
 
 function App() {
   return (
@@ -14,9 +15,15 @@ function App() {
               amazonian
             </Link>
           </div>
+          <div>
+            <Link to="/cart">Cart</Link>
+            <Link to="/signin">Sign In</Link>
+          </div>
         </header>
         <main>
           <Routes>
+            <Route path="/cart" element={<CartPage />} />
+            <Route path="/cart/:id" element={<CartPage />} />
             <Route path="/product/:id" element={<ProductPage />} />
             <Route path="/" exact element={<HomePage />} />
           </Routes>

@@ -22,7 +22,7 @@ export default function ProductPage() {
   const [qty, setQty] = useState(1);
 
   const addToCartHandler = () => {
-    navigate(`/cart/${productId}/?qty=${qty}`);
+    navigate(`/cart/${productId}?qty=${qty}`);
   };
 
   //dispatch detail product in useEffect, only one time before return is run
@@ -138,19 +138,21 @@ export default function ProductPage() {
                         </div>
                       </li>
                     )}
-                    <li>
-                      <div>
-                        <button
-                          onClick={addToCartHandler}
-                          className="block primary"
-                        >
-                          Add to Cart
-                        </button>
-                      </div>
-                      <div>
-                        <button className="block buy">Buy Now</button>
-                      </div>
-                    </li>
+                    {product.stock > 0 && (
+                      <li>
+                        <div>
+                          <button
+                            onClick={addToCartHandler}
+                            className="block primary"
+                          >
+                            Add to Cart
+                          </button>
+                        </div>
+                        <div>
+                          <button className="block buy">Buy Now</button>
+                        </div>
+                      </li>
+                    )}
                   </ul>
                 </div>
               </div>

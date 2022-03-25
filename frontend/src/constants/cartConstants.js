@@ -1,0 +1,3 @@
+export const ADD_CART_ITEM = "ADD_CART_ITEM";
+export const FAIL_CART_ITEM = "FAIL_CART_ITEM";
+export const UPDATE_CART_QUANTITY = "UPDATE_CART_QUANTITY";
