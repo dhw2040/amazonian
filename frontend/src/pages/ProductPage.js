@@ -100,7 +100,7 @@ export default function ProductPage() {
                     </li>
                     <li>
                       <div>
-                        Or fastest delivery <strong>Tomorrow, March 22</strong>.
+                        Or fastest delivery <strong>Tomorrow, March 22.</strong>
                         Order within 16 hrs 7 mins.
                       </div>
                     </li>

@@ -1,5 +1,6 @@
 import {
   ADD_CART_ITEM,
+  DELETE_CART_ITEM,
   UPDATE_CART_QUANTITY,
 } from "../constants/cartConstants";
 
@@ -21,6 +22,11 @@ export const cartReducers = (state = { cartItems: [] }, action) => {
           cartItems: [...state.cartItems, item],
         };
       }
+    case DELETE_CART_ITEM:
+      return {
+        ...state,
+        cartItems: state.cartItems.filter((x) => x.product !== action.payload),
+      };
     case UPDATE_CART_QUANTITY:
       const updateItem = state.cartItems.find(
         (x) => x.product === action.payload.index

@@ -101,19 +101,32 @@ h2 {
 }
 a {
   text-decoration: none;
-  color: #005bb0;
+  color: #306faa;
+}
+
+a:hover {
+  color: #ff8000;
+}
+
+.cart-button:hover {
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .grey {
   color: #828282;
 }
 
-.mb-3 {
-  margin-bottom: 3rem;
+.blue {
+  color: #306faa;
 }
 
-a:hover {
-  color: #ff8000;
+.vr {
+  border-left: 0.1rem solid #c0c0c0;
+  /* margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  padding-left: 0.9rem; */
+  padding: 0 1.5rem;
 }
 
 /* Header */
@@ -160,10 +173,6 @@ header a {
 .col-1 li,
 .col-2 li {
   padding: 0.3rem;
-}
-
-.card li {
-  padding: 1rem;
 }
 
 .no-list-style {
@@ -275,7 +284,7 @@ footer {
 }
 
 .success {
-  margin: 1rem;
+  margin: 0.2rem;
   color: #20a020;
 }
 
@@ -304,5 +313,6 @@ footer {
 
 /* Font Awesome Icon */
 .fa-check-circle {
+  margin: 0.5rem;
   color: #4ba54b;
 }

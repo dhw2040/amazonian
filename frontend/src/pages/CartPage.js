@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router";
 import { Link } from "react-router-dom";
-import { addToCart, updateCartQuantity } from "../actions/cartActions";
+import {
+  addToCart,
+  deleteFromCart,
+  updateCartQuantity,
+} from "../actions/cartActions";
 import MessageBox from "../components/MessageBox";
 
 export default function CartPage(props) {
@@ -28,6 +32,10 @@ export default function CartPage(props) {
     dispatch(updateCartQuantity(idx, q));
   };
 
+  const deleteFromCartHandler = (id) => {
+    dispatch(deleteFromCart(id));
+  };
+
   const checkoutHandler = () => {};
 
   return (
@@ -39,7 +47,7 @@ export default function CartPage(props) {
             <span className="grey">price</span>
           </div>
           {cartItems.length === 0 ? (
-            <MessageBox>
+            <MessageBox variants="danger">
               <h1>Your Amazonian cart is empty.</h1>{" "}
               <Link to="/">Go Shopping!</Link>
             </MessageBox>
@@ -65,6 +73,11 @@ export default function CartPage(props) {
                       <small className="grey">Eligible for FREE Shipping</small>
                     </li>
                     <li>
+                      <small className="success">
+                        {item.stock > 0 ? "In Stock" : "Out of Stock"}
+                      </small>
+                    </li>
+                    <li>
                       <label>Qty: </label>
                       <select
                         value={item.qty}
@@ -78,6 +91,19 @@ export default function CartPage(props) {
                           </option>
                         ))}
                       </select>
+
+                      <small
+                        className="cart-button blue vr"
+                        onClick={() => deleteFromCartHandler(item.product)}
+                      >
+                        Delete
+                      </small>
+                      <small className="cart-button blue vr">
+                        Save for later
+                      </small>
+                      <small className="cart-button blue vr">
+                        See more like this
+                      </small>
                     </li>
                   </ul>
                 </div>
@@ -92,10 +118,18 @@ export default function CartPage(props) {
           <div className="row">
             <div></div>
             <big>
-              Subtotal ({cartItems.reduce((total, x) => total + x.qty, 0)}{" "}
+              Subtotal (
+              {parseInt(
+                cartItems.reduce((total, x) => total + x.qty, 0),
+                10
+              )}{" "}
               items):{" "}
               <strong>
-                $ {cartItems.reduce((total, x) => total + x.qty * x.price, 0)}
+                ${" "}
+                {parseInt(
+                  cartItems.reduce((total, x) => total + x.qty * x.price, 0),
+                  10
+                )}
               </strong>
             </big>
           </div>
@@ -105,7 +139,7 @@ export default function CartPage(props) {
         {cartItems.length !== 0 && (
           <div className="card card-body">
             <div>
-              <i class="fa fa-lg fa-check-circle" aria-hidden="true"></i>
+              <i className="fa fa-lg fa-check-circle" aria-hidden="true"></i>
               <small>
                 <span className="success">
                   Your order qualifies for FREE shipping (excludes remote
@@ -119,10 +153,18 @@ export default function CartPage(props) {
             </div>
             <div>
               <big>
-                Subtotal ({cartItems.reduce((total, x) => total + x.qty, 0)}{" "}
+                Subtotal (
+                {parseInt(
+                  cartItems.reduce((total, x) => total + x.qty, 0),
+                  10
+                )}{" "}
                 items):{" "}
                 <strong>
-                  $ {cartItems.reduce((total, x) => total + x.qty * x.price, 0)}
+                  ${" "}
+                  {parseInt(
+                    cartItems.reduce((total, x) => total + x.qty * x.price, 0),
+                    10
+                  )}
                 </strong>
               </big>
             </div>
