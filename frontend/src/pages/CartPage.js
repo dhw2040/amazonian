@@ -79,6 +79,18 @@ export default function CartPage(props) {
               </div>
             </div>
           ))}
+          <div className="row top right">
+            <h2>
+              Subtotal (
+              <span>
+                {cartItems.reduce((total, x) => total + x.qty, 0)} items
+              </span>
+              ):{" "}
+              <strong>
+                {cartItems.reduce((total, x) => total + x.qty * x.price, 0)}
+              </strong>
+            </h2>
+          </div>
         </div>
       </div>
       <div className="col-1">
@@ -93,17 +105,7 @@ export default function CartPage(props) {
             </button>
           </div>
         </div>
-        <div className="card">
-          <div>
-            Your order qualifies for FREE shipping (excludes remote locations).
-            Choose this option at checkout. Details
-          </div>
-          <div>
-            <button onClick={checkoutHandler} className="block primary">
-              Proceed to Checkout
-            </button>
-          </div>
-        </div>
+        <div className="card"></div>
       </div>
     </div>
   );

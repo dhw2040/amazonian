@@ -6,6 +6,9 @@ import { useSelector } from "react-redux";
 import CartPage from "./pages/CartPage";
 
 function App() {
+  const cartState = useSelector((state) => state.cart);
+  const { cartItems } = cartState;
+
   return (
     <BrowserRouter>
       <div className="grid-container">
@@ -16,7 +19,12 @@ function App() {
             </Link>
           </div>
           <div>
-            <Link to="/cart">Cart</Link>
+            <Link to="/cart">
+              Cart
+              {cartItems.length > 0 && (
+                <span className="badge">{cartItems.length}</span>
+              )}
+            </Link>
             <Link to="/signin">Sign In</Link>
           </div>
         </header>
