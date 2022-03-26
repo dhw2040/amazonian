@@ -18,7 +18,8 @@
   "homepage": "https://github.com/dhw2040/amazonian#readme",
   "dependencies": {
     "axios": "^0.26.1",
-    "express": "^4.17.3"
+    "express": "^4.17.3",
+    "mongoose": "^6.2.8"
   },
   "devDependencies": {
     "eslint": "^8.11.0",
