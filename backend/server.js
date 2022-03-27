@@ -8,6 +8,8 @@ const port = process.env.port || 5000; // env var
 dotenv.config(); // use .env file
 
 const app = express();
+app.use(express.json()); // middleware that parses json data in the body of request
+app.use(express.urlencoded({ extended: true }));
 
 mongoose.connect(process.env.MONGODB_URL || "mongodb://localhost/amazonian", {
   useNewUrlParser: true,
