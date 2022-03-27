@@ -1,14 +1,14 @@
 import express from "express";
 import expressAsyncHandler from "express-async-handler";
 import data from "../data.js";
-import User from "../models/user.js";
+import User from "../models/userModel.js";
 
 const userRouter = express.Router();
 
 userRouter.get(
   "/seed",
   expressAsyncHandler(async (req, res) => {
-    await User.remove({}); // remove all users
+    await User.remove({}); // remove all users to prevent duplicate
     const usersPopulated = await User.insertMany(data.users);
     res.send({ usersPopulated });
   })

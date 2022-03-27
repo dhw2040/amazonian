@@ -29,7 +29,6 @@ const data = {
   ],
   products: [
     {
-      _id: "1",
       name: "SoundPEATS Smart Watch Fitness Tracker with All Day Heart Rate Monitor Sleep Quality Tracker IP68 Waterproof 1.4 Large Touch Screen Call & Message Reminder 12 Sports Modes for iPhone Android Phones ",
       abbr: "SoundPEATS Smart Watch Fitness Tracker",
       category: "smart watch",
@@ -49,7 +48,6 @@ const data = {
       maxQty: "5",
     },
     {
-      _id: "2",
       name: "Wireless Earbuds SoundPEATS TrueAir2 Earphones Bluetooth V5.2 with 4 Mic, CVC Noise Cancellation for Clear Calls Headphones Qualcomm 3040, aptX Codec, USB C, 25 Hours Playtime",
       abbr: "Wireless Earbuds SoundPEATS TrueAir2",
       category: "earbuds",
@@ -69,7 +67,6 @@ const data = {
       maxQty: "5",
     },
     {
-      _id: "3",
       name: "AquaOasis™ Cool Mist Humidifier {2.2L Water Tank} Quiet Ultrasonic Humidifiers for Bedroom & Large room - Adjustable -360° Rotation Nozzle, Auto-Shut Off, Humidifiers for Babies Nursery & Whole House ",
       abbr: "AquaOasis™ Cool Mist Humidifier",
       category: "Home Appliances",
@@ -89,7 +86,6 @@ const data = {
       maxQty: "15",
     },
     {
-      _id: "4",
       name: "TIRO CRG PNT WR",
       abbr: "TIRO CRG PNT WR",
       category: "apparels",
@@ -109,7 +105,6 @@ const data = {
       maxQty: "20",
     },
     {
-      _id: "5",
       name: "TYR Big Mesh Mummy Backpack",
       abbr: "TYR Big Mesh Mummy Backpack",
       category: "apparels",
@@ -129,7 +124,6 @@ const data = {
       maxQty: "20",
     },
     {
-      _id: "6",
       name: "2021 Apple 12.9-inch iPad Pro (Wi-Fi, 128GB) - Silver",
       abbr: "Apple 12.9-inch iPad Pro",
       category: "smartphone",
