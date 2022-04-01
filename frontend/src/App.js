@@ -1,9 +1,10 @@
-import React, { Component } from "react";
+import React from "react";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import ProductPage from "./pages/ProductPage";
 import { useSelector } from "react-redux";
 import CartPage from "./pages/CartPage";
+import SigninPage from "./pages/SigninPage";
 
 function App() {
   const cartState = useSelector((state) => state.cart);
@@ -32,6 +33,7 @@ function App() {
           <Routes>
             <Route path="/cart" element={<CartPage />} />
             <Route path="/cart/:id" element={<CartPage />} />
+            <Route path="/signin" element={<SigninPage />} />
             <Route path="/product/:id" element={<ProductPage />} />
             <Route path="/" exact element={<HomePage />} />
           </Routes>

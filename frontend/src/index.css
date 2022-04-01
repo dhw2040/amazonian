@@ -50,10 +50,11 @@ footer {
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  /* padding: 1rem 0.5rem; */
+  /* padding: 1rem 0; */
 }
 
 .row.hr {
+  /* padding-bottom: 2rem; */
   border-bottom: 0.1rem solid #c0c0c050;
 }
 
@@ -62,7 +63,7 @@ footer {
 }
 
 .row.center {
-  padding: 0 20rem;
+  padding: 2rem 20rem;
   justify-content: center;
 }
 
@@ -71,7 +72,7 @@ footer {
 }
 
 .col-0 {
-  flex: 1 1 12rem;
+  flex: 0 0 30%;
 }
 
 .col-1 {
@@ -86,6 +87,12 @@ footer {
 
 .right {
   float: right;
+}
+
+.content-center {
+  display: block;
+  margin: 0 auto;
+  width: 30%;
 }
 
 /* Common */
@@ -126,7 +133,15 @@ a:hover {
   /* margin-left: 0.5rem;
   margin-right: 0.5rem;
   padding-left: 0.9rem; */
-  padding: 0 1.5rem;
+  padding: 0 2rem;
+}
+
+.mb-3 {
+  margin-bottom: 2rem;
+}
+
+ul.mb-3 > li {
+  margin-bottom: 2rem;
 }
 
 /* Header */
@@ -153,7 +168,7 @@ header a {
 /* Card */
 .card {
   margin: 2rem 1rem;
-  padding: 2.5rem 1.5rem;
+  padding: 1.5rem 2.5rem;
   border: 0.1rem #c0c0c0 solid;
   border-radius: 0.5rem;
   /* background-color: #f8f8f8; */
@@ -216,11 +231,11 @@ select {
 button {
   background-color: #f8f8f8;
   cursor: pointer;
+  font-size: 90%;
 }
 
 button.primary {
   background-color: gold;
-  font-size: 90%;
   border-radius: 2.2rem;
   margin-bottom: 1rem;
   line-height: 1.1rem;
@@ -228,7 +243,6 @@ button.primary {
 
 button.buy {
   background-color: orange;
-  font-size: 90%;
   border-radius: 2.2rem;
   margin-bottom: 1rem;
   line-height: 1.1rem;
@@ -246,6 +260,23 @@ button.block {
 .rating span:last-child {
   margin: 0.5rem;
   color: #404040;
+}
+
+/* Form */
+form {
+  max-width: 50rem;
+  margin: 0 auto;
+}
+
+form > div {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem;
+}
+
+label {
+  font-weight: bold;
+  display: block;
 }
 
 /* Image */

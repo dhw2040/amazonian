@@ -73,9 +73,8 @@ export default function ProductPage() {
                 </ul>
               </div>
               <div className="row hr">
-                <ul className="no-list-style">
+                <ul>
                   <h2>About this item</h2>
-                  <li></li>
                   {product.description.map((d, idx) => (
                     <li key={idx}>{d}</li>
                   ))}
@@ -85,7 +84,7 @@ export default function ProductPage() {
             <div className="col-1">
               <div className="card card-body">
                 <div className="row hr">
-                  <ul className="no-list-style">
+                  <ul className="no-list-style mb-3">
                     <li>
                       <div className="price">${product.price}</div>
                     </li>
