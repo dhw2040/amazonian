@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useParams } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
 import { Link } from "react-router-dom";
 import {
   addToCart,
@@ -12,6 +12,7 @@ import MessageBox from "../components/MessageBox";
 export default function CartPage(props) {
   const param = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   let { id: productId } = param;
 
@@ -28,6 +29,8 @@ export default function CartPage(props) {
     }
   }, [dispatch, productId, qty]);
 
+  // Handler Functions
+
   const qtyHandler = (idx, q) => {
     dispatch(updateCartQuantity(idx, q));
   };
@@ -36,7 +39,9 @@ export default function CartPage(props) {
     dispatch(deleteFromCart(id));
   };
 
-  const checkoutHandler = () => {};
+  const checkoutHandler = () => {
+    navigate("/signin?redirect=/shipping");
+  };
 
   return (
     <div className="row top">

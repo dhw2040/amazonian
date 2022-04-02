@@ -1,10 +1,23 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router";
+
 import { signin } from "../actions/userActions";
+import LoadingBox from "../components/LoadingBox";
+import MessageBox from "../components/MessageBox";
 
 export default function SigninPage() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { search } = useLocation();
+  const redirectSearch = new URLSearchParams(search).get("redirect");
+  const redirectUrl = redirectSearch ? redirectSearch : "/";
+
+  const userState = useSelector((state) => state.userSignIn);
+  const { userInfo, loading, error } = userState;
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -12,6 +25,12 @@ export default function SigninPage() {
     e.preventDefault();
     dispatch(signin(email, password));
   };
+
+  useEffect(() => {
+    if (userInfo) {
+      navigate(redirectUrl);
+    }
+  }, [navigate, userInfo, redirectUrl]);
 
   return (
     <div>
@@ -26,6 +45,8 @@ export default function SigninPage() {
               />
             </Link>
           </div>
+          {loading && <LoadingBox></LoadingBox>}
+          {error && <MessageBox variants="danger">{error}</MessageBox>}
           <div className="card card-body">
             <form className="form" onSubmit={signinHandler}>
               <div>
