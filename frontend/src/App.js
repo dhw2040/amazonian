@@ -9,6 +9,8 @@ import SigninPage from "./pages/SigninPage";
 function App() {
   const cartState = useSelector((state) => state.cart);
   const { cartItems } = cartState;
+  const userState = useSelector((state) => state.userSignIn);
+  const { userInfo } = userState;
 
   return (
     <BrowserRouter>
@@ -26,7 +28,13 @@ function App() {
                 <span className="badge">{cartItems.length}</span>
               )}
             </Link>
-            <Link to="/signin">Sign In</Link>
+            {userInfo ? (
+              <Link to="#">
+                <small>Hello,</small> {userInfo.name}{" "}
+              </Link>
+            ) : (
+              <Link to="/signin">Sign In</Link>
+            )}
           </div>
         </header>
         <main>

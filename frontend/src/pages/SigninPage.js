@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { signin } from "../actions/userActions";
 
 export default function SigninPage() {
   const dispatch = useDispatch();
@@ -9,6 +10,7 @@ export default function SigninPage() {
 
   const signinHandler = (e) => {
     e.preventDefault();
+    dispatch(signin(email, password));
   };
 
   return (
@@ -51,24 +53,24 @@ export default function SigninPage() {
                   onChange={(e) => setPassword(e.target.value)}
                 ></input>
               </div>
+              <div>
+                <label />
+                <button className="block primary" type="submit">
+                  Sign In
+                </button>
+              </div>
             </form>
             <div>
-              <label />
-              <button className="block primary" type="submit">
-                Sign In
-              </button>
-              <div>
-                <small>
-                  By continuing, you agree to Amazonian's{" "}
-                  <Link to="https://www.amazon.com/gp/help/customer/display.html?nodeId=508088">
-                    Conditions of Use
-                  </Link>{" "}
-                  and{" "}
-                  <Link to="https://www.amazon.com/gp/help/customer/display.html?nodeId=468496">
-                    Privacy Notice.
-                  </Link>{" "}
-                </small>
-              </div>
+              <small>
+                By continuing, you agree to Amazonian's{" "}
+                <Link to="https://www.amazon.com/gp/help/customer/display.html?nodeId=508088">
+                  Conditions of Use
+                </Link>{" "}
+                and{" "}
+                <Link to="https://www.amazon.com/gp/help/customer/display.html?nodeId=468496">
+                  Privacy Notice.
+                </Link>{" "}
+              </small>
             </div>
           </div>
           <div>

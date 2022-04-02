@@ -4,7 +4,7 @@ import {
   UPDATE_CART_QUANTITY,
 } from "../constants/cartConstants";
 
-export const cartReducers = (state = { cartItems: [] }, action) => {
+export const cartReducer = (state = { cartItems: [] }, action) => {
   switch (action.type) {
     case ADD_CART_ITEM:
       const item = action.payload;
