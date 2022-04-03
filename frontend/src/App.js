@@ -30,12 +30,6 @@ function App() {
             </Link>
           </div>
           <div>
-            <Link to="/cart">
-              Cart
-              {cartItems.length > 0 && (
-                <span className="badge">{cartItems.length}</span>
-              )}
-            </Link>
             <div
               className="drop-down"
               onMouseOver={() => setDropDownHover(true)}
@@ -45,10 +39,11 @@ function App() {
                 <small>
                   Hello, <strong>{userInfo ? userInfo.name : "Sign in"}</strong>{" "}
                 </small>
+                <br />
                 <small>
-                  <strong>Account & Lists</strong>
-                </small>{" "}
-                <i className="fa fa-caret-down"></i>
+                  <strong>Account & Lists </strong>
+                </small>
+                <i className="fa fa-caret-down"> </i>
               </Link>
               <div className="drop-down-content">
                 <div className="row center hr">
@@ -126,6 +121,12 @@ function App() {
                 </div>
               </div>
             </div>
+            <Link to="/cart">
+              <i class="fa fa-shopping-cart fa-3x" aria-hidden="true"></i> Cart
+              {cartItems.length > 0 && (
+                <span className="badge">{cartItems.length}</span>
+              )}
+            </Link>
           </div>
         </header>
         <main
