@@ -54,7 +54,7 @@ export default function SigninPage() {
               </div>
               <div>
                 <label htmlFor="email">
-                  E-mail address or mobile phone number
+                  <small>E-mail address or mobile phone number</small>
                 </label>
                 <input
                   type="email"
@@ -65,7 +65,9 @@ export default function SigninPage() {
                 ></input>
               </div>
               <div>
-                <label htmlFor="password">Password</label>
+                <label htmlFor="password">
+                  <small>Password </small>
+                </label>
                 <input
                   type="password"
                   id="password"
@@ -95,7 +97,9 @@ export default function SigninPage() {
             </div>
           </div>
           <div>
-            <small className="grey content-center">New to Amazonian?</small>
+            <div className="content-center">
+              <small className="grey content-center">New to Amazonian?</small>
+            </div>
             <div>
               <button className="block">Create your Amazonian account</button>
             </div>

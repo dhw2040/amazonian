@@ -56,7 +56,7 @@ footer {
 
 .row.hr {
   /* padding-bottom: 2rem; */
-  border-bottom: 0.1rem solid #c0c0c050;
+  border-bottom: 0.1rem solid #c0c0c030;
 }
 
 .row.top {
@@ -64,12 +64,18 @@ footer {
 }
 
 .row.center {
-  padding: 2rem 20rem;
+  padding: 2% 15%;
   justify-content: center;
 }
 
 .row.bottom {
   align-items: flex-end;
+}
+
+.row.flex-row {
+  margin-top: 2rem;
+  flex-direction: row;
+  padding-left: 2rem;
 }
 
 .col-0 {
@@ -91,9 +97,7 @@ footer {
 }
 
 .content-center {
-  display: block;
-  margin: 0 auto;
-  width: 30%;
+  text-align: center;
 }
 
 /* Common */
@@ -110,6 +114,10 @@ h2 {
 a {
   text-decoration: none;
   color: #306faa;
+}
+
+a.grey {
+  font-size: 1.4rem;
 }
 
 a:hover {
@@ -129,8 +137,12 @@ a:hover {
   color: #306faa;
 }
 
+.dark-grey {
+  color: #2e2e2e;
+}
+
 .vr {
-  border-left: 0.1rem solid #c0c0c0;
+  border-left: 0.1rem solid #c0c0c040;
   /* margin-left: 0.5rem;
   margin-right: 0.5rem;
   padding-left: 0.9rem; */
@@ -164,6 +176,29 @@ a.brand {
 header a {
   color: #ffffff;
   padding: 1rem;
+}
+
+.drop-down {
+  display: inline-block;
+  position: relative;
+}
+
+.drop-down-content {
+  position: absolute;
+  z-index: 1;
+  display: none;
+  right: 0;
+  min-width: 50rem;
+  min-height: 35rem;
+  padding: 1rem;
+  background-color: #ffffff;
+  margin: 0rem;
+  margin-top: 0.4rem;
+  border-radius: 0.5rem;
+}
+
+.drop-down:hover .drop-down-content {
+  display: block;
 }
 
 /* Card */
@@ -235,11 +270,18 @@ button {
   font-size: 90%;
 }
 
+button.rect {
+  background-color: #ffd102;
+  border-radius: 0.5rem;
+  width: 50%;
+}
+
 button.primary {
   background-color: gold;
   border-radius: 2.2rem;
   margin-bottom: 1rem;
   line-height: 1.1rem;
+  width: 100%;
 }
 
 button.buy {
@@ -247,11 +289,13 @@ button.buy {
   border-radius: 2.2rem;
   margin-bottom: 1rem;
   line-height: 1.1rem;
+  width: 100%;
 }
 
 button.block {
-  width: 100%;
+  /* width: 100%; */
   display: block;
+  margin: 1rem auto;
 }
 
 .rating span {
