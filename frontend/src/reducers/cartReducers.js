@@ -1,5 +1,6 @@
 import {
   ADD_CART_ITEM,
+  CART_SAVE_ADDRESS,
   DELETE_CART_ITEM,
   UPDATE_CART_QUANTITY,
 } from "../constants/cartConstants";
@@ -35,11 +36,14 @@ export const cartReducer = (state = { cartItems: [] }, action) => {
       const newCart = state.cartItems.map((x) =>
         x.product === action.payload.index ? updateItem : x
       );
-      console.log(newCart);
-
       return {
         ...state,
         cartItems: newCart,
+      };
+    case CART_SAVE_ADDRESS:
+      return {
+        ...state,
+        shippingAddress: action.payload,
       };
     default:
       return state;

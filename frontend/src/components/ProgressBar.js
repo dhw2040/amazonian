@@ -13,7 +13,7 @@ export default function ProgressBar(props) {
         }
       >
         SIGN IN
-        <i class="fa fa-shopping-basket fa-2x" aria-hidden="true"></i>
+        <i className="fa fa-shopping-basket fa-2x" aria-hidden="true"></i>
       </div>
       <div
         className={
@@ -25,7 +25,7 @@ export default function ProgressBar(props) {
         }
       >
         SHIPPING
-        <i class="fa fa-shopping-basket fa-2x" aria-hidden="true"></i>
+        <i className="fa fa-shopping-basket fa-2x" aria-hidden="true"></i>
       </div>
       <div
         className={
@@ -37,7 +37,7 @@ export default function ProgressBar(props) {
         }
       >
         PAYMENT
-        <i class="fa fa-shopping-basket fa-2x" aria-hidden="true"></i>
+        <i className="fa fa-shopping-basket fa-2x" aria-hidden="true"></i>
       </div>
       <div
         className={
@@ -49,7 +49,7 @@ export default function ProgressBar(props) {
         }
       >
         PLACE ORDER
-        <i class="fa fa-shopping-basket fa-2x" aria-hidden="true"></i>
+        <i className="fa fa-shopping-basket fa-2x" aria-hidden="true"></i>
       </div>
     </div>
   );

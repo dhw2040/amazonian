@@ -1,27 +1,56 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
+import { saveShippingAddress } from "../actions/cartActions";
 import ProgressBar from "../components/ProgressBar";
 
 export default function ShippingPage() {
-  const [fullName, setFullname] = useState("");
-  const [address1, setFirstAddress] = useState("");
-  const [address2, setSecondAddress] = useState("");
-  const [city, setCity] = useState("");
-  const [postalCode, setPostalCode] = useState("");
-  const [country, setCountry] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const userState = useSelector((state) => state.userSignIn);
+  const { userInfo } = userState;
+  const cartState = useSelector((state) => state.cart);
+  const { shippingAddress } = cartState;
+
+  useEffect(() => {
+    if (!userInfo) {
+      navigate("/signin?redirect=/shipping");
+    }
+  }, [navigate, userInfo]);
+
+  const [fullName, setFullname] = useState(shippingAddress.fullName);
+  const [address1, setFirstAddress] = useState(shippingAddress.address1);
+  const [address2, setSecondAddress] = useState(shippingAddress.address2);
+  const [city, setCity] = useState(shippingAddress.city);
+  const [postalCode, setPostalCode] = useState(shippingAddress.postalCode);
+  const [country, setCountry] = useState(shippingAddress.country);
 
   const submitHandler = (e) => {
-    e.prventDefault();
+    e.preventDefault();
+    dispatch(
+      saveShippingAddress({
+        fullName,
+        address1,
+        address2,
+        city,
+        postalCode,
+        country,
+      })
+    );
+    navigate("/payment");
   };
 
   return (
     <div>
       <ProgressBar p1 p2="active"></ProgressBar>
+      {/* {userInfo.address ? <div></div> : <div></div>} */}
       <form className="form" onSubmit={submitHandler}>
         <div>
           <h1>Add a new Address</h1>
-          <p className="dark-grey">
+          <span className="dark-grey">
             Be sure to click "Ship to this address" when done.
-          </p>
+          </span>
         </div>
         <div>
           <label htmlFor="fullName">Full name</label>

@@ -48,7 +48,7 @@ function App() {
                 <i className="fa fa-caret-down"> </i>
               </Link>
               <div className="drop-down-content">
-                <div className="row center hr">
+                <div className="row center">
                   <div className="col-1">
                     {userInfo ? (
                       <div className="content-center">
@@ -67,6 +67,7 @@ function App() {
                     )}
                   </div>
                 </div>
+                <hr />
                 <div className="row top flex-row">
                   <div className="col-1">
                     <h2>Your Lists</h2>
@@ -122,7 +123,8 @@ function App() {
               </div>
             </div>
             <Link to="/cart">
-              <i class="fa fa-shopping-cart fa-3x" aria-hidden="true"></i> Cart
+              <i className="fa fa-shopping-cart fa-3x" aria-hidden="true"></i>{" "}
+              Cart
               {cartItems.length > 0 && (
                 <span className="badge">{cartItems.length}</span>
               )}
