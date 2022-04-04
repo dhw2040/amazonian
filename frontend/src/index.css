@@ -189,6 +189,8 @@ header a {
   padding: 1rem;
 }
 
+/* Drop down */
+
 .drop-down {
   display: inline-block;
   position: relative;
@@ -202,7 +204,7 @@ header a {
   font-size: 1.5rem;
   min-width: 50rem;
   min-height: 35rem;
-  padding: 0 0.5rem;
+  padding: 0.2rem 0.5rem;
   background-color: #ffffff;
   margin: 0rem;
   margin-top: 0.4rem;
@@ -225,6 +227,34 @@ header a {
 
 .drop-down:hover .drop-down-content {
   display: block;
+}
+
+/* Progress bar */
+.progress-bar {
+  margin-top: 2rem;
+}
+.progress-bar > div {
+  border-top: 0.4rem #c0c0c0 solid;
+  color: #c0c0c0;
+  flex: 1;
+  padding: 1rem;
+  font-weight: bold;
+}
+
+.progress-bar > div.enabled {
+  border-top-color: #ff8000;
+  color: #ff8000;
+}
+
+.progress-bar i {
+  display: none;
+}
+
+div.active > i {
+  z-index: 1;
+  position: absolute;
+  display: block;
+  top: 6rem;
 }
 
 /* Card */
