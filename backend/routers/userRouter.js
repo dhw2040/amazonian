@@ -40,4 +40,43 @@ userRouter.post(
   })
 );
 
+userRouter.post(
+  "/register",
+  expressAsyncHandler(async (req, res) => {
+    const emailExist = await User.findOne({ email: req.body.email });
+    if (emailExist) {
+      return res.status(401).send({
+        message:
+          "There is an existing account associated with this email address.",
+      });
+    } else if(req.body.password.length < 6){
+      return res.status(401).send({
+        message:
+          "Passwords must consist of at least 6 characters.",
+      });
+    } else if (req.body.password !== req.body.confirmPassword) {
+      return res.status(401).send({
+        message:
+          "Passwords do not match.",
+      });
+    } else {
+      const newUser = new User({
+        name: req.body.name,
+        email: req.body.email,
+        password: bcrypt.hashSync(req.body.password, 8),
+      });
+      const userCreated = newUser.save();
+      return res.send({
+        _id: userCreated._id,
+        name: userCreated.name,
+        email: userCreated.email,
+        isAdmin: userCreated.isAdmin,
+        token: generateToken(userCreated),
+      });
+    }
+
+    
+  })
+);
+
 export default userRouter;

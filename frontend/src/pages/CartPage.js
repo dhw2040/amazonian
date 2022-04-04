@@ -96,7 +96,6 @@ export default function CartPage(props) {
                           </option>
                         ))}
                       </select>
-
                       <small
                         className="cart-button blue vr"
                         onClick={() => deleteFromCartHandler(item.product)}

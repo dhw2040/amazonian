@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import CartPage from "./pages/CartPage";
 import SigninPage from "./pages/SigninPage";
 import { signout } from "./actions/userActions";
+import RegisterPage from "./pages/RegisterPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -47,24 +48,20 @@ function App() {
               </Link>
               <div className="drop-down-content">
                 <div className="row center hr">
-                  <div className="col-1 content-center">
-                    {userInfo && (
-                      <button
-                        className="block rect primary"
-                        onClick={signOutHandler}
-                      >
+                  <div className="col-1">
+                    {userInfo ? (
+                      <button className="block rect" onClick={signOutHandler}>
                         Sign Out
                       </button>
+                    ) : (
+                      <div className="content-center">
+                        <Link to="/signin">
+                          <button className="block rect">Sign in</button>
+                        </Link>
+                        <small className="grey">New customer?</small>
+                        <Link to="/register">Start here</Link>
+                      </div>
                     )}
-                    <div className="content-center">
-                      <Link to="/signin">
-                        <button className="block rect">Sign in</button>
-                      </Link>
-                      <small>
-                        <span className="grey">New customer?</span>
-                      </small>
-                      <Link to="/register">Start here</Link>
-                    </div>
                   </div>
                 </div>
                 <div className="row top flex-row">
@@ -137,13 +134,14 @@ function App() {
                   filter: "brightness(50%)",
                   background: "rgba(0,0,0,0.5)",
                 }
-              : {}
+              : { transitionDuration: "0.5s" }
           }
         >
           <Routes>
             <Route path="/cart" element={<CartPage />} />
             <Route path="/cart/:id" element={<CartPage />} />
             <Route path="/signin" element={<SigninPage />} />
+            <Route path="/register" element={<RegisterPage />} />
             <Route path="/product/:id" element={<ProductPage />} />
             <Route path="/" exact element={<HomePage />} />
           </Routes>

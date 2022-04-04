@@ -3,7 +3,17 @@ import React from "react";
 export default function MessageBox(props) {
   return (
     <div className={`alert alert-${props.variants || "info"}`}>
-      {props.children}
+      <div>
+        <span>
+          <i class="fa fa-exclamation-triangle fa-2x"></i>
+        </span>
+      </div>
+      <div>
+        <big>
+          <strong>There was a problem</strong>
+        </big>
+        {props.children}
+      </div>
     </div>
   );
 }
