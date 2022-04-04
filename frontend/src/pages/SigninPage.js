@@ -26,6 +26,10 @@ export default function SigninPage() {
     dispatch(signin(email, password));
   };
 
+  const registerHandler = () => {
+    navigate(`/register?redirect=${redirectUrl}`);
+  };
+
   useEffect(() => {
     if (userInfo) {
       navigate(redirectUrl);
@@ -34,7 +38,7 @@ export default function SigninPage() {
 
   return (
     <div>
-      <div className="row center hr">
+      <div className="row center">
         <div className="col-0">
           <div className="content-center">
             <Link to="/">
@@ -78,7 +82,7 @@ export default function SigninPage() {
               </div>
               <div>
                 <label />
-                <button className="block primary" type="submit">
+                <button className="block rect" type="submit">
                   Sign In
                 </button>
               </div>
@@ -95,35 +99,41 @@ export default function SigninPage() {
                 </Link>{" "}
               </small>
             </div>
-          </div>
-          <div>
             <div className="content-center">
               <small className="grey content-center">New to Amazonian?</small>
-            </div>
-            <div>
-              <button className="block">Create your Amazonian account</button>
+              <button className="block" onClick={registerHandler}>
+                Create your Amazonian account
+              </button>
             </div>
           </div>
         </div>
       </div>
-      {/* <div className="row center">
-        <div className="content-center">
+      <div>
+        <hr></hr>
+      </div>
+      <div className="content-center">
+        <small>
+          {" "}
           <Link to="https://www.amazon.com/gp/help/customer/display.html?nodeId=508088">
-            <small>Conditions of Use</small>
+            Conditions of Use
           </Link>
+        </small>
+        <small>
           <Link to="https://www.amazon.com/gp/help/customer/display.html?nodeId=468496">
-            <small>Privacy Notice</small>
+            Privacy Notice
           </Link>
+        </small>
+        <small>
           <Link to="https://www.amazon.com/gp/help/customer/display.html">
-            <small>Help</small>
+            Help
           </Link>
-        </div>
-        <div className="content-center">
-          <small className="grey">
-            © 1996-2022, Amazonian, Inc. or its affiliates
-          </small>
-        </div>
-      </div> */}
+        </small>
+      </div>
+      <div className="content-center">
+        <small className="grey">
+          © 1996-2022, Amazonian, Inc. or its affiliates
+        </small>
+      </div>
     </div>
   );
 }

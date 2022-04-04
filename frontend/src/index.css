@@ -51,7 +51,6 @@ footer {
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  /* padding: 1rem 0; */
 }
 
 .row.hr {
@@ -156,8 +155,9 @@ a:hover {
 
 hr {
   border: 0;
-  height: 0.1rem;
+  height: 0.2rem;
   background-image: linear-gradient(to right, #00000000, #00000030, #00000000);
+  margin-bottom: 2rem;
 }
 
 .mb-3 {

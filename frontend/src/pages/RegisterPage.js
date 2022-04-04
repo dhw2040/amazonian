@@ -36,7 +36,7 @@ export default function RegisterPage() {
 
   return (
     <div>
-      <div className="row center hr">
+      <div className="row center">
         <div className="col-0">
           <div className="content-center">
             <Link to="/">
@@ -47,7 +47,6 @@ export default function RegisterPage() {
               />
             </Link>
           </div>
-
           {loading && <LoadingBox></LoadingBox>}
           {error && <MessageBox variants="danger">{error}</MessageBox>}
           <div className="card card-body">
@@ -131,13 +130,15 @@ export default function RegisterPage() {
             <div>
               <div className="content-center">
                 <small className="grey content-center">
-                  Already have an account? <Link to="/signin">Sign in</Link>{" "}
+                  Already have an account?{" "}
+                  <Link to={`/signin?redirect=${redirectUrl}`}>Sign in</Link>{" "}
                 </small>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <hr />
       <div className="content-center">
         <small>
           {" "}
