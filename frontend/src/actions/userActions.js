@@ -28,29 +28,34 @@ export const signin = (email, password) => async (dispatch) => {
 
 export const signout = () => async (dispatch) => {
   localStorage.removeItem("userInfo");
-  localStorage.removeItem("cart");
+  localStorage.removeItem("cartItems");
+  localStorage.removeItem("shippingAddress");
   dispatch({ type: USER_SIGN_OUT });
 };
 
-export const register = (name, email, password,confirmPassword) => async (dispatch) => {
-  dispatch({ type: USER_REGISTER_REQUEST, payload: { name, email, password, confirmPassword } });
-  try {
-    const { data } = await Axios.post("/api/users/register", {
-      name,
-      email,
-      password,
-      confirmPassword
-    });
-    dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
-    dispatch({ type: USER_SIGNIN_SUCCESS, payload: data }); // After register, authenticate user as well by dispatching signin
-    localStorage.setItem("userInfo", JSON.stringify(data));
-  } catch (error) {
+export const register =
+  (name, email, password, confirmPassword) => async (dispatch) => {
     dispatch({
-      type: USER_REGISTER_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      type: USER_REGISTER_REQUEST,
+      payload: { name, email, password, confirmPassword },
     });
-  }
-};
+    try {
+      const { data } = await Axios.post("/api/users/register", {
+        name,
+        email,
+        password,
+        confirmPassword,
+      });
+      dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
+      dispatch({ type: USER_SIGNIN_SUCCESS, payload: data }); // After register, authenticate user as well by dispatching signin
+      localStorage.setItem("userInfo", JSON.stringify(data));
+    } catch (error) {
+      dispatch({
+        type: USER_REGISTER_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
