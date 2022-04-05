@@ -49,15 +49,13 @@ userRouter.post(
         message:
           "There is an existing account associated with this email address.",
       });
-    } else if(req.body.password.length < 6){
+    } else if (req.body.password.length < 6) {
       return res.status(401).send({
-        message:
-          "Passwords must consist of at least 6 characters.",
+        message: "Passwords must consist of at least 6 characters.",
       });
     } else if (req.body.password !== req.body.confirmPassword) {
       return res.status(401).send({
-        message:
-          "Passwords do not match.",
+        message: "Passwords do not match.",
       });
     } else {
       const newUser = new User({
@@ -74,8 +72,6 @@ userRouter.post(
         token: generateToken(userCreated),
       });
     }
-
-    
   })
 );
 

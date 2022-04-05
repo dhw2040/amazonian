@@ -24,10 +24,10 @@ export default function OrderPage() {
 
   const toNum = (n) => Number(Number(n).toFixed(2));
 
-  cartState.subtotal = toNum(
+  cartState.itemSubtotal = toNum(
     cartItems.reduce((total, x) => total + x.qty * x.price, 0)
   );
-  cartState.total = cartState.subtotal + toNum(deliveryOptions.price);
+  cartState.total = cartState.itemSubtotal + toNum(deliveryOptions.price);
   cartState.tax = toNum(cartState.total * 0.13);
   cartState.final = toNum(cartState.total + cartState.tax);
 
@@ -283,7 +283,7 @@ export default function OrderPage() {
                       )}
                       ):
                     </div>
-                    <div>${cartState.subtotal}</div>
+                    <div>${cartState.itemSubtotal}</div>
                   </li>
                   <li className="row">
                     <div>Shipping & Handling:</div>
@@ -300,7 +300,7 @@ export default function OrderPage() {
                   </li>
                   <hr />
                   <li className="row">
-                    <div className="dark-red">Order total:</div>
+                    <div className="dark-red">Order final:</div>
                     <div className="dark-red">{cartState.final}</div>
                   </li>
                 </ul>
