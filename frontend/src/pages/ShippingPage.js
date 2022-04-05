@@ -23,6 +23,7 @@ export default function ShippingPage() {
   const [address1, setFirstAddress] = useState(shippingAddress.address1);
   const [address2, setSecondAddress] = useState(shippingAddress.address2);
   const [city, setCity] = useState(shippingAddress.city);
+  const [province, setProvince] = useState(shippingAddress.province);
   const [postalCode, setPostalCode] = useState(shippingAddress.postalCode);
   const [country, setCountry] = useState(shippingAddress.country);
 
@@ -34,6 +35,7 @@ export default function ShippingPage() {
         address1,
         address2,
         city,
+        province,
         postalCode,
         country,
       })
@@ -93,6 +95,17 @@ export default function ShippingPage() {
             placeholder="City"
             value={city}
             onChange={(e) => setCity(e.target.value)}
+            required
+          ></input>
+        </div>
+        <div>
+          <label htmlFor="city">Province:</label>
+          <input
+            type="text"
+            id="province"
+            placeholder="Province"
+            value={province}
+            onChange={(e) => setProvince(e.target.value)}
             required
           ></input>
         </div>

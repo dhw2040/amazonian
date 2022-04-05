@@ -9,6 +9,7 @@ import { signout } from "./actions/userActions";
 import RegisterPage from "./pages/RegisterPage";
 import ShippingPage from "./pages/ShippingPage";
 import PaymentPage from "./pages/PaymentPage";
+import OrderPage from "./pages/OrderPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -150,6 +151,7 @@ function App() {
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/shipping" element={<ShippingPage />} />
             <Route path="/payment" element={<PaymentPage />} />
+            <Route path="/placeorder" element={<OrderPage />} />
             <Route path="/product/:id" element={<ProductPage />} />
             <Route path="/" exact element={<HomePage />} />
           </Routes>

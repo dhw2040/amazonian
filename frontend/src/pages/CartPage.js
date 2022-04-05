@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router";
 import { Link } from "react-router-dom";
@@ -122,18 +122,10 @@ export default function CartPage(props) {
           <div className="row">
             <div></div>
             <big>
-              Subtotal (
-              {parseInt(
-                cartItems.reduce((total, x) => total + x.qty, 0),
-                10
-              )}{" "}
+              Subtotal ({cartItems.reduce((total, x) => total + x.qty, 0)}{" "}
               items):{" "}
               <strong>
-                ${" "}
-                {parseInt(
-                  cartItems.reduce((total, x) => total + x.qty * x.price, 0),
-                  10
-                )}
+                $ {cartItems.reduce((total, x) => total + x.qty * x.price, 0)}
               </strong>
             </big>
           </div>
@@ -157,18 +149,10 @@ export default function CartPage(props) {
             </div>
             <div>
               <big>
-                Subtotal (
-                {parseInt(
-                  cartItems.reduce((total, x) => total + x.qty, 0),
-                  10
-                )}{" "}
+                Subtotal ({cartItems.reduce((total, x) => total + x.qty, 0)}{" "}
                 items):{" "}
                 <strong>
-                  ${" "}
-                  {parseInt(
-                    cartItems.reduce((total, x) => total + x.qty * x.price, 0),
-                    10
-                  )}
+                  $ {cartItems.reduce((total, x) => total + x.qty * x.price, 0)}
                 </strong>
               </big>
             </div>

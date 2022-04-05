@@ -64,7 +64,7 @@ footer {
 }
 
 .row.center {
-  padding: 0 13%;
+  padding: 0 10%;
   justify-content: center;
 }
 
@@ -78,18 +78,24 @@ footer {
   padding-left: 2rem;
 }
 
+.col-xs {
+  flex: 0 0 7rem;
+}
+
 .col-0 {
   flex: 0 0 30%;
+  /* margin-left: 0.7rem; */
 }
 
 .col-1 {
-  flex: 1 1 15rem;
+  flex: 1 1 20rem;
+  /* margin-left: 0 0.7rem; */
 }
 .col-2 {
   flex: 2 1 50rem;
 }
 .col-3 {
-  flex: 3 1 70rem;
+  flex: 3 1 60rem;
 }
 
 .right {
@@ -114,6 +120,8 @@ h1 {
 h2 {
   font-size: 2rem;
   /* padding: 1rem 0; */
+  display: inline-block;
+  margin-right: 0.8rem;
 }
 a {
   text-decoration: none;
@@ -145,23 +153,34 @@ a:hover {
   color: #2e2e2e;
 }
 
+.green {
+  color: #4ba54b;
+}
+
+.dark-red {
+  color: #a02020;
+  font-weight: bold;
+  font-size: larger;
+}
+
 .vr {
   border-left: 0.1rem solid #c0c0c040;
-  /* margin-left: 0.5rem;
-  margin-right: 0.5rem;
-  padding-left: 0.9rem; */
   padding: 0 2rem;
 }
 
 hr {
   border: 0;
-  height: 0.2rem;
+  height: 0.1rem;
   background-image: linear-gradient(to right, #00000000, #00000030, #00000000);
   margin-bottom: 2rem;
 }
 
 .mb-3 {
   margin-bottom: 2rem;
+}
+
+.ml-2 {
+  margin-left: 2rem;
 }
 
 ul.mb-3 > li {
@@ -273,6 +292,10 @@ div.active > i {
   word-wrap: break-word;
 }
 
+.card.info {
+  background-color: #f8f8f8;
+}
+
 .card ul,
 .col-1 ul {
   margin: 0;
@@ -314,6 +337,10 @@ button:hover {
   border: 0.1rem #404040 solid;
 }
 
+input {
+  margin-right: 1rem;
+}
+
 select {
   margin: 0 0.7rem;
   padding: 0.5rem;
@@ -336,7 +363,7 @@ button.rect {
 
 button.primary {
   background-color: gold;
-  border-radius: 2.2rem;
+  border-radius: 0.5rem;
   margin-bottom: 1rem;
   line-height: 1.1rem;
   width: 100%;
@@ -379,7 +406,7 @@ form > div {
 
 label {
   font-weight: bold;
-  display: block;
+  display: inline-block;
 }
 
 /* Image */

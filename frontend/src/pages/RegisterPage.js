@@ -91,7 +91,7 @@ export default function RegisterPage() {
                   onChange={(e) => setPassword(e.target.value)}
                 ></input>
                 <small className="dark-grey">
-                  <i class="fa fa-info-circle" aria-hidden="true"></i>
+                  <i className="fa fa-info-circle" aria-hidden="true"></i>
                   Passwords must consist of at least 6 characters.
                 </small>
               </div>
