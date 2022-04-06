@@ -10,6 +10,7 @@ import RegisterPage from "./pages/RegisterPage";
 import ShippingPage from "./pages/ShippingPage";
 import PaymentPage from "./pages/PaymentPage";
 import OrderPage from "./pages/OrderPage";
+import OrderSummaryPage from "./pages/OrderSummaryPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -152,6 +153,7 @@ function App() {
             <Route path="/shipping" element={<ShippingPage />} />
             <Route path="/payment" element={<PaymentPage />} />
             <Route path="/placeorder" element={<OrderPage />} />
+            <Route path="/order/:id" element={<OrderSummaryPage />} />
             <Route path="/product/:id" element={<ProductPage />} />
             <Route path="/" exact element={<HomePage />} />
           </Routes>

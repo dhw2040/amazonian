@@ -23,6 +23,7 @@ app.get("/", (req, res) => {
 app.use("/api/users", userRouter);
 app.use("/api/products", productRouter);
 app.use("/api/order", orderRouter);
+
 // Middleware that handles error
 app.use((err, req, res, next) => {
   res.status(500).send({ message: err.message });

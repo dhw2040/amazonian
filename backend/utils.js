@@ -16,9 +16,10 @@ export const generateToken = (user) => {
 };
 
 export const isAuth = (req, res, next) => {
-  const author = req.headers.authorization;
-  if (author) {
-    const token = author.slice(7, author.length);
+  const auth = req.headers.authorization;
+
+  if (auth) {
+    const token = auth.split(" ")[1];
     jwt.verify(
       token,
       process.env.JWT_SECRET || "wowSuper!@$#$Secret",

@@ -49,7 +49,6 @@ export default function OrderPage() {
   cart.total = toNum(cart.itemSubtotal + cart.shippingPrice);
   cart.tax = toNum(cart.total * 0.13);
   cart.final = toNum(cart.total + cart.tax);
-  //   console.log(new Date(deliveryOptions.date));
   cart.expectedDelivery = new Date(deliveryOptions.date);
 
   useEffect(() => {
@@ -74,7 +73,6 @@ export default function OrderPage() {
   };
 
   const deliveryOptionsHandler = (price, date) => {
-    console.log(price);
     setDeliveryOptions({ price: price, date: date });
   };
 
@@ -226,7 +224,7 @@ export default function OrderPage() {
                     <div className="col-2">
                       {cartItems.map((item, idx) => (
                         <div key={idx} className="row top hr">
-                          <div className="col-0 mr-2">
+                          <div className="col-xs mr-2">
                             <Link to={`/product/${item.product}`}>
                               <img
                                 className="sm"
@@ -288,7 +286,8 @@ export default function OrderPage() {
                         </div>
                       ))}
                     </div>
-                    <div className="col-1">
+                    <div className="col-1 ml-2">
+                      <strong>Choose a delivery option: </strong>
                       <div>
                         <div>
                           <input
@@ -304,7 +303,7 @@ export default function OrderPage() {
                             }
                           ></input>
                           <label htmlFor="option1">
-                            <big className="green">{options[0].date}</big>
+                            <strong className="green">{options[0].date}</strong>
                             <div className="grey">
                               {options[0].price} - Standard Shipping
                             </div>
@@ -326,9 +325,9 @@ export default function OrderPage() {
                             }
                           ></input>
                           <label htmlFor="option2">
-                            <big className="green">{options[1].date}</big>
+                            <strong className="green">{options[1].date}</strong>
                             <div className="grey">
-                              {options[1].date} - Standard Three-Day Shipping
+                              {options[1].price} - Standard 3-Day Shipping
                             </div>
                           </label>
                         </div>
@@ -348,9 +347,9 @@ export default function OrderPage() {
                             }
                           ></input>
                           <label htmlFor="option3">
-                            <big className="green">{options[2].date}</big>
+                            <strong className="green">{options[2].date}</strong>
                             <div className="grey">
-                              {options[2].price} - Standard Five-Day Shipping
+                              {options[2].price} - Standard 5-Day Shipping
                             </div>
                           </label>
                         </div>
