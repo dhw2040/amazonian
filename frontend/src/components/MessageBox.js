@@ -5,7 +5,7 @@ export default function MessageBox(props) {
     <div className={`alert alert-${props.variants || "info"}`}>
       <div>
         <span>
-          <i class="fa fa-exclamation-triangle fa-2x"></i>
+          <i className="fa fa-exclamation-triangle fa-2x"></i>
         </span>
       </div>
       <div>

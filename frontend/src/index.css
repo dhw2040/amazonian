@@ -54,7 +54,7 @@ footer {
 }
 
 .row.hr {
-  /* padding-bottom: 2rem; */
+  padding: 1rem 0;
   border-bottom: 0.1rem solid #c0c0c030;
   /* border-bottom: linear-gradient(to right, #00000000, #00000030, #00000000); */
 }
@@ -64,7 +64,7 @@ footer {
 }
 
 .row.center {
-  padding: 0 10%;
+  padding: 0 7%;
   justify-content: center;
 }
 
@@ -83,16 +83,17 @@ footer {
 }
 
 .col-0 {
-  flex: 0 0 30%;
+  flex: 0 0 20%;
   /* margin-left: 0.7rem; */
 }
 
 .col-1 {
-  flex: 1 1 20rem;
+  flex: 1 1 25rem;
   /* margin-left: 0 0.7rem; */
 }
+
 .col-2 {
-  flex: 2 1 50rem;
+  flex: 2 1 40rem;
 }
 .col-3 {
   flex: 3 1 60rem;
@@ -181,6 +182,9 @@ hr {
 
 .ml-2 {
   margin-left: 2rem;
+}
+.mr-2 {
+  margin-right: 2rem;
 }
 
 ul.mb-3 > li {
@@ -339,6 +343,11 @@ button:hover {
 
 input {
   margin-right: 1rem;
+}
+input[type="radio"] {
+  height: 1.5rem;
+  width: 1.5rem;
+  margin-bottom: 2.3rem;
 }
 
 select {

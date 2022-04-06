@@ -3,39 +3,67 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import { deleteFromCart, updateCartQuantity } from "../actions/cartActions";
+import { createOrder } from "../actions/orderActions";
+import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import ProgressBar from "../components/ProgressBar";
+import { ORDER_CREATE_RESET } from "../constants/orderConstats";
 
 export default function OrderPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const userState = useSelector((state) => state.userSignIn);
-  const { userInfo } = userState;
-  const cartState = useSelector((state) => state.cart);
-  const { cartItems, shippingAddress, paymentMethod } = cartState;
+  const orderCreate = useSelector((state) => state.orderCreate);
+  const { loading, success, error, order } = orderCreate;
+  const userSignIn = useSelector((state) => state.userSignIn);
+  const { userInfo } = userSignIn;
+  const cart = useSelector((state) => state.cart);
+  const { cartItems, shippingAddress, paymentMethod } = cart;
+
+  const toNum = (n) => Number(Number(n).toFixed(2));
+  const addDays = (n) => {
+    let newDate = new Date();
+    newDate.setDate(newDate.getDate() + n);
+    return newDate.toDateString();
+  };
+
+  const baseRate = 11.99;
+  const options = [
+    { price: baseRate, date: addDays(2) },
+    { price: toNum(baseRate * 0.8), date: addDays(3) },
+    { price: toNum(baseRate * 0.6), date: addDays(5) },
+  ];
 
   const [saveShippingPaymentInfo, setSaveShippingPaymentInfo] = useState(0);
   const [code, setCode] = useState("");
+
   const [deliveryOptions, setDeliveryOptions] = useState({
-    price: 6.99,
-    date: "Apr. 10, 2022",
+    price: options[0].price,
+    date: options[0].date,
   });
 
-  const toNum = (n) => Number(Number(n).toFixed(2));
-
-  cartState.itemSubtotal = toNum(
+  cart.itemSubtotal = toNum(
     cartItems.reduce((total, x) => total + x.qty * x.price, 0)
   );
-  cartState.total = cartState.itemSubtotal + toNum(deliveryOptions.price);
-  cartState.tax = toNum(cartState.total * 0.13);
-  cartState.final = toNum(cartState.total + cartState.tax);
+  cart.shippingPrice = cart.itemSubtotal > 0 ? toNum(deliveryOptions.price) : 0;
+  cart.total = toNum(cart.itemSubtotal + cart.shippingPrice);
+  cart.tax = toNum(cart.total * 0.13);
+  cart.final = toNum(cart.total + cart.tax);
+  //   console.log(new Date(deliveryOptions.date));
+  cart.expectedDelivery = new Date(deliveryOptions.date);
 
   useEffect(() => {
     if (!userInfo) {
-      navigate("/signin?redirect=/shipping");
+      navigate("/signin?redirect=/placeorder");
+    } else if (!paymentMethod) {
+      navigate("/payment");
     }
-  }, [navigate, userInfo]);
+
+    if (success) {
+      navigate(`/order/${order._id}`);
+      dispatch({ type: ORDER_CREATE_RESET });
+    }
+  }, [navigate, dispatch, userInfo, paymentMethod, success, order]);
 
   const qtyHandler = (idx, q) => {
     dispatch(updateCartQuantity(idx, q));
@@ -45,13 +73,22 @@ export default function OrderPage() {
     dispatch(deleteFromCart(id));
   };
 
+  const deliveryOptionsHandler = (price, date) => {
+    console.log(price);
+    setDeliveryOptions({ price: price, date: date });
+  };
+
   const applyCodeHandler = () => {};
 
-  const placeOrderHandler = () => {};
+  const placeOrderHandler = () => {
+    dispatch(createOrder({ ...cart, orderedItems: cart.cartItems }));
+  };
 
   return (
     <div>
       <ProgressBar p1 p2 p3 p4="active"></ProgressBar>
+      {loading && <LoadingBox />}
+      {error && <MessageBox variants="danger">{error}</MessageBox>}
       <div className="row top center">
         <h1>Review your order</h1>
         <div className="row top">
@@ -169,92 +206,168 @@ export default function OrderPage() {
               </div>
             </div>
             <div className="card card-body">
-              <h2 className="green">
-                Estimated delivery: {deliveryOptions.date}
-              </h2>
-              <span className="grey">If you order in the next 30 minutes</span>
-              <div>
-                {cartItems.length === 0 ? (
-                  <MessageBox variants="danger">
-                    <h1>Your Amazonian cart is empty.</h1>{" "}
-                    <Link to="/">Go Shopping!</Link>
-                  </MessageBox>
-                ) : (
-                  cartItems.map((item, idx) => (
-                    <div key={idx} className="row top hr">
-                      <div className="col-1">
-                        <Link to={`/product/${item.product}`}>
-                          <img
-                            className="sm"
-                            src={item.image}
-                            alt={item.name}
-                          ></img>
-                        </Link>
+              {cartItems.length === 0 ? (
+                <MessageBox variants="danger">
+                  <h1>Your Amazonian cart is empty.</h1>{" "}
+                  <Link to="/">Go Shopping!</Link>
+                </MessageBox>
+              ) : (
+                <div>
+                  <h2 className="green">
+                    Estimated delivery: {deliveryOptions.date}
+                  </h2>
+                  {deliveryOptions.price === options[0].price &&
+                    deliveryOptions.date === options[0].date && (
+                      <span className="grey">
+                        If you order in the next 30 minutes
+                      </span>
+                    )}
+                  <div className="row top">
+                    <div className="col-2">
+                      {cartItems.map((item, idx) => (
+                        <div key={idx} className="row top hr">
+                          <div className="col-0 mr-2">
+                            <Link to={`/product/${item.product}`}>
+                              <img
+                                className="sm"
+                                src={item.image}
+                                alt={item.name}
+                              ></img>
+                            </Link>
+                          </div>
+                          <div className="col-2">
+                            <Link to={`/product/${item.product}`}>
+                              <big>
+                                <strong>{item.name}</strong>
+                              </big>
+                            </Link>
+                            <ul className="no-list-style">
+                              <li>
+                                <small className="grey">
+                                  Ships from and sold by Amazonian
+                                </small>
+                              </li>
+                              <li>
+                                <span className="price">${item.price}</span>
+                              </li>
+                              <li>
+                                <small className="success">
+                                  {item.stock > 0 ? "In Stock" : "Out of Stock"}
+                                </small>
+                              </li>
+                              <li>
+                                <label>Qty: </label>
+                                <select
+                                  value={item.qty}
+                                  onChange={(e) =>
+                                    qtyHandler(item.product, e.target.value)
+                                  }
+                                >
+                                  {[...Array(Number(item.maxQty)).keys()].map(
+                                    (x) => (
+                                      <option key={x + 1} value={x + 1}>
+                                        {x + 1}
+                                      </option>
+                                    )
+                                  )}
+                                </select>
+                                <small
+                                  className="cart-button blue vr"
+                                  onClick={() =>
+                                    deleteFromCartHandler(item.product)
+                                  }
+                                >
+                                  Delete
+                                </small>
+                                <small className="cart-button blue vr">
+                                  Save for later
+                                </small>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="col-1">
+                      <div>
+                        <div>
+                          <input
+                            type="radio"
+                            id="option1"
+                            name="deliveryOptions"
+                            required
+                            onChange={() =>
+                              deliveryOptionsHandler(
+                                options[0].price,
+                                options[0].date
+                              )
+                            }
+                          ></input>
+                          <label htmlFor="option1">
+                            <big className="green">{options[0].date}</big>
+                            <div className="grey">
+                              {options[0].price} - Standard Shipping
+                            </div>
+                          </label>
+                        </div>
                       </div>
-                      <div className="col-3">
-                        <Link to={`/product/${item.product}`}>
-                          <h2>{item.name}</h2>
-                        </Link>
-                        <ul className="no-list-style">
-                          <li>
-                            <small className="grey">
-                              Ships from and sold by Amazonian
-                            </small>
-                          </li>
-                          <li>
-                            <small className="grey">
-                              Eligible for FREE Shipping
-                            </small>
-                          </li>
-                          <li>
-                            <small className="success">
-                              {item.stock > 0 ? "In Stock" : "Out of Stock"}
-                            </small>
-                          </li>
-                          <li>
-                            <label>Qty: </label>
-                            <select
-                              value={item.qty}
-                              onChange={(e) =>
-                                qtyHandler(item.product, e.target.value)
-                              }
-                            >
-                              {[...Array(Number(item.maxQty)).keys()].map(
-                                (x) => (
-                                  <option key={x + 1} value={x + 1}>
-                                    {x + 1}
-                                  </option>
-                                )
-                              )}
-                            </select>
-                            <small
-                              className="cart-button blue vr"
-                              onClick={() =>
-                                deleteFromCartHandler(item.product)
-                              }
-                            >
-                              Delete
-                            </small>
-                            <small className="cart-button blue vr">
-                              Save for later
-                            </small>
-                          </li>
-                        </ul>
+                      <div>
+                        <div>
+                          <input
+                            type="radio"
+                            id="option2"
+                            name="deliveryOptions"
+                            required
+                            onChange={() =>
+                              deliveryOptionsHandler(
+                                options[1].price,
+                                options[1].date
+                              )
+                            }
+                          ></input>
+                          <label htmlFor="option2">
+                            <big className="green">{options[1].date}</big>
+                            <div className="grey">
+                              {options[1].date} - Standard Three-Day Shipping
+                            </div>
+                          </label>
+                        </div>
                       </div>
-                      <div className="col-1">
-                        <strong className="right">
-                          <h2>$ {item.price}</h2>
-                        </strong>
+                      <div>
+                        <div>
+                          <input
+                            type="radio"
+                            id="option3"
+                            name="deliveryOptions"
+                            required
+                            onChange={() =>
+                              deliveryOptionsHandler(
+                                options[2].price,
+                                options[2].date
+                              )
+                            }
+                          ></input>
+                          <label htmlFor="option3">
+                            <big className="green">{options[2].date}</big>
+                            <div className="grey">
+                              {options[2].price} - Standard Five-Day Shipping
+                            </div>
+                          </label>
+                        </div>
                       </div>
                     </div>
-                  ))
-                )}
-              </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
           <div className="col-1">
             <div className="card card-body">
-              <button className="block primary" onClick={placeOrderHandler}>
+              <button
+                className="block primary"
+                onClick={placeOrderHandler}
+                disabled={cartItems.length === 0}
+              >
                 Place your Order
               </button>
               <div className="content-center">
@@ -283,25 +396,25 @@ export default function OrderPage() {
                       )}
                       ):
                     </div>
-                    <div>${cartState.itemSubtotal}</div>
+                    <div>${cart.itemSubtotal}</div>
                   </li>
                   <li className="row">
                     <div>Shipping & Handling:</div>
-                    <div>{deliveryOptions.price}</div>
+                    <div>${deliveryOptions.price}</div>
                   </li>
                   <hr />
                   <li className="row">
                     <div>Total before tax:</div>
-                    <div>{cartState.total}</div>
+                    <div>${cart.total}</div>
                   </li>
                   <li className="row">
                     <div>Estimated tax (GST & HST): </div>
-                    <div>{cartState.tax}</div>
+                    <div>${cart.tax}</div>
                   </li>
                   <hr />
                   <li className="row">
                     <div className="dark-red">Order final:</div>
-                    <div className="dark-red">{cartState.final}</div>
+                    <div className="dark-red">${cart.final}</div>
                   </li>
                 </ul>
               </div>

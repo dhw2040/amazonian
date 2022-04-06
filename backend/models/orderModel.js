@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const orderSchema = new mongoose.Schema(
   {
-    items: [
+    orderedItems: [
       {
         name: { type: String, required: true },
         qty: { type: String, required: true },
@@ -31,11 +31,11 @@ const orderSchema = new mongoose.Schema(
     tax: { type: Number, required: true },
     final: { type: Number, required: true },
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }, // type is linked to mongoose Usermodel Schema
-    isPaid: { type: Boolean, required: true },
-    dateOfPayment: { type: Date, required: true },
-    isDelivered: { type: Boolean, required: true },
+    isPaid: { type: Boolean, default: false },
+    dateOfPayment: { type: Date },
+    isDelivered: { type: Boolean, default: false },
     expectedDelivery: { type: Date, required: true },
-    dateOfDelivery: { type: Date, required: true },
+    dateOfDelivery: { type: Date },
   },
   { timestamps: true }
 );
