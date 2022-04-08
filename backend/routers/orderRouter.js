@@ -37,6 +37,7 @@ orderRouter.post(
         tax: req.body.tax,
         final: req.body.final,
         expectedDelivery: req.body.expectedDelivery,
+        eligibleReturnDate: req.body.eligibleReturnDate,
         user: req.user._id,
       });
       const newOrder = await order.save();

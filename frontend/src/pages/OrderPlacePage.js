@@ -68,6 +68,7 @@ export default function OrderPlacePage() {
   cart.tax = toNum(cart.total * 0.13);
   cart.final = toNum(cart.total + cart.tax);
   cart.expectedDelivery = new Date(deliveryOptions.date);
+  cart.eligibleReturnDate = new Date(addDays(30));
 
   // Handler Functions
   const qtyHandler = (idx, q) => {

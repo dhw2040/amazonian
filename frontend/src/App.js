@@ -56,8 +56,11 @@ function App() {
                 <div className="row center">
                   <div className="col-1">
                     {userInfo ? (
-                      <div className="content-center">
-                        <button className="block rect" onClick={signOutHandler}>
+                      <div>
+                        <button
+                          className="block rect content-center"
+                          onClick={signOutHandler}
+                        >
                           Sign Out
                         </button>
                       </div>

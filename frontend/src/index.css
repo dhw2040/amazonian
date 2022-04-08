@@ -82,6 +82,10 @@ footer {
   flex: 0 0 7rem;
 }
 
+.col-sm {
+  flex: 0 0 19%;
+}
+
 .col-0 {
   flex: 0 0 27%;
   /* margin-left: 0.7rem; */
@@ -97,6 +101,10 @@ footer {
 }
 .col-3 {
   flex: 3 1 60rem;
+}
+
+.col-100 {
+  flex: 0 0 100%;
 }
 
 .right {
@@ -165,8 +173,9 @@ a:hover {
 }
 
 .vr {
-  border-left: 0.1rem solid #c0c0c040;
-  padding: 0 2rem;
+  border-left: 0.1rem solid #c0c0c070;
+  padding-left: 1rem;
+  margin-left: 1rem;
 }
 
 hr {
@@ -177,7 +186,7 @@ hr {
 }
 
 .mb-3 {
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
 }
 
 .ml-2 {
@@ -188,7 +197,7 @@ hr {
 }
 
 ul.mb-3 > li {
-  margin-bottom: 2rem;
+  margin-bottom: 1.7rem;
 }
 
 /* Header */
@@ -316,7 +325,7 @@ div.active > i {
 }
 
 .price {
-  font-size: 160%;
+  font-size: 130%;
   color: #b82525;
 }
 
@@ -336,8 +345,7 @@ button {
 
 input:hover,
 select:hover,
-textarea:hover,
-button:hover {
+textarea:hover {
   border: 0.1rem #404040 solid;
 }
 
@@ -363,9 +371,18 @@ select {
 }
 
 button {
+  border: none;
   background-color: #f8f8f8;
   cursor: pointer;
   font-size: 90%;
+}
+
+button:hover {
+  -webkit-filter: brightness(95%);
+  -moz-filter: brightness(95%);
+  -o-filter: brightness(95%);
+  -ms-filter: brightness(95%);
+  filter: brightness(95%);
 }
 
 button.rect {
@@ -388,6 +405,26 @@ button.buy {
   margin-bottom: 1rem;
   line-height: 1.1rem;
   width: 100%;
+}
+
+button.cart {
+  border-radius: 2.2rem;
+  /* margin: 0 2rem 0 0; */
+  line-height: 1.6rem;
+}
+
+button.buyAgain {
+  line-height: 3rem;
+  width: 20rem;
+  font-size: large;
+}
+
+button.myOrder {
+  background-color: #ebebeb;
+  float: right;
+  width: 60%;
+  margin-bottom: 0.4rem;
+  line-height: 2.2rem;
 }
 
 button.block {
@@ -436,14 +473,21 @@ img.sm {
 }
 
 img.md {
+  max-width: 13rem;
+  min-width: 13rem;
+  max-height: 15rem;
+}
+
+img.lg {
   max-width: 40rem;
   min-height: 35rem;
   max-height: 35rem;
 }
 
-img.lg {
-  max-width: 60rem;
+img.xl {
+  max-width: 50rem;
   width: 100%;
+  height: 100%;
 }
 
 /* Footer */
@@ -508,15 +552,32 @@ footer {
 
 .table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border: 0.3rem solid #e4e4e4;
+  border-radius: 0.5rem;
+  color: #404040;
+  background-color: #f4f4f4;
+  padding: 1.3rem 1.8rem;
 }
-
+/* 
 .table tbody tr:nth-child(odd) {
   background-color: #f4f4f4;
-}
-
+} */
 .table td,
 th {
   text-align: left;
-  border: 1rem solid #e4e4e4;
+  /* border: 1rem solid #e4e4e4; */
+}
+
+td:last-child,
+th:last-child {
+  text-align: right;
+}
+
+/* Page Custom CSS */
+.cart-bg-grey {
+  background-color: #e9e9e9;
+}
+.cart-bg-grey .card {
+  background-color: #ffffff;
 }

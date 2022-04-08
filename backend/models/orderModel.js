@@ -42,6 +42,7 @@ const orderSchema = new mongoose.Schema(
     isDelivered: { type: Boolean, default: false },
     expectedDelivery: { type: Date, required: true },
     dateOfDelivery: { type: Date },
+    eligibleReturnDate: { type: Date, required: true },
   },
   { timestamps: true }
 );

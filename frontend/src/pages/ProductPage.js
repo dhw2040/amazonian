@@ -40,10 +40,10 @@ export default function ProductPage() {
         <div>
           <Link to="/">Back to Result</Link>
           <div className="row top center hr">
-            <div className="col-1">
-              <img className="md" src={product.image} alt={product.name} />
-            </div>
             <div className="col-2">
+              <img className="xl" src={product.image} alt={product.name} />
+            </div>
+            <div className="col-2 ml-2">
               <div className="row hr">
                 <ul className="no-list-style">
                   <li>
@@ -81,7 +81,7 @@ export default function ProductPage() {
                 </ul>
               </div>
             </div>
-            <div className="col-1">
+            <div className="col-sm ml-2">
               <div className="card card-body">
                 <div className="row hr">
                   <ul className="no-list-style mb-3">
@@ -140,17 +140,14 @@ export default function ProductPage() {
                     )}
                     {product.stock > 0 && (
                       <li>
-                        <div>
-                          <button
-                            onClick={addToCartHandler}
-                            className="block primary"
-                          >
-                            Add to Cart
-                          </button>
-                        </div>
-                        <div>
-                          <button className="block buy">Buy Now</button>
-                        </div>
+                        <button
+                          onClick={addToCartHandler}
+                          className="primary cart"
+                        >
+                          Add to Cart
+                        </button>
+
+                        <button className="buy cart">Buy Now</button>
                       </li>
                     )}
                   </ul>
