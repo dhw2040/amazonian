@@ -505,3 +505,18 @@ footer {
   margin-right: 0.5rem;
   color: #306faa;
 }
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table tbody tr:nth-child(odd) {
+  background-color: #f4f4f4;
+}
+
+.table td,
+th {
+  text-align: left;
+  border: 1rem solid #e4e4e4;
+}

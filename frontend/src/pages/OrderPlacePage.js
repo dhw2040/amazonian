@@ -1,3 +1,6 @@
+import Axios from "axios";
+// import Stripe from "stripe";
+// import { loadStripe } from "@stripe/stripe-js";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
@@ -9,7 +12,7 @@ import MessageBox from "../components/MessageBox";
 import ProgressBar from "../components/ProgressBar";
 import { ORDER_CREATE_RESET } from "../constants/orderConstats";
 
-export default function OrderPage() {
+export default function OrderPlacePage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -19,7 +22,23 @@ export default function OrderPage() {
   const { userInfo } = userSignIn;
   const cart = useSelector((state) => state.cart);
   const { cartItems, shippingAddress, paymentMethod } = cart;
+  const [sdkReady, setSdkReady] = useState(false);
 
+  useEffect(() => {
+    if (!userInfo) {
+      navigate("/signin?redirect=/placeorder");
+    } else if (!paymentMethod) {
+      navigate("/payment");
+    }
+    // enablePaypalScript();
+
+    if (success) {
+      navigate(`/order/${order._id}/pay`);
+      dispatch({ type: ORDER_CREATE_RESET });
+    }
+  }, [navigate, dispatch, userInfo, paymentMethod, success, order]);
+
+  // Miscell Functions
   const toNum = (n) => Number(Number(n).toFixed(2));
   const addDays = (n) => {
     let newDate = new Date();
@@ -36,7 +55,6 @@ export default function OrderPage() {
 
   const [saveShippingPaymentInfo, setSaveShippingPaymentInfo] = useState(0);
   const [code, setCode] = useState("");
-
   const [deliveryOptions, setDeliveryOptions] = useState({
     price: options[0].price,
     date: options[0].date,
@@ -51,19 +69,7 @@ export default function OrderPage() {
   cart.final = toNum(cart.total + cart.tax);
   cart.expectedDelivery = new Date(deliveryOptions.date);
 
-  useEffect(() => {
-    if (!userInfo) {
-      navigate("/signin?redirect=/placeorder");
-    } else if (!paymentMethod) {
-      navigate("/payment");
-    }
-
-    if (success) {
-      navigate(`/order/${order._id}`);
-      dispatch({ type: ORDER_CREATE_RESET });
-    }
-  }, [navigate, dispatch, userInfo, paymentMethod, success, order]);
-
+  // Handler Functions
   const qtyHandler = (idx, q) => {
     dispatch(updateCartQuantity(idx, q));
   };
@@ -77,6 +83,18 @@ export default function OrderPage() {
   };
 
   const applyCodeHandler = () => {};
+
+  // const enablePaypalScript = async () => {
+  //   const { data } = await Axios.get("/api/config/paypal");
+  //   const script = document.createElement("script");
+  //   script.type = "text/javascript";
+  //   script.src = `https://www.paypal.com/sdk/js?client-id=${data}`;
+  //   script.async = true;
+  //   script.onload = () => {
+  //     setSdkReady(true);
+  //   };
+  //   document.body.appendChild(script);
+  // };
 
   const placeOrderHandler = () => {
     dispatch(createOrder({ ...cart, orderedItems: cart.cartItems }));
@@ -369,6 +387,7 @@ export default function OrderPage() {
               >
                 Place your Order
               </button>
+
               <div className="content-center">
                 <small>
                   By placing your order, you agree to Amazonian's{" "}

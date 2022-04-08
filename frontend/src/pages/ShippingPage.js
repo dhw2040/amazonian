@@ -8,10 +8,10 @@ export default function ShippingPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const userState = useSelector((state) => state.userSignIn);
-  const { userInfo } = userState;
-  const cartState = useSelector((state) => state.cart);
-  const { shippingAddress } = cartState;
+  const userSignIn = useSelector((state) => state.userSignIn);
+  const { userInfo } = userSignIn;
+  const cart = useSelector((state) => state.cart);
+  const { shippingAddress } = cart;
 
   useEffect(() => {
     if (!userInfo) {

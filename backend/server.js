@@ -20,6 +20,10 @@ app.get("/", (req, res) => {
   res.send("Server is ready");
 });
 
+app.get("/api/config/paypal", (req, res) => {
+  res.send(process.env.PAYPAL_USER_API || "sb");
+});
+
 app.use("/api/users", userRouter);
 app.use("/api/products", productRouter);
 app.use("/api/order", orderRouter);

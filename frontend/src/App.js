@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import ProductPage from "./pages/ProductPage";
@@ -9,8 +9,10 @@ import { signout } from "./actions/userActions";
 import RegisterPage from "./pages/RegisterPage";
 import ShippingPage from "./pages/ShippingPage";
 import PaymentPage from "./pages/PaymentPage";
-import OrderPage from "./pages/OrderPage";
+import OrderPlacePage from "./pages/OrderPlacePage";
 import OrderSummaryPage from "./pages/OrderSummaryPage";
+import OrderPayPage from "./pages/OrderPayPage";
+import OrderHistory from "./pages/OrderHistory";
 
 function App() {
   const dispatch = useDispatch();
@@ -106,7 +108,7 @@ function App() {
                         </Link>
                       </li>
                       <li>
-                        <Link to="#" className="grey">
+                        <Link to="/order/mine" className="grey">
                           Your Orders
                         </Link>
                       </li>
@@ -152,8 +154,11 @@ function App() {
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/shipping" element={<ShippingPage />} />
             <Route path="/payment" element={<PaymentPage />} />
-            <Route path="/placeorder" element={<OrderPage />} />
-            <Route path="/order/:id" element={<OrderSummaryPage />} />
+            <Route path="/placeorder" element={<OrderPlacePage />} />
+            {/* <Route path="/order/:id/pay" element={<OrderPayPage />} /> */}
+            {/* <Route path="/order/:id/result" element={<OrderResultPage />} /> */}
+            <Route path="/order/:id/summary" element={<OrderSummaryPage />} />
+            <Route path="/order/mine" element={<OrderHistory />} />
             <Route path="/product/:id" element={<ProductPage />} />
             <Route path="/" exact element={<HomePage />} />
           </Routes>
