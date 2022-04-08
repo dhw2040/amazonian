@@ -307,72 +307,77 @@ export default function OrderPlacePage() {
                     </div>
                     <div className="col-1 ml-2">
                       <strong>Choose a delivery option: </strong>
-                      <div>
+                      <form id="deliveryOptions">
                         <div>
-                          <input
-                            type="radio"
-                            id="option1"
-                            name="deliveryOptions"
-                            required
-                            onChange={() =>
-                              deliveryOptionsHandler(
-                                options[0].price,
-                                options[0].date
-                              )
-                            }
-                          ></input>
-                          <label htmlFor="option1">
-                            <strong className="green">{options[0].date}</strong>
-                            <div className="grey">
-                              {options[0].price} - Standard Shipping
-                            </div>
-                          </label>
+                          <div>
+                            <input
+                              type="radio"
+                              id="option1"
+                              name="deliveryOptions"
+                              onChange={() =>
+                                deliveryOptionsHandler(
+                                  options[0].price,
+                                  options[0].date
+                                )
+                              }
+                            ></input>
+                            <label htmlFor="option1">
+                              <strong className="green">
+                                {options[0].date}
+                              </strong>
+                              <div className="grey">
+                                {options[0].price} - Standard Shipping
+                              </div>
+                            </label>
+                          </div>
                         </div>
-                      </div>
-                      <div>
                         <div>
-                          <input
-                            type="radio"
-                            id="option2"
-                            name="deliveryOptions"
-                            required
-                            onChange={() =>
-                              deliveryOptionsHandler(
-                                options[1].price,
-                                options[1].date
-                              )
-                            }
-                          ></input>
-                          <label htmlFor="option2">
-                            <strong className="green">{options[1].date}</strong>
-                            <div className="grey">
-                              {options[1].price} - Standard 3-Day Shipping
-                            </div>
-                          </label>
+                          <div>
+                            <input
+                              type="radio"
+                              id="option2"
+                              name="deliveryOptions"
+                              onChange={() =>
+                                deliveryOptionsHandler(
+                                  options[1].price,
+                                  options[1].date
+                                )
+                              }
+                            ></input>
+                            <label htmlFor="option2">
+                              <strong className="green">
+                                {options[1].date}
+                              </strong>
+                              <div className="grey">
+                                {options[1].price} - Standard 3-Day Shipping
+                              </div>
+                            </label>
+                          </div>
                         </div>
-                      </div>
-                      <div>
                         <div>
-                          <input
-                            type="radio"
-                            id="option3"
-                            name="deliveryOptions"
-                            required
-                            onChange={() =>
-                              deliveryOptionsHandler(
-                                options[2].price,
-                                options[2].date
-                              )
-                            }
-                          ></input>
-                          <label htmlFor="option3">
-                            <strong className="green">{options[2].date}</strong>
-                            <div className="grey">
-                              {options[2].price} - Standard 5-Day Shipping
-                            </div>
-                          </label>
+                          <div>
+                            <input
+                              type="radio"
+                              id="option3"
+                              name="deliveryOptions"
+                              onChange={() =>
+                                deliveryOptionsHandler(
+                                  options[2].price,
+                                  options[2].date
+                                )
+                              }
+                            ></input>
+                            <label htmlFor="option3">
+                              <strong className="green">
+                                {options[2].date}
+                              </strong>
+                              <div className="grey">
+                                {options[2].price} - Standard 5-Day Shipping
+                              </div>
+                            </label>
+                          </div>
                         </div>
-                      </div>
+                      </form>
                     </div>
                   </div>
                 </div>

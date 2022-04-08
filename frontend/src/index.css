@@ -336,17 +336,28 @@ textarea,
 button {
   padding: 1rem;
   border: 0.1rem #a4a4a4 solid;
-  border-radius: 0.5rem;
+  border-radius: 0.3rem;
   font-size: 1.6rem;
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-input:hover,
-select:hover,
-textarea:hover {
-  border: 0.1rem #404040 solid;
+input:not([type="radio"]):focus,
+textarea:focus {
+  box-shadow: 0px 0px 1.3rem #ff8000;
+  outline: none;
+  border: 0.1rem #ff8000 ridge;
+  transition-duration: 0.2s;
+}
+
+button:hover,
+select:hover {
+  -webkit-filter: brightness(95%);
+  -moz-filter: brightness(95%);
+  -o-filter: brightness(95%);
+  -ms-filter: brightness(95%);
+  filter: brightness(95%);
 }
 
 input {
@@ -375,14 +386,6 @@ button {
   background-color: #f8f8f8;
   cursor: pointer;
   font-size: 90%;
-}
-
-button:hover {
-  -webkit-filter: brightness(95%);
-  -moz-filter: brightness(95%);
-  -o-filter: brightness(95%);
-  -ms-filter: brightness(95%);
-  filter: brightness(95%);
 }
 
 button.rect {
