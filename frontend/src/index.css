@@ -68,8 +68,21 @@ footer {
   justify-content: center;
 }
 
+.row.sidepad {
+  padding: 0 17%;
+}
+
+.row.center-15 {
+  padding: 0 17%;
+  justify-content: center;
+}
+
 .row.bottom {
   align-items: flex-end;
+}
+
+.justify-start {
+  margin-right: auto;
 }
 
 .row.flex-row {
@@ -132,6 +145,11 @@ h2 {
   display: inline-block;
   margin-right: 0.8rem;
 }
+
+h3 {
+  margin-bottom: 0.1rem;
+}
+
 a {
   text-decoration: none;
   color: #306faa;
@@ -295,7 +313,7 @@ div.active > i {
 .card {
   margin: 2rem 1rem;
   padding: 1.5rem 2.5rem;
-  border: 0.1rem #c0c0c0 solid;
+  border: 0.1rem #9c9c9c solid;
   border-radius: 0.5rem;
   /* background-color: #f8f8f8; */
 }
@@ -583,4 +601,12 @@ th:last-child {
 }
 .cart-bg-grey .card {
   background-color: #ffffff;
+}
+
+a > .card {
+  max-height: 9rem;
+  max-width: 30rem;
+}
+a > .card-body:hover {
+  background-color: #00000010;
 }

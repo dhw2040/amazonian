@@ -15,7 +15,7 @@ export default function OrderHistory() {
   }, [dispatch]);
   return (
     <div className="row center">
-      <h1>Your Orders</h1>
+      <h1 className="justify-start">Your Orders</h1>
 
       {loading ? (
         <LoadingBox></LoadingBox>

@@ -107,7 +107,7 @@ export default function OrderPlacePage() {
       {loading && <LoadingBox />}
       {error && <MessageBox variants="danger">{error}</MessageBox>}
       <div className="row top center">
-        <h1>Review your order</h1>
+        <h1 className="justify-start">Review your order</h1>
         <div className="row top">
           <div className="col-3">
             <div className="card card-body info">

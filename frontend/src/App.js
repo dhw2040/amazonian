@@ -13,6 +13,7 @@ import OrderPlacePage from "./pages/OrderPlacePage";
 import OrderSummaryPage from "./pages/OrderSummaryPage";
 import OrderPayPage from "./pages/OrderPayPage";
 import OrderHistory from "./pages/OrderHistory";
+import AccountPage from "./pages/AccountPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -106,7 +107,7 @@ function App() {
                     <h2>Your Account</h2>
                     <ul className="no-list-style">
                       <li>
-                        <Link to="#" className="grey">
+                        <Link to="/user/home" className="grey">
                           Your Account
                         </Link>
                       </li>
@@ -162,6 +163,7 @@ function App() {
             {/* <Route path="/order/:id/result" element={<OrderResultPage />} /> */}
             <Route path="/order/:id/summary" element={<OrderSummaryPage />} />
             <Route path="/order/mine" element={<OrderHistory />} />
+            <Route path="/user/home" element={<AccountPage />} />
             <Route path="/product/:id" element={<ProductPage />} />
             <Route path="/" exact element={<HomePage />} />
           </Routes>
