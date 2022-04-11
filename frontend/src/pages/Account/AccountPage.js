@@ -1,10 +1,20 @@
-import React from "react";
-import { useParams } from "react-router";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 
 export default function AccountPage() {
-  const param = useParams();
-  let { id: userId } = param;
+  const navigate = useNavigate();
+
+  const userSignIn = useSelector((state) => state.userSignIn);
+  const { userInfo } = userSignIn;
+
+  useEffect(() => {
+    if (!userInfo) {
+      navigate("/signin?redirect=/user/home");
+    }
+  }, [navigate, userInfo]);
+
   return (
     <div className="row sidepad">
       <h1>Your Account</h1>
@@ -31,7 +41,7 @@ export default function AccountPage() {
           </Link>
         </div>
         <div className="col-1">
-          <Link to={`/user/${userId}/security`}>
+          <Link to={`/user/security`}>
             <div className="card card-body">
               <div className="row">
                 <div className="col-sm mr-2">
@@ -75,7 +85,7 @@ export default function AccountPage() {
       </div>
       <div className="row">
         <div className="col-1">
-          <Link to={`/user/${userId}/giftcard`}>
+          <Link to={`/user/giftcard`}>
             <div className="card card-body">
               <div className="row">
                 <div className="col-sm mr-2">
@@ -96,7 +106,7 @@ export default function AccountPage() {
           </Link>
         </div>
         <div className="col-1">
-          <Link to={`/user/${userId}/payments`}>
+          <Link to={`/user/payments`}>
             <div className="card card-body">
               <div className="row">
                 <div className="col-sm mr-2">
@@ -117,7 +127,7 @@ export default function AccountPage() {
           </Link>
         </div>
         <div className="col-1">
-          <Link to={`/user/${userId}/profile`}>
+          <Link to={`/user/profile`}>
             <div className="card card-body">
               <div className="row">
                 <div className="col-sm mr-2">
@@ -140,7 +150,7 @@ export default function AccountPage() {
       </div>
       <div className="row">
         <div className="col-1">
-          <Link to={`/user/${userId}/messages`}>
+          <Link to={`/user/messages`}>
             <div className="card card-body">
               <div className="row">
                 <div className="col-sm mr-2">

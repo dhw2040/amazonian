@@ -26,7 +26,7 @@ export const createOrder = (order) => async (dispatch, getState) => {
     // });
     const { data } = await Axios({
       method: "post",
-      url: "/api/order",
+      url: "/api/orders",
       data: order,
       headers: { Authorization: "Basic " + userInfo.token },
     });
@@ -53,7 +53,7 @@ export const summaryOrder = (orderId) => async (dispatch, getState) => {
   try {
     const { data } = await Axios({
       method: "get",
-      url: `/api/order/${orderId}`,
+      url: `/api/orders/${orderId}`,
       headers: { Authorization: "Basic " + userInfo.token },
     });
 
@@ -78,7 +78,7 @@ export const payOrder =
     try {
       const { data } = await Axios({
         method: "put",
-        url: `/api/order/${order._id}/pay`,
+        url: `/api/orders/${order._id}/pay`,
         data: { order, paymentResult },
         headers: { Authorization: "Basic " + userInfo.token },
       });
@@ -103,7 +103,7 @@ export const listMyOrder = () => async (dispatch, getState) => {
   try {
     const { data } = await Axios({
       method: "GET",
-      url: "/api/order/mine",
+      url: "/api/orders/mine",
       headers: { Authorization: "Basic " + userInfo.token },
     });
 

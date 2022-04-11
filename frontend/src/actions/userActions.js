@@ -7,6 +7,9 @@ import {
   USER_SIGNIN_REQUEST,
   USER_SIGNIN_SUCCESS,
   USER_SIGN_OUT,
+  USER_UPDATE_SECURITY_FAIL,
+  USER_UPDATE_SECURITY_REQUEST,
+  USER_UPDATE_SECURITY_SUCCESS,
 } from "../constants/userConstants";
 
 export const signin = (email, password) => async (dispatch) => {
@@ -59,3 +62,23 @@ export const register =
       });
     }
   };
+
+export const updateUserSecurity = (user) => async (dispatch, getState) => {
+  dispatch({ type: USER_UPDATE_SECURITY_REQUEST, payload: user });
+  const {
+    userSignIn: { userInfo },
+  } = getState();
+  try {
+    const { data } = await Axios.put("/api/users/security", user, {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    });
+    dispatch({ type: USER_UPDATE_SECURITY_SUCCESS, payload: data });
+    localStorage.setItem("userInfo", JSON.stringify(data));
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({ type: USER_UPDATE_SECURITY_FAIL, payload: message });
+  }
+};

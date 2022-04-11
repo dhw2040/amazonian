@@ -15,8 +15,8 @@ export default function RegisterPage() {
   const redirectSearch = new URLSearchParams(search).get("redirect");
   const redirectUrl = redirectSearch ? redirectSearch : "/";
 
-  const userState = useSelector((state) => state.userRegister);
-  const { userInfo, loading, error } = userState;
+  const userRegister = useSelector((state) => state.userRegister);
+  const { userInfo, loading, error } = userRegister;
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");

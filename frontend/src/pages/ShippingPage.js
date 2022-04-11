@@ -133,7 +133,7 @@ export default function ShippingPage() {
         </div>
         <div>
           <label />
-          <button className="block rect" type="submit">
+          <button className="block primary" type="submit">
             Continue
           </button>
         </div>

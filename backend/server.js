@@ -26,7 +26,7 @@ app.get("/api/config/paypal", (req, res) => {
 
 app.use("/api/users", userRouter);
 app.use("/api/products", productRouter);
-app.use("/api/order", orderRouter);
+app.use("/api/orders", orderRouter);
 
 // Middleware that handles error
 app.use((err, req, res, next) => {

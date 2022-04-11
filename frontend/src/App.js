@@ -13,7 +13,9 @@ import OrderPlacePage from "./pages/OrderPlacePage";
 import OrderSummaryPage from "./pages/OrderSummaryPage";
 import OrderPayPage from "./pages/OrderPayPage";
 import OrderHistory from "./pages/OrderHistory";
-import AccountPage from "./pages/AccountPage";
+import AccountPage from "./pages/Account/AccountPage";
+import LogInSecurityPage from "./pages/Account/LogInSecurityPage";
+import UpdateSecurityPage from "./pages/Account/UpdateSecurityPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -164,6 +166,11 @@ function App() {
             <Route path="/order/:id/summary" element={<OrderSummaryPage />} />
             <Route path="/order/mine" element={<OrderHistory />} />
             <Route path="/user/home" element={<AccountPage />} />
+            <Route path="/user/security" element={<LogInSecurityPage />} />
+            <Route
+              path="/user/security/update"
+              element={<UpdateSecurityPage />}
+            />
             <Route path="/product/:id" element={<ProductPage />} />
             <Route path="/" exact element={<HomePage />} />
           </Routes>

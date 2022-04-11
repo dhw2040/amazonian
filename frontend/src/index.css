@@ -72,9 +72,8 @@ footer {
   padding: 0 17%;
 }
 
-.row.center-15 {
-  padding: 0 17%;
-  justify-content: center;
+.row.sidepad.md {
+  padding: 0 32%;
 }
 
 .row.bottom {
@@ -137,6 +136,7 @@ footer {
 h1 {
   font-size: 2.8rem;
   line-height: 110%;
+  margin-bottom: 0.4rem;
   /* padding: 1rem 0; */
 }
 h2 {
@@ -147,6 +147,7 @@ h2 {
 }
 
 h3 {
+  margin-top: 0.1rem;
   margin-bottom: 0.1rem;
 }
 
@@ -203,6 +204,10 @@ hr {
   margin-bottom: 2rem;
 }
 
+.mb-1 {
+  margin-bottom: 1rem;
+}
+
 .mb-3 {
   margin-bottom: 3rem;
 }
@@ -216,6 +221,10 @@ hr {
 
 ul.mb-3 > li {
   margin-bottom: 1.7rem;
+}
+
+.no-border {
+  border: none;
 }
 
 /* Header */
@@ -313,7 +322,7 @@ div.active > i {
 .card {
   margin: 2rem 1rem;
   padding: 1.5rem 2.5rem;
-  border: 0.1rem #9c9c9c solid;
+  border: 0.1rem #c4c4c4 solid;
   border-radius: 0.5rem;
   /* background-color: #f8f8f8; */
 }
@@ -325,6 +334,20 @@ div.active > i {
 
 .card.info {
   background-color: #f8f8f8;
+}
+
+.card.security {
+  margin: 0;
+  padding: 0;
+  width: 65rem;
+}
+.card.security > div {
+  padding: 2rem;
+  border-top: 0.1rem #c4c4c4 solid;
+}
+
+.card.security > div:first-child {
+  border-top: none;
 }
 
 .card ul,
@@ -401,7 +424,7 @@ select {
 
 button {
   border: none;
-  background-color: #f8f8f8;
+  background-color: #ebebeb;
   cursor: pointer;
   font-size: 90%;
 }
@@ -409,7 +432,7 @@ button {
 button.rect {
   background-color: #ffd102;
   border-radius: 0.5rem;
-  width: 60%;
+  width: 21rem;
 }
 
 button.primary {
@@ -418,6 +441,12 @@ button.primary {
   margin-bottom: 1rem;
   line-height: 1.1rem;
   width: 100%;
+}
+
+button.block {
+  /* width: 100%; */
+  display: block;
+  margin: 0.3rem auto;
 }
 
 button.buy {
@@ -441,17 +470,16 @@ button.buyAgain {
 }
 
 button.myOrder {
-  background-color: #ebebeb;
   float: right;
   width: 60%;
   margin-bottom: 0.4rem;
   line-height: 2.2rem;
 }
 
-button.block {
-  /* width: 100%; */
-  display: block;
-  margin: 0.3rem auto;
+button.security {
+  float: right;
+  width: 7rem;
+  border: 0.1rem #a4a4a4 solid;
 }
 
 .rating span {
@@ -608,5 +636,5 @@ a > .card {
   max-width: 30rem;
 }
 a > .card-body:hover {
-  background-color: #00000010;
+  background-color: #00000009;
 }
