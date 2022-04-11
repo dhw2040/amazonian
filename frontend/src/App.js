@@ -35,8 +35,12 @@ function App() {
       <div className="grid-container">
         <header className="row">
           <div>
-            <Link className="brand" to="/">
-              amazonian
+            <Link to="/">
+              <img
+                className="sm"
+                src="/imgs/amazonian_brand_logo.png"
+                alt="amazonian_logo"
+              />
             </Link>
           </div>
           <div>
@@ -133,6 +137,8 @@ function App() {
                 </div>
               </div>
             </div>
+          </div>
+          <div>
             <Link to="/cart">
               <i className="fa fa-shopping-cart fa-3x" aria-hidden="true"></i>{" "}
               Cart

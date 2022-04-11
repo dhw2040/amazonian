@@ -42,8 +42,8 @@ export default function RegisterPage() {
             <Link to="/">
               <img
                 className="sm"
-                src="/imgs/amazon_logo.jpg"
-                alt="amazon_logo"
+                src="/imgs/amazonian_logo.jpg"
+                alt="amazonian_logo"
               />
             </Link>
           </div>
