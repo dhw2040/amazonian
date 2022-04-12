@@ -16,6 +16,7 @@ import OrderHistory from "./pages/OrderHistory";
 import AccountPage from "./pages/Account/AccountPage";
 import LogInSecurityPage from "./pages/Account/LogInSecurityPage";
 import UpdateSecurityPage from "./pages/Account/UpdateSecurityPage";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   const dispatch = useDispatch();
@@ -50,17 +51,13 @@ function App() {
               onMouseOut={() => setDropDownHover(false)}
             >
               <Link to="#">
-                <small>
-                  Hello, <strong>{userInfo ? userInfo.name : "Sign in"}</strong>{" "}
-                </small>
+                <small>Hello, {userInfo ? userInfo.name : "Sign in"} </small>
                 <br />
-                <small>
-                  <strong>Account & Lists </strong>
-                </small>
+                <b>Account & Lists </b>
                 <i className="fa fa-caret-down"> </i>
               </Link>
               <div className="drop-down-content">
-                <div className="row center">
+                <div className="row center mb-1">
                   <div className="col-1">
                     {userInfo ? (
                       <div>
@@ -111,7 +108,7 @@ function App() {
                   </div>
                   <div className="col-1 vr">
                     <h2>Your Account</h2>
-                    <ul className="no-list-style">
+                    <ul className="no-list-style mb-1">
                       <li>
                         <Link to="/user/home" className="grey">
                           Your Account
@@ -133,6 +130,33 @@ function App() {
                         </Link>
                       </li>
                     </ul>
+                    {userInfo && userInfo.isAdmin && (
+                      <div>
+                        <h2>Admin</h2>
+                        <ul className="no-list-style">
+                          <li>
+                            <Link to="/admin/dashboard" className="grey">
+                              Dashboard
+                            </Link>
+                          </li>
+                          <li>
+                            <Link to="/admin/manageproducts" className="grey">
+                              Manage Products
+                            </Link>
+                          </li>
+                          <li>
+                            <Link to="/admin/manageorders" className="grey">
+                              Manage Orders
+                            </Link>
+                          </li>
+                          <li>
+                            <Link to="/admin/manageusers" className="grey">
+                              Manage Users
+                            </Link>
+                          </li>
+                        </ul>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -172,7 +196,14 @@ function App() {
             <Route path="/order/:id/summary" element={<OrderSummaryPage />} />
             <Route path="/order/mine" element={<OrderHistory />} />
             <Route path="/user/home" element={<AccountPage />} />
-            <Route path="/user/security" element={<LogInSecurityPage />} />
+            <Route
+              path="/user/security"
+              element={
+                <PrivateRoute>
+                  <LogInSecurityPage />
+                </PrivateRoute>
+              }
+            />
             <Route
               path="/user/security/update"
               element={<UpdateSecurityPage />}
