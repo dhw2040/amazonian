@@ -17,6 +17,7 @@ import AccountPage from "./pages/Account/AccountPage";
 import LogInSecurityPage from "./pages/Account/LogInSecurityPage";
 import UpdateSecurityPage from "./pages/Account/UpdateSecurityPage";
 import PrivateRoute from "./components/PrivateRoute";
+import SearchBox from "./components/SearchBox";
 
 function App() {
   const dispatch = useDispatch();
@@ -43,6 +44,9 @@ function App() {
                 alt="amazonian_logo"
               />
             </Link>
+          </div>
+          <div className="searchbox">
+            <SearchBox />
           </div>
           <div>
             <div
@@ -161,6 +165,20 @@ function App() {
                 </div>
               </div>
             </div>
+          </div>
+          <div>
+            <Link to="/order/mine">
+              <small>Hello, {userInfo.name}</small>
+              <br />
+              <b>Select your location</b>
+            </Link>
+          </div>
+          <div>
+            <Link to="/order/mine">
+              <small>Return</small>
+              <br />
+              <b>& Orders</b>
+            </Link>
           </div>
           <div>
             <Link to="/cart">

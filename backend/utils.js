@@ -37,3 +37,13 @@ export const isAuth = (req, res, next) => {
     return res.status(401).send({ message: "No Token." });
   }
 };
+
+export const isAdmin = (req, res, next) => {
+  if (req.user && req.user.isAdmin) {
+    next();
+  } else {
+    return res
+      .status(401)
+      .send({ message: "Invalid: You do not have access." });
+  }
+};
