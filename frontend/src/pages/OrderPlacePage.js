@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
+import { addDays, options, toNum } from "../utils";
 import { deleteFromCart, updateCartQuantity } from "../actions/cartActions";
 import { createOrder } from "../actions/orderActions";
 import LoadingBox from "../components/LoadingBox";
@@ -37,21 +38,6 @@ export default function OrderPlacePage() {
       dispatch({ type: ORDER_CREATE_RESET });
     }
   }, [navigate, dispatch, userInfo, paymentMethod, success, order]);
-
-  // Miscell Functions
-  const toNum = (n) => Number(Number(n).toFixed(2));
-  const addDays = (n) => {
-    let newDate = new Date();
-    newDate.setDate(newDate.getDate() + n);
-    return newDate.toDateString();
-  };
-
-  const baseRate = 11.99;
-  const options = [
-    { price: baseRate, date: addDays(2) },
-    { price: toNum(baseRate * 0.8), date: addDays(3) },
-    { price: toNum(baseRate * 0.6), date: addDays(5) },
-  ];
 
   const [saveShippingPaymentInfo, setSaveShippingPaymentInfo] = useState(0);
   const [code, setCode] = useState("");

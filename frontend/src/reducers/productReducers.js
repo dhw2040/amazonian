@@ -17,7 +17,10 @@ export const listReducer = (
     case PRODUCT_LIST_SUCCESS:
       return {
         loading: false,
-        products: action.payload,
+        products: action.payload.products,
+        page: action.payload.page,
+        itemPerPage: action.payload.itemPerPage,
+        totalPageNum: action.payload.totalPageNum,
       };
     case PRODUCT_LIST_FAIL:
       return { loading: false, error: action.payload };

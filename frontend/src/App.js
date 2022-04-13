@@ -18,6 +18,7 @@ import LogInSecurityPage from "./pages/Account/LogInSecurityPage";
 import UpdateSecurityPage from "./pages/Account/UpdateSecurityPage";
 import PrivateRoute from "./components/PrivateRoute";
 import SearchBox from "./components/SearchBox";
+import SearchResultPage from "./pages/SearchResultPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -26,7 +27,7 @@ function App() {
   const userState = useSelector((state) => state.userSignIn);
   const { userInfo } = userState;
 
-  const [dropDownHover, setDropDownHover] = useState(false);
+  const [filterOnFocus, setFilterOnFocus] = useState(false);
 
   const signOutHandler = () => {
     dispatch(signout());
@@ -45,14 +46,18 @@ function App() {
               />
             </Link>
           </div>
-          <div className="searchbox">
+          <div
+            className="searchbox"
+            onFocus={() => setFilterOnFocus(true)}
+            onBlur={() => setFilterOnFocus(false)}
+          >
             <SearchBox />
           </div>
           <div>
             <div
               className="drop-down"
-              onMouseOver={() => setDropDownHover(true)}
-              onMouseOut={() => setDropDownHover(false)}
+              onMouseOver={() => setFilterOnFocus(true)}
+              onMouseOut={() => setFilterOnFocus(false)}
             >
               <Link to="#">
                 <small>Hello, {userInfo ? userInfo.name : "Sign in"} </small>
@@ -167,7 +172,7 @@ function App() {
             </div>
           </div>
           <div>
-            <Link to="/order/mine">
+            <Link to="#">
               <small>Hello, {userInfo.name}</small>
               <br />
               <b>Select your location</b>
@@ -192,7 +197,7 @@ function App() {
         </header>
         <main
           style={
-            dropDownHover
+            filterOnFocus
               ? {
                   transitionDuration: "0.5s",
                   filter: "brightness(50%)",
@@ -212,7 +217,14 @@ function App() {
             {/* <Route path="/order/:id/pay" element={<OrderPayPage />} /> */}
             {/* <Route path="/order/:id/result" element={<OrderResultPage />} /> */}
             <Route path="/order/:id/summary" element={<OrderSummaryPage />} />
-            <Route path="/order/mine" element={<OrderHistory />} />
+            <Route
+              path="/order/mine"
+              element={
+                <PrivateRoute>
+                  <OrderHistory />
+                </PrivateRoute>
+              }
+            />
             <Route path="/user/home" element={<AccountPage />} />
             <Route
               path="/user/security"
@@ -226,6 +238,27 @@ function App() {
               path="/user/security/update"
               element={<UpdateSecurityPage />}
             />
+
+            <Route
+              path="/search/keywords/:keywords"
+              element={<SearchResultPage />}
+              exact
+            ></Route>
+            <Route
+              path="/search/department/:department"
+              element={<SearchResultPage />}
+              exact
+            ></Route>
+            <Route
+              path="/search/department/:department/keywords/:keywords"
+              element={<SearchResultPage />}
+              exact
+            ></Route>
+            <Route
+              path="/search/department/:department/keywords/:keywords/min/:minPrice/max/:maxPrice/rating/:minRating/sort/:sortOrder/page/:pageNum"
+              element={<SearchResultPage />}
+              exact
+            ></Route>
             <Route path="/product/:id" element={<ProductPage />} />
             <Route path="/" exact element={<HomePage />} />
           </Routes>

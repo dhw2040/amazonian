@@ -8,17 +8,29 @@ import {
   PRODUCT_LIST_SUCCESS,
 } from "../constants/productConstants";
 
-export const listProducts = () => async (dispatch) => {
-  dispatch({
-    type: PRODUCT_LIST_REQUEST,
-  });
-  try {
-    const { data } = await Axios.get("/api/products"); // get the ajax request from Node Server
-    dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
-  } catch (error) {
-    dispatch({ type: PRODUCT_LIST_FAIL, payload: error.message }); // error.message is general response
-  }
-};
+export const listProducts =
+  ({
+    department = "all",
+    keywords = "all",
+    minPrice = 0,
+    maxPrice = Infinity,
+    minRating = 0,
+    sortOrder = "newest",
+    pageNum = 1,
+  }) =>
+  async (dispatch) => {
+    dispatch({
+      type: PRODUCT_LIST_REQUEST,
+    });
+    try {
+      const { data } = await Axios.get(
+        `/api/products?department=${department}&keywords=${keywords}&min=${minPrice}&max=${maxPrice}&rating=${minRating}&sort=${sortOrder}&page=${pageNum}`
+      );
+      dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({ type: PRODUCT_LIST_FAIL, payload: error.message });
+    }
+  };
 
 export const detailsProduct = (productId) => async (dispatch) => {
   dispatch({ type: PRODUCT_DETAILS_REQUEST, payload: productId });

@@ -428,6 +428,7 @@ input[type="radio"] + label {
 
 input.search {
   min-width: 100rem;
+  border-radius: 1rem;
 }
 
 select {

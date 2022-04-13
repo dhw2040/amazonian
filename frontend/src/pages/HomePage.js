@@ -20,7 +20,7 @@ export default function HomePage() {
         <LoadingBox></LoadingBox>
       ) : error ? (
         // content of messsage box has children {error} available to MB.js
-        <MessageBox>{error}</MessageBox>
+        <MessageBox variants="danger">{error}</MessageBox>
       ) : (
         <div className="row center">
           {products.map((product) => (

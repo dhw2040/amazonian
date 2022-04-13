@@ -3,10 +3,10 @@ import { useNavigate } from "react-router-dom";
 
 export default function SearchBox() {
   const navigate = useNavigate();
-  const [query, setName] = useState("");
+  const [keywords, setKeywords] = useState("all");
   const submitHandler = (e) => {
     e.preventDefault();
-    navigate(`/search/query/${query}`);
+    navigate(`/search/keywords/${keywords}`);
   };
   return (
     <form className="search" onSubmit={submitHandler}>
@@ -14,9 +14,9 @@ export default function SearchBox() {
         <input
           className="search"
           type="text"
-          name="query"
-          id="query"
-          onChange={(e) => setName(e.target.value)}
+          name="keywords"
+          id="keywords"
+          onChange={(e) => setKeywords(e.target.value)}
         ></input>
         <button className="search" type="submit">
           <i className="fa fa-search"></i>
