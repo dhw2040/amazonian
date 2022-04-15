@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import { Link } from "react-router-dom";
-import { listProducts } from "../actions/productActions";
+import { listProductCategories, listProducts } from "../actions/productActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import Product from "../components/Product";
@@ -48,12 +48,12 @@ export default function SearchResultPage() {
   const productList = useSelector((state) => state.productList);
   const { loading, error, products, page, itemPerPage, totalPageNum } =
     productList;
-  //   const departmentList = useSelector((state) => state.departmentList);
-  //   const {
-  //     loading: loadingDepartment,
-  //     error: errorDepartment,
-  //     departments,
-  //   } = departmentList;
+  const departmentList = useSelector((state) => state.productCategories);
+  const {
+    loading: loadingDepartment,
+    error: errorDepartment,
+    categories,
+  } = departmentList;
 
   useEffect(() => {
     dispatch(
@@ -67,6 +67,7 @@ export default function SearchResultPage() {
         pageNum,
       })
     );
+    dispatch(listProductCategories());
   }, [
     dispatch,
     keywords,
@@ -83,11 +84,9 @@ export default function SearchResultPage() {
     high: Number(itemPerPage * pageNum),
   };
 
-  console.log(itemPerPage, page);
-
   return (
     <div>
-      <div className="row">
+      <div className="row hr mb-1">
         {loading ? (
           <LoadingBox></LoadingBox>
         ) : error ? (
@@ -113,50 +112,56 @@ export default function SearchResultPage() {
         </div>
       </div>
       <div className="row top">
-        <div className="col-sm">
+        <div className="col-1 sidebar">
           <div>
-            {/* <h3>Department</h3>
+            <h3>Department</h3>
             {loadingDepartment ? (
               <LoadingBox></LoadingBox>
             ) : errorDepartment ? (
               <MessageBox variants="danger">{errorDepartment}</MessageBox>
             ) : (
-              <ul className="no-list-style">
-                <li>
-                  <Link
-                    className={department === "all" ? "active" : ""}
-                    to={generateRefineURL({ department: "all" })}
-                  >
-                    Any
-                  </Link>
-                </li>
-                {departments.map((d) => (
-                  <li key={d}>
+              <div className="mb-3">
+                <ul className="no-list-style">
+                  <li>
                     <Link
-                      className={d === department ? "active" : ""}
-                      to={generateRefineURL({ department: d })}
+                      className={department === "all" ? "active" : ""}
+                      to={generateRefineURL({ department: "all" })}
                     >
-                      {d}
+                      Any
+                    </Link>
+                  </li>
+                  {categories.map((d) => (
+                    <li key={d}>
+                      <Link
+                        className={d === department ? "active" : ""}
+                        to={generateRefineURL({ department: d })}
+                      >
+                        {d}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+          <div>
+            <h3>Customer Review</h3>
+            <div className="mb-3">
+              <ul className="no-list-style">
+                {ratings.map((r) => (
+                  <li key={r.label}>
+                    <Link
+                      to={generateRefineURL({ minRating: r.rating })}
+                      className={
+                        `${r.rating}` === `${minRating}` ? "active" : ""
+                      }
+                    >
+                      <Rating label={" & Up"} rating={r.rating}></Rating>
                     </Link>
                   </li>
                 ))}
               </ul>
-            )} */}
-          </div>
-          <div>
-            <h3>Customer Review</h3>
-            <ul className="no-list-style">
-              {ratings.map((r) => (
-                <li key={r.label}>
-                  <Link
-                    to={generateRefineURL({ minRating: r.rating })}
-                    className={`${r.rating}` === `${minRating}` ? "active" : ""}
-                  >
-                    <Rating label={" & Up"} rating={r.rating}></Rating>
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            </div>
           </div>
           <div>
             <h3>Price</h3>
@@ -177,6 +182,8 @@ export default function SearchResultPage() {
           </div>
           {/* <div>
             <h3>Availability</h3>
+             <div className="mb-3">
+            </div>
             <input
               type="checkbox"
               id="includeEmptyStock"
@@ -188,36 +195,42 @@ export default function SearchResultPage() {
             ></input>
           </div> */}
         </div>
-        <div className="col-3">
-          {loading ? (
-            <LoadingBox></LoadingBox>
-          ) : error ? (
-            <MessageBox variants="danger">{error}</MessageBox>
-          ) : (
-            <>
-              {products.length === 0 && (
-                <MessageBox variants="danger">
-                  No Product Has Been Found
-                </MessageBox>
-              )}
-              <div className="row center">
-                {products.map((product) => (
-                  <Product key={product._id} product={product}></Product>
-                ))}
-              </div>
-              <div className="row center page">
-                {[...Array(totalPageNum).keys()].map((x) => (
-                  <Link
-                    className={x + 1 === page ? "active" : ""}
-                    key={x + 1}
-                    to={generateRefineURL({ page: x + 1 })}
-                  >
-                    {x + 1}
-                  </Link>
-                ))}
-              </div>
-            </>
-          )}
+        <div className="col-4 vr">
+          <div className="mb-3">
+            {loading ? (
+              <LoadingBox></LoadingBox>
+            ) : error ? (
+              <MessageBox variants="danger">{error}</MessageBox>
+            ) : (
+              <>
+                {products.length === 0 && (
+                  <MessageBox variants="danger">
+                    No Product Has Been Found
+                  </MessageBox>
+                )}
+                <div className="row center">
+                  {products.map((product) => (
+                    <Product
+                      key={product._id}
+                      product={product}
+                      type="search"
+                    ></Product>
+                  ))}
+                </div>
+                <div className="row center pagebox">
+                  {[...Array(totalPageNum).keys()].map((x) => (
+                    <Link
+                      className={x + 1 === page ? "active" : ""}
+                      key={x + 1}
+                      to={generateRefineURL({ page: x + 1 })}
+                    >
+                      {x + 1}
+                    </Link>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
         </div>
       </div>
     </div>

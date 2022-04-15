@@ -19,6 +19,7 @@ import UpdateSecurityPage from "./pages/Account/UpdateSecurityPage";
 import PrivateRoute from "./components/PrivateRoute";
 import SearchBox from "./components/SearchBox";
 import SearchResultPage from "./pages/SearchResultPage";
+import AdminDashboardPage from "./pages/Admin/AdminDashboardPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -39,18 +40,18 @@ function App() {
         <header className="row">
           <div>
             <Link to="/">
-              <img
-                className="sm"
-                src="/imgs/amazonian_brand_logo.png"
-                alt="amazonian_logo"
-              />
+              <img src="/imgs/amazonian_brand_logo.png" alt="amazonian_logo" />
             </Link>
           </div>
-          <div
-            className="searchbox"
-            onFocus={() => setFilterOnFocus(true)}
-            onBlur={() => setFilterOnFocus(false)}
-          >
+          <div>
+            <Link to="#">
+              <small>Hello, {userInfo ? userInfo.name : ""}</small>
+              <br />
+              <b>Select your location</b>
+            </Link>
+          </div>
+
+          <div className="searchbox">
             <SearchBox />
           </div>
           <div>
@@ -172,13 +173,6 @@ function App() {
             </div>
           </div>
           <div>
-            <Link to="#">
-              <small>Hello, {userInfo.name}</small>
-              <br />
-              <b>Select your location</b>
-            </Link>
-          </div>
-          <div>
             <Link to="/order/mine">
               <small>Return</small>
               <br />
@@ -258,6 +252,22 @@ function App() {
               path="/search/department/:department/keywords/:keywords/min/:minPrice/max/:maxPrice/rating/:minRating/sort/:sortOrder/page/:pageNum"
               element={<SearchResultPage />}
               exact
+            ></Route>
+            <Route
+              path="/admin/dashboard"
+              element={<AdminDashboardPage />}
+            ></Route>
+            <Route
+              path="/admin/dashboard"
+              element={<AdminDashboardPage />}
+            ></Route>
+            <Route
+              path="/admin/dashboard"
+              element={<AdminDashboardPage />}
+            ></Route>
+            <Route
+              path="/admin/dashboard"
+              element={<AdminDashboardPage />}
             ></Route>
             <Route path="/product/:id" element={<ProductPage />} />
             <Route path="/" exact element={<HomePage />} />

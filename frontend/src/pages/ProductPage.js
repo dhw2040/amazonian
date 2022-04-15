@@ -41,7 +41,9 @@ export default function ProductPage() {
           <Link to="/">Back to Result</Link>
           <div className="row top center hr">
             <div className="col-2">
-              <img className="xl" src={product.image} alt={product.name} />
+              <div className="xl">
+                <img src={product.image} alt={product.name} />
+              </div>
             </div>
             <div className="col-2 ml-2">
               <div className="row hr">

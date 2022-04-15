@@ -38,74 +38,75 @@ export default function LogInSecurityPage() {
       <div className="col-100">
         <h1>Login & Security</h1>
       </div>
-
-      <div className="card card-body security">
-        <div className="row top">
-          <div className="col-1">
-            <div>
-              <strong>Name:</strong>
+      <div className="col-2">
+        <div className="card card-body security">
+          <div className="row top">
+            <div className="col-1">
+              <div>
+                <strong>Name:</strong>
+              </div>
+              <div>{userInfo.name}</div>
             </div>
-            <div>{userInfo.name}</div>
-          </div>
-          <div className="col-1">
-            <button
-              className="security"
-              onClick={(e) => editButtonHandler(e, "name")}
-            >
-              Edit
-            </button>
-          </div>
-        </div>
-        <div className="row top">
-          <div className="col-1">
-            <div>
-              <strong>Email:</strong>
+            <div className="col-1">
+              <button
+                className="security"
+                onClick={(e) => editButtonHandler(e, "name")}
+              >
+                Edit
+              </button>
             </div>
-            <div>{userInfo.email}</div>
           </div>
-          <div className="col-1">
-            <button
-              className="security"
-              onClick={(e) => editButtonHandler(e, "email")}
-            >
-              Edit
-            </button>
-          </div>
-        </div>
-        <div className="row top">
-          <div className="col-1">
-            <div>
-              <strong>Mobile Phone Number:</strong>
+          <div className="row top">
+            <div className="col-1">
+              <div>
+                <strong>Email:</strong>
+              </div>
+              <div>{userInfo.email}</div>
             </div>
-            {userInfo.phone ? (
-              <div className>{userInfo.mobile}</div>
-            ) : (
-              <div className="blue">why add a mobile phone number?</div>
-            )}
-          </div>
-          <div className="col-1">
-            <button
-              className="security"
-              onClick={(e) => editButtonHandler(e, "mobile")}
-            >
-              {userInfo.phone ? "Edit" : "Add"}
-            </button>
-          </div>
-        </div>
-        <div className="row top no-border">
-          <div className="col-1">
-            <div>
-              <strong>Password:</strong>
+            <div className="col-1">
+              <button
+                className="security"
+                onClick={(e) => editButtonHandler(e, "email")}
+              >
+                Edit
+              </button>
             </div>
-            <div>*******</div>
           </div>
-          <div className="col-1">
-            <button
-              className="security"
-              onClick={(e) => editButtonHandler(e, "password")}
-            >
-              Edit
-            </button>
+          <div className="row top">
+            <div className="col-1">
+              <div>
+                <strong>Mobile Phone Number:</strong>
+              </div>
+              {userInfo.phone ? (
+                <div className>{userInfo.mobile}</div>
+              ) : (
+                <div className="blue">why add a mobile phone number?</div>
+              )}
+            </div>
+            <div className="col-1">
+              <button
+                className="security"
+                onClick={(e) => editButtonHandler(e, "mobile")}
+              >
+                {userInfo.phone ? "Edit" : "Add"}
+              </button>
+            </div>
+          </div>
+          <div className="row top no-border">
+            <div className="col-1">
+              <div>
+                <strong>Password:</strong>
+              </div>
+              <div>*******</div>
+            </div>
+            <div className="col-1">
+              <button
+                className="security"
+                onClick={(e) => editButtonHandler(e, "password")}
+              >
+                Edit
+              </button>
+            </div>
           </div>
         </div>
       </div>

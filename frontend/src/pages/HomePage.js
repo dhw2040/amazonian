@@ -24,7 +24,7 @@ export default function HomePage() {
       ) : (
         <div className="row center">
           {products.map((product) => (
-            <Product key={product._id} product={product}></Product>
+            <Product key={product._id} product={product} type="home"></Product>
           ))}
         </div>
       )}

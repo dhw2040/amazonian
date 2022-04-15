@@ -29,6 +29,7 @@ app.use("/api/products", productRouter);
 app.use("/api/orders", orderRouter);
 
 // Middleware that handles error
+// eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
   res.status(500).send({ message: err.message });
 });

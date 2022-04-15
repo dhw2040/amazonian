@@ -61,13 +61,15 @@ export default function CartPage(props) {
               cartItems.map((item, idx) => (
                 <div key={idx} className="row top hr">
                   <div className="col-1">
-                    <Link to={`/product/${item.product}`}>
-                      <img
-                        className="sm"
-                        src={item.image}
-                        alt={item.name}
-                      ></img>
-                    </Link>
+                    <div className="sm content-center">
+                      <Link to={`/product/${item.product}`}>
+                        <img
+                          // className="sm content-center"
+                          src={item.image}
+                          alt={item.name}
+                        ></img>
+                      </Link>
+                    </div>
                   </div>
                   <div className="col-3">
                     <Link to={`/product/${item.product}`}>

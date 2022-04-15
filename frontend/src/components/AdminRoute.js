@@ -2,21 +2,10 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Route, Navigate } from "react-router-dom";
 
-export default function AdminRoute({ component: Component, ...rest }) {
+const AdminRoute = ({ children }) => {
   const userSignIn = useSelector((state) => state.userSignIn);
   const { userInfo } = userSignIn;
-  return (
-    // Show the component only when the user is signed in
-    // Otherwise, redirect the user to /signin page
-    <Route
-      {...rest}
-      render={(props) =>
-        userInfo && userInfo.isAdmin ? (
-          <Component {...props} />
-        ) : (
-          <Navigate to="/signin" />
-        )
-      }
-    />
-  );
-}
+  return userInfo && userInfo.isAdmin ? children : <Navigate to="/signin" />;
+};
+
+export default AdminRoute;

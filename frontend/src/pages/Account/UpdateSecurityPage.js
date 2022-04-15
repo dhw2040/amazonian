@@ -58,49 +58,50 @@ export default function UpdateSecurityPage() {
       <div className="col-100 mb-1">
         <h1>Change your {field}</h1>
       </div>
-
-      <div className="card card-body security">
-        <div className="row top">
-          <div className="col-1 ">
-            <div className="mb-3">
-              <small>
-                If you want to change the {field} associated with your Amazon
-                customer account, you may do so below. Be sure to click the Save
-                Changes button when you are done.{" "}
-              </small>
-            </div>
-            <div>
-              <strong>New {field}</strong>
-            </div>
-            <div className="mb-3">
-              <input
-                id={field}
-                type={type}
-                placeholder={`Enter new ${field}`}
-                value={newVal}
-                onChange={(e) => setNewVal(e.target.value)}
-              ></input>
-            </div>
-            {field === "password" && (
+      <div className="col-2">
+        <div className="card card-body security">
+          <div className="row top">
+            <div className="col-1 ">
+              <div className="mb-3">
+                <small>
+                  If you want to change the {field} associated with your Amazon
+                  customer account, you may do so below. Be sure to click the
+                  Save Changes button when you are done.{" "}
+                </small>
+              </div>
+              <div>
+                <strong>New {field}</strong>
+              </div>
               <div className="mb-3">
                 <input
                   id={field}
                   type={type}
-                  placeholder="Confirm password"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  placeholder={`Enter new ${field}`}
+                  value={newVal}
+                  onChange={(e) => setNewVal(e.target.value)}
                 ></input>
-                <div>
-                  <small className="dark-grey">
-                    <i className="fa fa-info-circle" aria-hidden="true"></i>
-                    Passwords must consist of at least 6 characters.
-                  </small>
-                </div>
               </div>
-            )}
-            <button className="rect" onClick={(e) => updateButtonHandler(e)}>
-              Save changes
-            </button>
+              {field === "password" && (
+                <div className="mb-3">
+                  <input
+                    id={field}
+                    type={type}
+                    placeholder="Confirm password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                  ></input>
+                  <div>
+                    <small className="dark-grey">
+                      <i className="fa fa-info-circle" aria-hidden="true"></i>
+                      Passwords must consist of at least 6 characters.
+                    </small>
+                  </div>
+                </div>
+              )}
+              <button className="rect" onClick={(e) => updateButtonHandler(e)}>
+                Save changes
+              </button>
+            </div>
           </div>
         </div>
       </div>

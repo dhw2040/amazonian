@@ -231,11 +231,9 @@ export default function OrderPlacePage() {
                         <div key={idx} className="row top hr">
                           <div className="col-xs mr-2">
                             <Link to={`/product/${item.product}`}>
-                              <img
-                                className="sm"
-                                src={item.image}
-                                alt={item.name}
-                              ></img>
+                              <div className="sm">
+                                <img src={item.image} alt={item.name}></img>
+                              </div>
                             </Link>
                           </div>
                           <div className="col-2">

@@ -24,11 +24,12 @@ export default function AccountPage() {
             <div className="card card-body">
               <div className="row">
                 <div className="col-sm mr-2">
-                  <img
-                    className="sm"
-                    src="/imgs/your_account_orders.png"
-                    alt="your_account_orders"
-                  ></img>
+                  <div className="xs">
+                    <img
+                      src="/imgs/your_account_orders.png"
+                      alt="your_account_orders"
+                    ></img>
+                  </div>
                 </div>
                 <div className="col-1">
                   <h3>Your Orders</h3>
@@ -45,11 +46,12 @@ export default function AccountPage() {
             <div className="card card-body">
               <div className="row">
                 <div className="col-sm mr-2">
-                  <img
-                    className="sm"
-                    src="/imgs/your_account_login.png"
-                    alt="your_account_login"
-                  ></img>
+                  <div className="xs">
+                    <img
+                      src="/imgs/your_account_login.png"
+                      alt="your_account_login"
+                    ></img>
+                  </div>
                 </div>
                 <div className="col-1">
                   <h3>Login & Security</h3>
@@ -66,11 +68,12 @@ export default function AccountPage() {
             <div className="card card-body">
               <div className="row">
                 <div className="col-sm mr-2">
-                  <img
-                    className="sm"
-                    src="/imgs/your_account_prime.png"
-                    alt="your_account_prime"
-                  ></img>
+                  <div className="xs">
+                    <img
+                      src="/imgs/your_account_prime.png"
+                      alt="your_account_prime"
+                    ></img>
+                  </div>
                 </div>
                 <div className="col-1">
                   <h3>Prime</h3>
@@ -89,11 +92,12 @@ export default function AccountPage() {
             <div className="card card-body">
               <div className="row">
                 <div className="col-sm mr-2">
-                  <img
-                    className="sm"
-                    src="/imgs/your_account_giftcard.png"
-                    alt="your_account_giftcard"
-                  ></img>
+                  <div className="xs">
+                    <img
+                      src="/imgs/your_account_giftcard.png"
+                      alt="your_account_giftcard"
+                    ></img>
+                  </div>
                 </div>
                 <div className="col-1">
                   <h3>Gift cards</h3>
@@ -110,11 +114,12 @@ export default function AccountPage() {
             <div className="card card-body">
               <div className="row">
                 <div className="col-sm mr-2">
-                  <img
-                    className="sm"
-                    src="/imgs/your_account_payment.png"
-                    alt="your_account_payment"
-                  ></img>
+                  <div className="xs">
+                    <img
+                      src="/imgs/your_account_payment.png"
+                      alt="your_account_payment"
+                    ></img>
+                  </div>
                 </div>
                 <div className="col-1">
                   <h3>Your Payments</h3>
@@ -131,11 +136,12 @@ export default function AccountPage() {
             <div className="card card-body">
               <div className="row">
                 <div className="col-sm mr-2">
-                  <img
-                    className="sm"
-                    src="/imgs/your_account_profile.png"
-                    alt="your_account_profile"
-                  ></img>
+                  <div className="xs">
+                    <img
+                      src="/imgs/your_account_profile.png"
+                      alt="your_account_profile"
+                    ></img>
+                  </div>
                 </div>
                 <div className="col-1">
                   <h3>Your Profiles</h3>
@@ -154,11 +160,13 @@ export default function AccountPage() {
             <div className="card card-body">
               <div className="row">
                 <div className="col-sm mr-2">
-                  <img
-                    className="sm"
-                    src="/imgs/your_account_message.png"
-                    alt="your_account_message"
-                  ></img>
+                  <div className="xs">
+                    {" "}
+                    <img
+                      src="/imgs/your_account_message.png"
+                      alt="your_account_message"
+                    ></img>
+                  </div>
                 </div>
                 <div className="col-1">
                   <h3>Your Messages</h3>
@@ -175,11 +183,12 @@ export default function AccountPage() {
             <div className="card card-body">
               <div className="row">
                 <div className="col-sm mr-2">
-                  <img
-                    className="sm"
-                    src="/imgs/your_account_archive_orders.png"
-                    alt="your_account_archive_orders"
-                  ></img>
+                  <div className="xs">
+                    <img
+                      src="/imgs/your_account_archive_orders.png"
+                      alt="your_account_archive_orders"
+                    ></img>
+                  </div>
                 </div>
                 <div className="col-1">
                   <h3>Archived Orders</h3>

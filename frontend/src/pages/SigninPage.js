@@ -42,11 +42,9 @@ export default function SigninPage() {
         <div className="col-0">
           <div className="content-center">
             <Link to="/">
-              <img
-                className="sm"
-                src="/imgs/amazon_logo.jpg"
-                alt="amazon_logo"
-              />
+              <div className="xs logo">
+                <img src="/imgs/amazonian_logo.jpg" alt="amazon_logo" />
+              </div>
             </Link>
           </div>
           {loading && <LoadingBox></LoadingBox>}

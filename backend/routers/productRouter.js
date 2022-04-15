@@ -59,6 +59,14 @@ productRouter.get(
 );
 
 productRouter.get(
+  "/categories",
+  expressAsyncHandler(async (req, res) => {
+    const categories = await Product.find().distinct("category");
+    res.send(categories);
+  })
+);
+
+productRouter.get(
   "/seed",
   expressAsyncHandler(async (req, res) => {
     await Product.remove({}); // remove all users to prevent duplicate
