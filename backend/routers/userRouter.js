@@ -3,12 +3,14 @@ import expressAsyncHandler from "express-async-handler";
 import data from "../data.js";
 import User from "../models/userModel.js";
 import bcrypt from "bcrypt";
-import { generateToken, isAuth } from "../utils.js";
+import { generateToken, isAuth, isAdmin } from "../utils.js";
 
 const userRouter = express.Router();
 
 userRouter.get(
   "/seed",
+  isAuth,
+  isAdmin,
   expressAsyncHandler(async (req, res) => {
     await User.remove({}); // remove all users to prevent duplicate
     const usersPopulated = await User.insertMany(data.users);

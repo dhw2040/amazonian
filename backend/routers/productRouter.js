@@ -2,6 +2,7 @@ import express from "express";
 import expressAsyncHandler from "express-async-handler";
 import data from "../data.js";
 import Product from "../models/productModel.js";
+import Review from "../models/reviewModel.js";
 
 const productRouter = express.Router();
 
@@ -26,7 +27,7 @@ productRouter.get(
     const departmentQuery = department ? { category: department } : {};
     const priceQuery =
       minPrice && maxPrice ? { price: { $gte: minPrice, $lte: maxPrice } } : {};
-    const ratingQuery = minRating ? { rating: { $gte: minRating } } : {};
+    const ratingQuery = minRating ? { avgRating: { $gte: minRating } } : {};
     const sortOrderQuery =
       sortOrder === "lowFirst"
         ? { price: 1 }
@@ -69,7 +70,7 @@ productRouter.get(
 productRouter.get(
   "/seed",
   expressAsyncHandler(async (req, res) => {
-    await Product.remove({}); // remove all users to prevent duplicate
+    await Product.remove({});
     const productPopulated = await Product.insertMany(data.products);
     res.send(productPopulated);
   })
@@ -83,6 +84,48 @@ productRouter.get(
       res.send(product);
     } else {
       res.status(404).send({ message: "Product Not Found" });
+    }
+  })
+);
+
+productRouter.post(
+  "/:id",
+  expressAsyncHandler(async (req, res) => {
+    const product = await Product.findById(req.params.id);
+    if (product) {
+      res.send(product);
+    } else {
+      res.status(404).send({ message: "Product Not Found" });
+    }
+  })
+);
+
+productRouter.get(
+  "/:id/review",
+  expressAsyncHandler(async (req, res) => {
+    const reviews = await Review.find({ product: req.params.id });
+    if (reviews) {
+      res.send(reviews);
+    } else {
+      res.status(404).send({ message: "Reviews Not Found" });
+    }
+  })
+);
+
+productRouter.put(
+  "/:id/review/update",
+  expressAsyncHandler(async (req, res) => {
+    const product = await Product.findById(req.params.id);
+
+    if (product) {
+      product.avgRating = req.body.avgRating;
+      product.numReviews = req.body.numReviews;
+      await product.save();
+      res.send({
+        message: "Product review has been updated",
+      });
+    } else {
+      res.status(404).send({ message: "Reviews Not Found" });
     }
   })
 );

@@ -20,6 +20,8 @@ import PrivateRoute from "./components/PrivateRoute";
 import SearchBox from "./components/SearchBox";
 import SearchResultPage from "./pages/SearchResultPage";
 import AdminDashboardPage from "./pages/Admin/AdminDashboardPage";
+import ReviewPage from "./pages/ReviewPage";
+import ReviewCreatePage from "./pages/ReviewCreatePage";
 
 function App() {
   const dispatch = useDispatch();
@@ -270,6 +272,11 @@ function App() {
               element={<AdminDashboardPage />}
             ></Route>
             <Route path="/product/:id" element={<ProductPage />} />
+            <Route path="/review/product/:id" element={<ReviewPage />} />
+            <Route
+              path="/review/create-review/product/:id"
+              element={<ReviewCreatePage />}
+            />
             <Route path="/" exact element={<HomePage />} />
           </Routes>
         </main>

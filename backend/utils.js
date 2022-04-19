@@ -47,3 +47,5 @@ export const isAdmin = (req, res, next) => {
       .send({ message: "Invalid: You do not have access." });
   }
 };
+
+export const calcAverage = (n, avg, newVal) => ((n - 1) * avg + newVal) / n;

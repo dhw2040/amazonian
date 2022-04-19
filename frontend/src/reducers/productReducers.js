@@ -8,6 +8,12 @@ import {
   PRODUCT_LIST_FAIL,
   PRODUCT_LIST_REQUEST,
   PRODUCT_LIST_SUCCESS,
+  PRODUCT_REVIEWS_FAIL,
+  PRODUCT_REVIEWS_REQUEST,
+  PRODUCT_REVIEWS_SUCCESS,
+  PRODUCT_UPDATE_REVIEW_FAIL,
+  PRODUCT_UPDATE_REVIEW_REQUEST,
+  PRODUCT_UPDATE_REVIEW_SUCCESS,
 } from "../constants/productConstants";
 
 export const listReducer = (
@@ -64,6 +70,50 @@ export const detailsReducer = (
         product: action.payload,
       };
     case PRODUCT_DETAILS_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
+export const reviewsReducer = (
+  state = { loading: true, reviews: {} },
+  action
+) => {
+  switch (action.type) {
+    case PRODUCT_REVIEWS_REQUEST:
+      return { loading: true };
+    case PRODUCT_REVIEWS_SUCCESS:
+      return {
+        loading: false,
+        reviews: action.payload,
+      };
+    case PRODUCT_REVIEWS_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
+export const updateReviewReducer = (
+  state = { loading: true, message: {} },
+  action
+) => {
+  switch (action.type) {
+    case PRODUCT_UPDATE_REVIEW_REQUEST:
+      return { loading: true };
+    case PRODUCT_UPDATE_REVIEW_SUCCESS:
+      return {
+        loading: false,
+        message: action.payload.message,
+      };
+    case PRODUCT_UPDATE_REVIEW_FAIL:
       return {
         loading: false,
         error: action.payload,

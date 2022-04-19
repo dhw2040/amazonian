@@ -35,8 +35,6 @@ const data = {
       image: "/imgs/product1.jpg",
       price: 10,
       brand: "SoundPEATS",
-      rating: "4.0",
-      numReviews: "150",
       description: [
         "【Accurate Fitness Tracker Watch】SoundPEATS fitness watch accurately records your steps, distance walked, calories burned and heart rate at your wrist all day, motivating you to reach your exercise goal with real-time statistics on the watch. It also supports extra 12 sports modes to help you track your other exercise patterns and connects to your smartphone's GPS to draw the route map in the SOUNDPEATS SPORTS app.",
         "【Smart Watch for iPhone Android Phones】This smartwatch is compatible with Android 4.4 & ios 8.0 and above smartphones. You can get incoming calls, text messages, and social media notifications, such as Facebook, WhatsApp, Twitter, Instagram, and more on your wrist. You can also read them diredctly on the watch, staying connected with the world.",
@@ -54,8 +52,7 @@ const data = {
       image: "/imgs/product2.jpg",
       price: 35,
       brand: "SoundPEATS",
-      rating: "3.0",
-      numReviews: "110",
+
       description: [
         "ADVANCED BLUETOOTH TECNOLOGY: The SOUNDPEATS TrueAir2 wireless headphones incorporate the latest Qualcomm QCC3040 5.2 Bluetooth technology. This latest generation Bluetooth technology is 75% more stable than previous generations giving you flawless connection and unrivalled sound quality.",
         "PERFECT CALL QUAILTY: The dual mic technology used by the TrueAir 2 Bluetooth headphones combine crystal clear voice recognition with superb back ground noise cancelation. These qualities make the TrueAir 2 wireless headphones ideal for making calls on the go or conference/video calls, so you can hear and be heard with any directions.",
@@ -73,8 +70,7 @@ const data = {
       image: "/imgs/product3.jpg",
       price: 26,
       brand: "AquaOasis",
-      rating: "5.0",
-      numReviews: "300",
+
       description: [
         "DRY AIR RELIEF! LOOK NO FURTHER FOR THE MOST EFFECTIVE COOL MIST HUMIDEFIER ON THE MARKET!",
         "Want to eliminate the suffering from the terrible effects of dry air? No need to struggle with cheap flimsy and leaky desk humidifiers. This quality ultrasonic humidifier is the one you’re looking for. It pumps relief immediately and effectively! – Feel better in minutes! ",
@@ -92,8 +88,7 @@ const data = {
       image: "/imgs/product4.jpg",
       price: 20,
       brand: "Adidas",
-      rating: "4.5",
-      numReviews: "50",
+
       description: [
         "Lightweight woven fabric delivers superior comfort & durability.",
         "Material wicks sweat & dries really fast.",
@@ -111,8 +106,7 @@ const data = {
       image: "/imgs/product5.jpg",
       price: 60,
       brand: "TYR",
-      rating: "4.7",
-      numReviews: "60",
+
       description: [
         "Lightweight woven fabric delivers superior comfort & durability.",
         "Material wicks sweat & dries really fast.",
@@ -129,9 +123,8 @@ const data = {
       category: "smartphone",
       image: "/imgs/product6.jpg",
       price: 1000,
-      brand: "Apple",
-      rating: "3.7",
-      numReviews: "235",
+      brand: "Apple iPad Pro",
+
       description: [
         "10.9-inch Liquid Retina display with True Tone, P3 wide color, and an antireflective coating",
         "Apple M1 chip with Neural Engine",
