@@ -9,6 +9,8 @@ import {
   listReviews,
   updateProductReview,
 } from "../actions/productActions";
+import { deleteReview } from "../actions/reviewActions";
+import { REVIEWS_DELETE_RESET } from "../constants/reviewConstants";
 
 export default function ProductPage() {
   const navigate = useNavigate();
@@ -16,29 +18,31 @@ export default function ProductPage() {
 
   const param = useParams();
   let { id: productId } = param;
+  const userSignIn = useSelector((state) => state.userSignIn);
+  const { userInfo } = userSignIn;
+
   const productDetails = useSelector((state) => state.productDetails);
-  const productReviews = useSelector((state) => state.productReviews);
-  const reviewCreate = useSelector((state) => state.reviewCreate);
   const {
     loading: loadingProduct,
     error: errorProduct,
     product,
   } = productDetails;
 
+  const productReviews = useSelector((state) => state.productReviews);
   const {
     loading: loadingReviews,
     error: errorReviews,
     reviews,
-    numReviews,
-    avgRating,
   } = productReviews;
 
+  const reviewDelete = useSelector((state) => state.reviewDelete);
   const {
-    error: errorCreate,
-    avgRating: avgRatingCreate,
-    numReviews: numReviewsCreate,
-    message: messageCreate,
-  } = reviewCreate;
+    error: errorDeleteReview,
+    success: successDeleteReview,
+    message: messageDeleteReview,
+    newAvg: newAvgDeleteReview,
+    newNumReviews: newNumDeleteReview,
+  } = reviewDelete;
 
   const [qty, setQty] = useState(1);
 
@@ -48,23 +52,48 @@ export default function ProductPage() {
 
   const helpfulHandler = () => {};
 
-  const writeReviewHandler = () => {
+  const writeReviewHandler = (e) => {
+    e.preventDefault();
     navigate(`/review/create-review/product/${productId}`);
   };
 
+  const editReviewHandler = (e) => {
+    e.preventDefault();
+    navigate(`/review/create-review/product/${productId}/?mode=edit`);
+  };
+
+  const deleteReviewHandler = (e) => {
+    e.preventDefault();
+    let returnVal = window.confirm(
+      "Are you sure you want to delete your review?"
+    );
+    if (returnVal) {
+      dispatch(deleteReview(productId));
+    }
+  };
+
   useEffect(() => {
-    if (reviewCreate) {
-      dispatch(
-        updateProductReview({
-          product: productId,
-          avgRating: avgRatingCreate,
-          numReviews: numReviewsCreate,
-        })
-      );
+    if (successDeleteReview) {
+      if (newAvgDeleteReview !== null && newNumDeleteReview !== null) {
+        dispatch(
+          updateProductReview({
+            product: productId,
+            avgRating: newAvgDeleteReview,
+            numReviews: newNumDeleteReview,
+          })
+        );
+      }
+      dispatch({ type: REVIEWS_DELETE_RESET });
     }
     dispatch(detailsProduct(productId));
     dispatch(listReviews(productId));
-  }, [dispatch, productId, reviewCreate, avgRatingCreate, numReviewsCreate]);
+  }, [
+    dispatch,
+    newAvgDeleteReview,
+    newNumDeleteReview,
+    productId,
+    successDeleteReview,
+  ]);
 
   return (
     <div>
@@ -76,7 +105,19 @@ export default function ProductPage() {
       ) : (
         <div>
           <Link to="/">Back to Result</Link>
+
           <div className="row top center hr">
+            <div className="col-100">
+              {errorDeleteReview ? (
+                <MessageBox variants="danger">{errorDeleteReview}</MessageBox>
+              ) : (
+                successDeleteReview && (
+                  <MessageBox variants="success">
+                    {messageDeleteReview}
+                  </MessageBox>
+                )
+              )}
+            </div>
             <div className="col-2">
               <div className="xl">
                 <img src={product.image} alt={product.name} />
@@ -89,7 +130,10 @@ export default function ProductPage() {
                     <h1>{product.name}</h1>
                   </li>
                   <li>
-                    <Rating rating={avgRating} numReviews={numReviews}></Rating>
+                    <Rating
+                      rating={product.avgRating}
+                      numReviews={product.numReviews}
+                    ></Rating>
                   </li>
                 </ul>
               </div>
@@ -196,7 +240,7 @@ export default function ProductPage() {
               <h1 className="mb-1">Customer reviews</h1>
               <div>
                 <Rating
-                  rating={product.rating}
+                  rating={product.avgRating}
                   numReviews={product.numReviews}
                   label={`out of 5`}
                   size="lg"
@@ -212,7 +256,10 @@ export default function ProductPage() {
                   <h2 className="mb-1">Review this product</h2>
                 </div>
                 <p>Share your thoughts with other customers</p>
-                <button className="review" onClick={writeReviewHandler}>
+                <button
+                  className="review"
+                  onClick={(e) => writeReviewHandler(e)}
+                >
                   Write a customer review
                 </button>
               </div>
@@ -220,13 +267,6 @@ export default function ProductPage() {
             <div className="col-3 mb-3">
               <h2 className="mb-1">Top reviews from Canada</h2>
               <div>
-                {errorCreate ? (
-                  <MessageBox variants="danger">{errorCreate}</MessageBox>
-                ) : (
-                  messageCreate && (
-                    <MessageBox variants="success">{messageCreate}</MessageBox>
-                  )
-                )}
                 {loadingReviews ? (
                   <LoadingBox></LoadingBox>
                 ) : errorReviews ? (
@@ -235,53 +275,91 @@ export default function ProductPage() {
                   <h1>There is no review for this product.</h1>
                 ) : (
                   reviews.map((r) => (
-                    <ul key={r.title} className="no-list-style">
-                      <li className="mb-3">
-                        {r.user ? (
-                          <>
-                            <i src={r.user.img} alt="r.user.name"></i>
-                            <span>{r.user.name}</span>
-                          </>
-                        ) : (
-                          "Anonymous User"
-                        )}
-                      </li>
-                      <li>
-                        <Rating rating={r.rating} color="orange"></Rating>
-                        <Link to={`/review/${r._id}?product=${productId}`}>
-                          {r.title}
-                        </Link>
-                      </li>
-                      <li>
-                        <small className="grey">Reviewed in {r.location}</small>
-                      </li>
-                      {r.user && r.isVerified && (
-                        <li>
-                          <small className="price">Verified Purchase</small>
+                    <div key={r.title}>
+                      <ul className="no-list-style">
+                        <li className="mb-3">
+                          {r.user ? (
+                            <>
+                              <i src={r.user.img} alt="r.user.name"></i>
+                              <span>{r.user.name}</span>
+                            </>
+                          ) : (
+                            "Anonymous User"
+                          )}
                         </li>
-                      )}
-                      <li>
-                        <p>{r.content}</p>
-                      </li>
-                      {r.helpful && r.helpful.count !== 0 && (
+                        <li>
+                          <Rating rating={r.rating} color="orange"></Rating>
+                          <h3>
+                            <Link to={`/review/${r._id}?product=${productId}`}>
+                              {r.title}
+                            </Link>
+                          </h3>
+                        </li>
                         <li>
                           <small className="grey">
-                            {r.helpful.count} people found this helpful
+                            Reviewed in {r.location}
                           </small>
                         </li>
-                      )}
-                      <li>
-                        <button
-                          className="review helpful"
-                          onClick={helpfulHandler}
-                        >
-                          Helpful
-                        </button>
-                        <small className="cart-button blue vr ml-3">
-                          Report abuse
-                        </small>
-                      </li>
-                    </ul>
+                        {r.user && r.isVerified && (
+                          <li>
+                            <span
+                              className="price"
+                              style={{ fontSize: "1.5rem" }}
+                            >
+                              Verified Purchase
+                            </span>
+                          </li>
+                        )}
+                        <li>
+                          <p>
+                            <big>{r.content}</big>
+                          </p>
+                        </li>
+                        {r.helpful && r.helpful.count !== 0 && (
+                          <li>
+                            <small className="grey">
+                              {r.helpful.count} people found this helpful
+                            </small>
+                          </li>
+                        )}
+                        <li>
+                          {r.user === userInfo._id ? (
+                            <>
+                              <button
+                                className="review helpful"
+                                onClick={(e) => editReviewHandler(e)}
+                              >
+                                Edit
+                              </button>
+                              <button
+                                className="review helpful vr"
+                                onClick={(e) => deleteReviewHandler(e)}
+                              >
+                                Delete
+                              </button>
+                            </>
+                          ) : (
+                            <>
+                              <button
+                                className="review helpful"
+                                onClick={helpfulHandler}
+                              >
+                                Helpful
+                              </button>
+                              <button className="review helpful vr">
+                                Report abuse
+                              </button>
+                            </>
+                          )}
+                        </li>
+                      </ul>
+                      <hr />
+                      <div className="ml-2">
+                        <Link to={`/review/product/${productId}`}>
+                          <b>See all reviews</b>
+                        </Link>
+                      </div>
+                    </div>
                   ))
                 )}
               </div>

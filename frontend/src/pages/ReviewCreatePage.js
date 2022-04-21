@@ -1,15 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
 import { Link } from "react-router-dom";
-import { detailsProduct } from "../actions/productActions";
-import { createReview } from "../actions/reviewActions";
+import { detailsProduct, updateProductReview } from "../actions/productActions";
+import { createReview, updateReview } from "../actions/reviewActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
+import {
+  REVIEWS_CREATE_RESET,
+  REVIEWS_UPDATE_RESET,
+} from "../constants/reviewConstants";
 
 export default function ReviewCreatePage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
+  const mode = location.search.split("=")[1];
 
   const param = useParams();
   let { id: productId } = param;
@@ -25,34 +31,121 @@ export default function ReviewCreatePage() {
   const [title, setTitle] = useState("");
   const [comment, setComment] = useState("");
 
+  const reviewCreate = useSelector((state) => state.reviewCreate);
+  const {
+    success: successCreate,
+    error: errorCreate,
+    message: messageCreate,
+    newAvg: newAvgCreate,
+    newNumReviews: newNumCreate,
+  } = reviewCreate;
+
+  const reviewUpdate = useSelector((state) => state.reviewUpdate);
+  const {
+    error: errorUpdate,
+    success: successUpdate,
+    message: messageUpdate,
+    newAvg: newAvgUpdate,
+    newNumReviews: newNumUpdate,
+  } = reviewUpdate;
+
   useEffect(() => {
     if (!userInfo) {
       navigate(`/signin?redirect=/review/create-review/product/${productId}`);
     } else {
       dispatch(detailsProduct(productId));
+      if (successCreate) {
+        if (newAvgCreate && newNumCreate) {
+          dispatch(
+            updateProductReview({
+              product: productId,
+              avgRating: newAvgCreate,
+              numReviews: newNumCreate,
+            })
+          );
+        }
+        dispatch({ type: REVIEWS_CREATE_RESET });
+      } else if (successUpdate) {
+        if (newAvgUpdate && newNumUpdate) {
+          dispatch(
+            updateProductReview({
+              product: productId,
+              avgRating: newAvgUpdate,
+              numReviews: newNumUpdate,
+            })
+          );
+        }
+        dispatch({ type: REVIEWS_UPDATE_RESET });
+      }
     }
-  }, [dispatch, navigate, userInfo, productId]);
+  }, [
+    dispatch,
+    navigate,
+    userInfo,
+    productId,
+    reviewCreate,
+    newAvgCreate,
+    newNumCreate,
+    successCreate,
+    successUpdate,
+    newAvgUpdate,
+    newNumUpdate,
+  ]);
+
+  // console.log(productCreate ? productCreate : "asd");
+  //
 
   const submitReviewHandler = (e) => {
     e.preventDefault();
-    dispatch(
-      createReview({
-        product: productId,
-        title: title,
-        rating: rating,
-        content: comment,
-        location: "Canada",
-        isVerified: true,
-      })
-    );
-    navigate(`/product/${productId}`);
+    if (mode === "edit") {
+      dispatch(
+        updateReview({
+          product: productId,
+          title: title,
+          rating: rating,
+          content: comment,
+          location: "Canada",
+          isVerified: true,
+        })
+      );
+    } else {
+      dispatch(
+        createReview({
+          product: productId,
+          title: title,
+          rating: rating,
+          content: comment,
+          location: "Canada",
+          isVerified: true,
+        })
+      );
+    }
+
+    // navigate(`/product/${productId}`);
   };
 
   return (
     <div>
       <div className="row sidepad hr">
+        <div className="col-100">
+          {errorCreate ? (
+            <MessageBox variants="danger">{errorCreate}</MessageBox>
+          ) : (
+            successCreate && (
+              <MessageBox variants="success">{messageCreate}</MessageBox>
+            )
+          )}
+          {errorUpdate ? (
+            <MessageBox variants="danger">{errorUpdate}</MessageBox>
+          ) : (
+            successUpdate && (
+              <MessageBox variants="success">{messageUpdate} </MessageBox>
+            )
+          )}
+        </div>
+
         <h1 style={{ fontSize: "4rem", marginBottom: "2rem" }}>
-          Create New Reviews
+          {mode === "edit" ? "Edit your Review" : "Create New Reviews"}
         </h1>
         <div className="grey mt-2">
           Your public name: <big>{userInfo && userInfo.name}</big>

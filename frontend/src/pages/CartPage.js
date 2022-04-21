@@ -20,8 +20,8 @@ export default function CartPage(props) {
   const qtySearch = new URLSearchParams(search).get("qty");
   const qty = qtySearch ? Number(qtySearch) : 1;
 
-  const cartState = useSelector((state) => state.cart);
-  const { cartItems } = cartState;
+  const cart = useSelector((state) => state.cart);
+  const { cartItems } = cart;
 
   useEffect(() => {
     if (productId) {

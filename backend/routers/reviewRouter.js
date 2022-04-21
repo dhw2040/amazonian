@@ -2,7 +2,7 @@ import express from "express";
 import expressAsyncHandler from "express-async-handler";
 import Product from "../models/productModel.js";
 import Review from "../models/reviewModel.js";
-import { calcAverage, isAuth } from "../utils.js";
+import { isAuth } from "../utils.js";
 
 const reviewRouter = express.Router();
 
@@ -11,14 +11,13 @@ reviewRouter.post(
   isAuth,
   expressAsyncHandler(async (req, res) => {
     const existProduct = await Product.findById(req.body.product);
-    const existReview = await Review.findOne(
+    const reviewCount = await Review.count({ product: req.body.product });
+    const existUserReview = await Review.findOne(
       { product: req.body.product },
       { user: req.user._id }
     );
     if (existProduct) {
-      //   const numReviews = await Review.count({ product: req.body.product });
-
-      if (existReview) {
+      if (existUserReview) {
         return res
           .status(400)
           .send({ message: "You already submitted a review" });
@@ -34,35 +33,129 @@ reviewRouter.post(
         });
         const newReview = await review.save();
 
-        const reviewAggregate = await Review.aggregate([
-          {
-            $match: {
-              product: req.body.product,
-            },
-          },
-          {
-            $group: {
-              _id: null,
-              total: { $sum: "$rating" },
-              count: { $sum: 1 },
-            },
-          },
-        ]);
-        const numReviews = reviewAggregate.count + 1;
-        const currentAvg = existProduct.avgRating;
-        const avg = currentAvg
-          ? currentAvg
-          : reviewAggregate.total
-          ? reviewAggregate.total
-          : 0;
-        const avgRating = calcAverage(numReviews, avg, req.body.rating);
+        if (!newReview) {
+          return res
+            .status(404)
+            .send({ message: "Creating new review has failed" });
+        } else {
+          const numReviews = existProduct.numReviews;
+          const avgRating = existProduct.avgRating;
+          const currentTotal = reviewCount * avgRating;
 
-        return res.status(201).send({
-          message: "Created new review",
-          review: newReview,
-          avgRating,
-          numReviews,
-        });
+          const newAvg = (currentTotal + req.body.rating) / (numReviews + 1);
+          const newNumReviews = numReviews + 1;
+
+          return res.status(201).send({
+            success: true,
+            message:
+              "You have successfully created new review for the product.",
+            product: String(req.user._id),
+            newAvg,
+            newNumReviews,
+          });
+        }
+      }
+    } else {
+      return res.status(404).send({ message: "Product Not Found" });
+    }
+  })
+);
+
+reviewRouter.put(
+  "/edit-review",
+  isAuth,
+  expressAsyncHandler(async (req, res) => {
+    const existProduct = await Product.findById(req.body.product);
+    const reviewCount = await Review.count({ product: req.body.product });
+    const userReview = await Review.findOne(
+      { product: req.body.product },
+      { user: req.user._id }
+    );
+    if (existProduct) {
+      if (userReview) {
+        const previousRating = userReview.rating;
+        const numReviews = existProduct.numReviews;
+        const avgRating = existProduct.avgRating;
+        const currentTotal = reviewCount * avgRating;
+
+        const newAvg =
+          (currentTotal - previousRating + req.body.rating) / numReviews;
+
+        userReview.user = req.user._id;
+        userReview.title = req.body.title;
+        userReview.rating = req.body.rating;
+        userReview.content = req.body.content;
+        userReview.location = req.body.location;
+
+        const updateReview = await userReview.save();
+
+        if (!updateReview) {
+          return res
+            .status(404)
+            .send({ message: "Updating your review has failed" });
+        } else {
+          return res.status(201).send({
+            success: true,
+            message:
+              "You have successfully updated your review for the product.",
+            review: updateReview,
+            newAvg,
+            newNumReviews: numReviews,
+          });
+        }
+      } else {
+        return res
+          .status(400)
+          .send({ message: "You have not submitted any review." });
+      }
+    } else {
+      return res.status(404).send({ message: "Product Not Found" });
+    }
+  })
+);
+
+reviewRouter.delete(
+  "/delete-review",
+  isAuth,
+  expressAsyncHandler(async (req, res) => {
+    const existProduct = await Product.findById(req.body.product);
+    const reviewCount = await Review.count({ product: req.body.product });
+    const userReview = await Review.findOne(
+      { product: req.body.product },
+      { user: req.user._id }
+    );
+    if (existProduct) {
+      if (userReview) {
+        const previousRating = userReview.rating;
+        const numReviews = existProduct.numReviews;
+        const avgRating = existProduct.avgRating;
+        const currentTotal = reviewCount * avgRating;
+
+        let newAvg;
+        if (numReviews === 1) {
+          newAvg = 0;
+        } else {
+          newAvg = (currentTotal - previousRating) / (numReviews - 1);
+        }
+
+        const removedReview = await userReview.remove();
+        if (removedReview) {
+          return res.status(201).send({
+            message: "You have successfully deleted your review.",
+            success: true,
+            newAvg,
+            newNumReviews: numReviews - 1,
+            review: removedReview,
+          });
+        } else {
+          return res
+            .status(400)
+            .send({ message: "Deleting request has failed" });
+        }
+      } else {
+        return res
+          .status(400)
+          .send({ message: "There is no review that you have submitted" });
       }
     } else {
       return res.status(404).send({ message: "Product Not Found" });

@@ -10,15 +10,21 @@ productRouter.get(
   "/",
   expressAsyncHandler(async (req, res) => {
     const department =
-      req.query.department !== "all" ? req.query.department : "";
-    const keywords = req.query.keywords !== "all" ? req.query.keywords : "";
+      !req.query.department || req.query.department === "all"
+        ? ""
+        : req.query.department;
+
+    const keywords =
+      !req.query.keywords || req.query.keywords === "all"
+        ? ""
+        : req.query.keywords;
     const minPrice =
       req.query.min && Number(req.query.min) !== 0 ? Number(req.query.min) : 0;
     const maxPrice =
       req.query.max && Number(req.query.max) !== Infinity
         ? Number(req.query.max)
         : Infinity;
-    const minRating = req.query.rating;
+    const minRating = req.query.rating || 0;
     const sortOrder = req.query.sort || "";
     const page = Number(req.query.page) || 1;
     const itemPerPage = 12;
@@ -70,7 +76,7 @@ productRouter.get(
 productRouter.get(
   "/seed",
   expressAsyncHandler(async (req, res) => {
-    await Product.remove({});
+    await Product.deleteMany({});
     const productPopulated = await Product.insertMany(data.products);
     res.send(productPopulated);
   })
@@ -118,14 +124,31 @@ productRouter.put(
     const product = await Product.findById(req.params.id);
 
     if (product) {
-      product.avgRating = req.body.avgRating;
-      product.numReviews = req.body.numReviews;
-      await product.save();
-      res.send({
-        message: "Product review has been updated",
-      });
+      // product.avgRating = req.body.avgRating;
+      // product.numReviews = req.body.numReviews;
+
+      const update = await Product.findByIdAndUpdate(
+        req.params.id,
+        {
+          $set: {
+            avgRating: Number(req.body.avgRating),
+            numReviews: Number(req.body.numReviews),
+          },
+        },
+        { upsert: true }
+      );
+
+      if (update) {
+        res.send({
+          message: "Product review has been updated",
+        });
+      } else {
+        res.status(404).send({ message: "Product update has failed" });
+      }
     } else {
-      res.status(404).send({ message: "Reviews Not Found" });
+      res
+        .status(404)
+        .send({ message: "Product Review Update Fail! Product Not Found" });
     }
   })
 );

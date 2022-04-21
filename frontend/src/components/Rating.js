@@ -78,12 +78,12 @@ export default function Rating(props) {
           <>
             <big>
               <strong className="ml-2">
-                {rating ? rating : ""} {label}
+                {rating !== undefined ? rating : ""} {label}
               </strong>
             </big>
             <div className="mt-2 mb-1 ">
               <span className="grey">
-                {numReviews ? numReviews : ""} global ratings{" "}
+                {numReviews !== undefined ? numReviews : ""} global ratings{" "}
               </span>
             </div>
           </>
@@ -91,9 +91,9 @@ export default function Rating(props) {
           <span>
             {label ? (
               <strong className="ml-2">
-                {rating ? rating : ""} {label}
+                {rating !== undefined ? rating : ""} {label}
               </strong>
-            ) : numReviews ? (
+            ) : numReviews !== undefined ? (
               `${numReviews} ratings`
             ) : (
               ""

@@ -1,7 +1,16 @@
 import {
   REVIEWS_CREATE_FAIL,
   REVIEWS_CREATE_REQUEST,
+  REVIEWS_CREATE_RESET,
   REVIEWS_CREATE_SUCCESS,
+  REVIEWS_DELETE_FAIL,
+  REVIEWS_DELETE_REQUEST,
+  REVIEWS_DELETE_RESET,
+  REVIEWS_DELETE_SUCCESS,
+  REVIEWS_UPDATE_FAIL,
+  REVIEWS_UPDATE_REQUEST,
+  REVIEWS_UPDATE_RESET,
+  REVIEWS_UPDATE_SUCCESS,
 } from "../constants/reviewConstants";
 
 export const createReviewReducer = (
@@ -14,16 +23,75 @@ export const createReviewReducer = (
     case REVIEWS_CREATE_SUCCESS:
       return {
         loading: false,
-        review: action.payload.review,
+        success: action.payload.success,
         message: action.payload.message,
-        avgRating: action.payload.avgRating,
-        numReviews: action.payload.numReviews,
+        product: action.payload.product,
+        newAvg: action.payload.newAvg,
+        newNumReviews: action.payload.newNumReviews,
       };
     case REVIEWS_CREATE_FAIL:
       return {
         loading: false,
         error: action.payload,
       };
+    case REVIEWS_CREATE_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const updateReviewReducer = (
+  state = { loading: true, review: {} },
+  action
+) => {
+  switch (action.type) {
+    case REVIEWS_UPDATE_REQUEST:
+      return { loading: true };
+    case REVIEWS_UPDATE_SUCCESS:
+      return {
+        loading: false,
+        success: action.payload.success,
+        message: action.payload.message,
+        review: action.payload.review,
+        newAvg: action.payload.newAvg,
+        newNumReviews: action.payload.newNumReviews,
+      };
+    case REVIEWS_UPDATE_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    case REVIEWS_UPDATE_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const deleteReviewReducer = (
+  state = { loading: true, review: {} },
+  action
+) => {
+  switch (action.type) {
+    case REVIEWS_DELETE_REQUEST:
+      return { loading: true };
+    case REVIEWS_DELETE_SUCCESS:
+      return {
+        loading: false,
+        success: action.payload.success,
+        message: action.payload.message,
+        review: action.payload.review,
+        newAvg: action.payload.newAvg,
+        newNumReviews: action.payload.newNumReviews,
+      };
+    case REVIEWS_DELETE_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    case REVIEWS_DELETE_RESET:
+      return {};
     default:
       return state;
   }
