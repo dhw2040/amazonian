@@ -11,6 +11,7 @@ import {
 } from "../actions/productActions";
 import { deleteReview } from "../actions/reviewActions";
 import { REVIEWS_DELETE_RESET } from "../constants/reviewConstants";
+import { calcRatingDist } from "../utils";
 
 export default function ProductPage() {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ export default function ProductPage() {
   const userSignIn = useSelector((state) => state.userSignIn);
   const { userInfo } = userSignIn;
 
+  // Product Details & Reviews
   const productDetails = useSelector((state) => state.productDetails);
   const {
     loading: loadingProduct,
@@ -33,8 +35,10 @@ export default function ProductPage() {
     loading: loadingReviews,
     error: errorReviews,
     reviews,
+    distribution,
   } = productReviews;
 
+  // Review Delete & Update Product Rating
   const reviewDelete = useSelector((state) => state.reviewDelete);
   const {
     error: errorDeleteReview,
@@ -44,8 +48,10 @@ export default function ProductPage() {
     newNumReviews: newNumDeleteReview,
   } = reviewDelete;
 
+  // Use State Hook
   const [qty, setQty] = useState(1);
 
+  // Handler
   const addToCartHandler = () => {
     navigate(`/cart/${productId}?qty=${qty}`);
   };
@@ -71,6 +77,8 @@ export default function ProductPage() {
       dispatch(deleteReview(productId));
     }
   };
+
+  // Window function for image animation on scroll
 
   useEffect(() => {
     if (successDeleteReview) {
@@ -246,7 +254,7 @@ export default function ProductPage() {
                   size="lg"
                   color="orange"
                   bar={true}
-                  percentages={["56", "32", "18", "3", "1"]}
+                  distribution={distribution ? distribution : [0, 0, 0, 0, 0]}
                   productId={productId}
                 ></Rating>
               </div>
@@ -323,7 +331,7 @@ export default function ProductPage() {
                           </li>
                         )}
                         <li>
-                          {r.user === userInfo._id ? (
+                          {userInfo && r.user === userInfo._id ? (
                             <>
                               <button
                                 className="review helpful"
@@ -346,8 +354,8 @@ export default function ProductPage() {
                               >
                                 Helpful
                               </button>
-                              <button className="review helpful vr">
-                                Report abuse
+                              <button className="review report vr">
+                                Report Abuse
                               </button>
                             </>
                           )}

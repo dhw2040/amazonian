@@ -623,6 +623,12 @@ button.review.helpful {
   margin-right: 3rem;
 }
 
+button.review.report {
+  width: 12rem;
+  height: 4rem;
+  margin-right: 3rem;
+}
+
 button.submitReview {
   float: right;
   background-color: #ffd102;
@@ -687,10 +693,8 @@ button.security {
 
 .rating-bar > div {
   background-color: #f19d01;
-  border: 0.2rem #f19d01 solid;
-  height: 2rem;
+  height: 2.2rem;
   border-radius: 0.3rem;
-  margin: 0;
 }
 
 /* Form */

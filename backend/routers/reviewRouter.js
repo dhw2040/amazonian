@@ -12,10 +12,11 @@ reviewRouter.post(
   expressAsyncHandler(async (req, res) => {
     const existProduct = await Product.findById(req.body.product);
     const reviewCount = await Review.count({ product: req.body.product });
-    const existUserReview = await Review.findOne(
-      { product: req.body.product },
-      { user: req.user._id }
-    );
+    const existUserReview = await Review.findOne({
+      product: req.body.product,
+      user: req.user._id,
+    });
+
     if (existProduct) {
       if (existUserReview) {
         return res
@@ -67,10 +68,10 @@ reviewRouter.put(
   expressAsyncHandler(async (req, res) => {
     const existProduct = await Product.findById(req.body.product);
     const reviewCount = await Review.count({ product: req.body.product });
-    const userReview = await Review.findOne(
-      { product: req.body.product },
-      { user: req.user._id }
-    );
+    const userReview = await Review.findOne({
+      product: req.body.product,
+      user: req.user._id,
+    });
     if (existProduct) {
       if (userReview) {
         const previousRating = userReview.rating;
@@ -120,10 +121,10 @@ reviewRouter.delete(
   expressAsyncHandler(async (req, res) => {
     const existProduct = await Product.findById(req.body.product);
     const reviewCount = await Review.count({ product: req.body.product });
-    const userReview = await Review.findOne(
-      { product: req.body.product },
-      { user: req.user._id }
-    );
+    const userReview = await Review.findOne({
+      product: req.body.product,
+      user: req.user._id,
+    });
     if (existProduct) {
       if (userReview) {
         const previousRating = userReview.rating;

@@ -89,7 +89,8 @@ export const reviewsReducer = (
     case PRODUCT_REVIEWS_SUCCESS:
       return {
         loading: false,
-        reviews: action.payload,
+        reviews: action.payload.reviews,
+        distribution: action.payload.distribution,
       };
     case PRODUCT_REVIEWS_FAIL:
       return {

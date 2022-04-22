@@ -9,12 +9,10 @@ export default function Rating(props) {
     size,
     color,
     bar,
-    percentages,
+    distribution,
     productId,
   } = props;
   const fas = size && size === "lg" ? "lg" : "";
-
-  const progress = percentages ? percentages : ["20", "20", "20", "20", "20"];
 
   return (
     <>
@@ -107,45 +105,45 @@ export default function Rating(props) {
             <Link to={`/review?product=${productId}&rating=5`}>
               <span>5 star</span>
               <div className="rating-bar">
-                <div style={{ width: `${progress[0]}%` }}></div>
+                <div style={{ width: `${distribution[0]}%` }}></div>
               </div>
-              <span>{progress[0]}%</span>
+              <span>{distribution[0]}%</span>
             </Link>
           </div>
           <div className="rating-progress-bar">
             <Link to={`/review?product=${productId}&rating=4`}>
               <span>4 star</span>
               <div className="rating-bar">
-                <div style={{ width: `${progress[1]}%` }}></div>
+                <div style={{ width: `${distribution[1]}%` }}></div>
               </div>
-              <span>{progress[1]}%</span>
+              <span>{distribution[1]}%</span>
             </Link>
           </div>{" "}
           <div className="rating-progress-bar">
             <Link to={`/review?product=${productId}&rating=3`}>
               <span>3 star</span>
               <div className="rating-bar">
-                <div style={{ width: `${progress[2]}%` }}></div>
+                <div style={{ width: `${distribution[2]}%` }}></div>
               </div>
-              <span>{progress[2]}%</span>
+              <span>{distribution[2]}%</span>
             </Link>
           </div>{" "}
           <div className="rating-progress-bar">
             <Link to={`/review?product=${productId}&rating=2`}>
               <span>2 star</span>
               <div className="rating-bar">
-                <div style={{ width: `${progress[3]}%` }}></div>
+                <div style={{ width: `${distribution[3]}%` }}></div>
               </div>
-              <span>{progress[3]}%</span>
+              <span>{distribution[3]}%</span>
             </Link>
           </div>{" "}
           <div className="rating-progress-bar">
             <Link to={`/review?product=${productId}&rating=1`}>
               <span>1 star</span>
               <div className="rating-bar">
-                <div style={{ width: `${progress[4]}%` }}></div>
+                <div style={{ width: `${distribution[4]}%` }}></div>
               </div>
-              <span>{progress[4]}%</span>
+              <span>{distribution[4]}%</span>
             </Link>
           </div>
         </div>

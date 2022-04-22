@@ -3,6 +3,9 @@ import expressAsyncHandler from "express-async-handler";
 import data from "../data.js";
 import Product from "../models/productModel.js";
 import Review from "../models/reviewModel.js";
+import mongoose from "mongoose";
+
+const ObjectId = mongoose.Types.ObjectId;
 
 const productRouter = express.Router();
 
@@ -110,8 +113,32 @@ productRouter.get(
   "/:id/review",
   expressAsyncHandler(async (req, res) => {
     const reviews = await Review.find({ product: req.params.id });
+    let numReviews = reviews.length;
+    let distribution = [0, 0, 0, 0, 0];
+
+    if (numReviews === 1) {
+      let idx = reviews[0].rating.toFixed(2);
+      distribution[idx - 1] = 100;
+    } else if (numReviews > 1) {
+      let countRating = await Review.aggregate([
+        {
+          $match: {
+            product: ObjectId(req.params.id),
+          },
+        },
+        {
+          $group: {
+            _id: "$rating",
+            count: { $sum: 1 },
+          },
+        },
+      ]);
+      countRating.forEach((r) => (distribution[r._id - 1] = r.count));
+      distribution = distribution.map((d) => (d / numReviews) * 100);
+    }
+
     if (reviews) {
-      res.send(reviews);
+      res.send({ reviews, distribution });
     } else {
       res.status(404).send({ message: "Reviews Not Found" });
     }
@@ -124,9 +151,6 @@ productRouter.put(
     const product = await Product.findById(req.params.id);
 
     if (product) {
-      // product.avgRating = req.body.avgRating;
-      // product.numReviews = req.body.numReviews;
-
       const update = await Product.findByIdAndUpdate(
         req.params.id,
         {
