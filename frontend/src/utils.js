@@ -1,10 +1,23 @@
 // Functions
 export const toNum = (n) => Number(Number(n).toFixed(2));
+
 export const addDays = (n) => {
   let newDate = new Date();
   newDate.setDate(newDate.getDate() + n);
   return newDate.toDateString();
 };
+
+// export const generateURL = (defaultState, refine) => {
+//   let url = "";
+//   if (!refine) {
+//     Object.keys(refine).forEach((r) => url.concat(`/${r}/${refine[r]}`));
+//   } else {
+//     Object.keys(defaultState).forEach((d) =>
+//       url.concat(`/${d}/${defaultState[d]}`)
+//     );
+//   }
+//   return url;
+// };
 
 // Constants
 export const baseRate = 11.99;

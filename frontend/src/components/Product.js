@@ -18,8 +18,9 @@ export default function Product(props) {
           <Link to={`/product/${product._id}`}>{product.name}</Link>
         )}
         <Rating
-          rating={product.rating}
+          rating={product.avgRating}
           numReviews={product.numReviews}
+          color="orange"
         ></Rating>
         <Link to={`/product/${product._id}`}>
           <small className="price">${product.price}</small>

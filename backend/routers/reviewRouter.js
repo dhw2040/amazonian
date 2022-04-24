@@ -6,6 +6,68 @@ import { isAuth } from "../utils.js";
 
 const reviewRouter = express.Router();
 
+reviewRouter.get(
+  "/",
+  expressAsyncHandler(async (req, res) => {
+    const productId = req.query.product;
+    const sortOrder = req.query.sort;
+    const verified = req.query.verified;
+    const rating =
+      req.query.rating !== "all" ? Number(req.query.rating) : "all";
+    const page = req.query.page;
+    const itemPerPage = 10;
+
+    // const keywords =
+    //   !req.query.keywords || req.query.keywords === "all"
+    //     ? ""
+    //     : req.query.keywords;
+    // const keywordsQuery = { name: { $regex: keywords, $options: "i" } };
+
+    if (productId) {
+      const verifiedQuery = verified ? { isVerified: { $eq: true } } : {};
+      const ratingQuery = rating !== "all" ? { rating: { $eq: rating } } : {};
+      const sortOrderQuery =
+        sortOrder === "top"
+          ? { helpful: 1 }
+          : sortOrder === "recent"
+          ? { _id: -1 }
+          : {};
+
+      const topPositive = await Review.find({ product: productId })
+        .sort({ helpful: 1, rating: -1 })
+        .limit(1);
+      const topCritical = await Review.find({ product: productId })
+        .sort({ helpful: 1, rating: 1 })
+        .limit(1);
+
+      const searchCount = await Review.count({
+        product: productId,
+        ...verifiedQuery,
+        ...ratingQuery,
+      });
+
+      const reviews = await Review.find({
+        product: productId,
+        ...verifiedQuery,
+        ...ratingQuery,
+      })
+        .sort(sortOrderQuery)
+        .skip((page - 1) * itemPerPage)
+        .limit(itemPerPage);
+
+      res.send({
+        topPositive: topPositive[0],
+        topCritical: topCritical[0],
+        reviews,
+        page,
+        searchCount,
+      });
+    } else {
+      return res.status(404).send({ message: "Product Not Found" });
+    }
+  })
+);
+
 reviewRouter.post(
   "/create-review",
   isAuth,

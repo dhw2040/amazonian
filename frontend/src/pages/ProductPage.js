@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Rating from "../components/Rating";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,7 +11,6 @@ import {
 } from "../actions/productActions";
 import { deleteReview } from "../actions/reviewActions";
 import { REVIEWS_DELETE_RESET } from "../constants/reviewConstants";
-import { calcRatingDist } from "../utils";
 
 export default function ProductPage() {
   const navigate = useNavigate();
@@ -79,6 +78,8 @@ export default function ProductPage() {
   };
 
   // Window function for image animation on scroll
+  // const ref = useRef(null);
+  // const topPos = ref.current.getBoundingClientRect().top;
 
   useEffect(() => {
     if (successDeleteReview) {
@@ -91,7 +92,6 @@ export default function ProductPage() {
           })
         );
       }
-      dispatch({ type: REVIEWS_DELETE_RESET });
     }
     dispatch(detailsProduct(productId));
     dispatch(listReviews(productId));
@@ -141,6 +141,7 @@ export default function ProductPage() {
                     <Rating
                       rating={product.avgRating}
                       numReviews={product.numReviews}
+                      color="orange"
                     ></Rating>
                   </li>
                 </ul>
@@ -286,7 +287,7 @@ export default function ProductPage() {
                     <div key={r.title}>
                       <ul className="no-list-style">
                         <li className="mb-3">
-                          {r.user ? (
+                          {r.user && r.user.name ? (
                             <>
                               <i src={r.user.img} alt="r.user.name"></i>
                               <span>{r.user.name}</span>

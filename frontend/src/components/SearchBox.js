@@ -42,6 +42,7 @@ export default function SearchBox() {
                 {c}
               </option>
             ))}
+            {/* <i className="fa fa-angle-down" aria-hidden="true"></i> */}
           </select>
           <input
             className="search"

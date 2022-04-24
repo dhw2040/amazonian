@@ -7,8 +7,8 @@ import { listProducts } from "../actions/productActions";
 
 export default function HomePage() {
   const dispatch = useDispatch();
-  const productList = useSelector((state) => state.productList); // must match the reducer in the store.js
-  const { loading, error, products } = productList; // must match the params in ProductReducer
+  const productList = useSelector((state) => state.productList);
+  const { loading, error, products } = productList;
 
   useEffect(() => {
     dispatch(listProducts({}));
@@ -19,7 +19,6 @@ export default function HomePage() {
       {loading ? (
         <LoadingBox></LoadingBox>
       ) : error ? (
-        // content of messsage box has children {error} available to MB.js
         <MessageBox variants="danger">{error}</MessageBox>
       ) : (
         <div className="row center">

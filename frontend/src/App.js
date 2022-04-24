@@ -274,6 +274,10 @@ function App() {
             <Route path="/product/:id" element={<ProductPage />} />
             <Route path="/review/product/:id" element={<ReviewPage />} />
             <Route
+              path="/review/product/:id/sort/:sortOrder/verified/:verifiedFilter/rating/:ratingFilter"
+              element={<ReviewPage />}
+            />
+            <Route
               path="/review/create-review/product/:id"
               element={<ReviewCreatePage />}
             />

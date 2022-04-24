@@ -36,8 +36,8 @@ export default function SearchResultPage() {
       : minPrice;
     const refineMax = refineField.maxPrice
       ? refineField.maxPrice
-      : refineField.maxPrice === 0
-      ? 0
+      : refineField.maxPrice === Infinity
+      ? Infinity
       : maxPrice;
     const refineRating = refineField.minRating || minRating;
     const refinePageNum = refineField.pageNum || pageNum;

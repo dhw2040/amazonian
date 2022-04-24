@@ -81,7 +81,7 @@ export default function Rating(props) {
             </big>
             <div className="mt-2 mb-1 ">
               <span className="grey">
-                {numReviews !== undefined ? numReviews : ""} global ratings{" "}
+                {numReviews !== undefined ? numReviews : ""} global ratings
               </span>
             </div>
           </>
@@ -105,7 +105,10 @@ export default function Rating(props) {
             <Link to={`/review?product=${productId}&rating=5`}>
               <span>5 star</span>
               <div className="rating-bar">
-                <div style={{ width: `${distribution[0]}%` }}></div>
+                <div
+                  className={distribution[0] === 0 ? "zero" : ""}
+                  style={{ width: `${distribution[0]}%` }}
+                ></div>
               </div>
               <span>{distribution[0]}%</span>
             </Link>
@@ -114,34 +117,46 @@ export default function Rating(props) {
             <Link to={`/review?product=${productId}&rating=4`}>
               <span>4 star</span>
               <div className="rating-bar">
-                <div style={{ width: `${distribution[1]}%` }}></div>
+                <div
+                  className={distribution[1] === 0 ? "zero" : ""}
+                  style={{ width: `${distribution[1]}%` }}
+                ></div>
               </div>
               <span>{distribution[1]}%</span>
             </Link>
-          </div>{" "}
+          </div>
           <div className="rating-progress-bar">
             <Link to={`/review?product=${productId}&rating=3`}>
               <span>3 star</span>
               <div className="rating-bar">
-                <div style={{ width: `${distribution[2]}%` }}></div>
+                <div
+                  className={distribution[2] === 0 ? "zero" : ""}
+                  style={{ width: `${distribution[2]}%` }}
+                ></div>
               </div>
               <span>{distribution[2]}%</span>
             </Link>
-          </div>{" "}
+          </div>
           <div className="rating-progress-bar">
             <Link to={`/review?product=${productId}&rating=2`}>
               <span>2 star</span>
               <div className="rating-bar">
-                <div style={{ width: `${distribution[3]}%` }}></div>
+                <div
+                  className={distribution[3] === 0 ? "zero" : ""}
+                  style={{ width: `${distribution[3]}%` }}
+                ></div>
               </div>
               <span>{distribution[3]}%</span>
             </Link>
-          </div>{" "}
+          </div>
           <div className="rating-progress-bar">
             <Link to={`/review?product=${productId}&rating=1`}>
               <span>1 star</span>
               <div className="rating-bar">
-                <div style={{ width: `${distribution[4]}%` }}></div>
+                <div
+                  className={distribution[4] === 0 ? "zero" : ""}
+                  style={{ width: `${distribution[4]}%` }}
+                ></div>
               </div>
               <span>{distribution[4]}%</span>
             </Link>

@@ -64,7 +64,6 @@ export default function ReviewCreatePage() {
             })
           );
         }
-        dispatch({ type: REVIEWS_CREATE_RESET });
       } else if (successUpdate) {
         if (newAvgUpdate && newNumUpdate) {
           dispatch(
@@ -75,7 +74,6 @@ export default function ReviewCreatePage() {
             })
           );
         }
-        dispatch({ type: REVIEWS_UPDATE_RESET });
       }
     }
   }, [
