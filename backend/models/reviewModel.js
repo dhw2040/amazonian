@@ -16,8 +16,8 @@ const reviewSchema = new mongoose.Schema(
     content: { type: String, required: true },
     location: { type: String },
     isVerified: { type: Boolean }, // if user has purchased the item, true, otherwise false.
-    helpful: [{ type: String }],
-    abuse: [{ type: String }],
+    helpful: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+    abuse: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   },
   { timestamps: true }
 );

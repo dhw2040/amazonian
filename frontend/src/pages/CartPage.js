@@ -53,7 +53,7 @@ export default function CartPage(props) {
               <span className="grey">price</span>
             </div>
             {cartItems.length === 0 ? (
-              <MessageBox variants="danger">
+              <MessageBox variants="amazonian">
                 <h1>Your Amazonian cart is empty.</h1>{" "}
                 <Link to="/">Go Shopping!</Link>
               </MessageBox>

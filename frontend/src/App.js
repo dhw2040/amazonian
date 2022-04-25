@@ -272,10 +272,15 @@ function App() {
               element={<AdminDashboardPage />}
             ></Route>
             <Route path="/product/:id" element={<ProductPage />} />
-            <Route path="/review/product/:id" element={<ReviewPage />} />
+            <Route path="/review/product/:id" element={<ReviewPage />} exact />
+            <Route
+              path="/review/product/:id/rating/:ratingFilter"
+              element={<ReviewPage />}
+            />
             <Route
               path="/review/product/:id/sort/:sortOrder/verified/:verifiedFilter/rating/:ratingFilter"
               element={<ReviewPage />}
+              exact
             />
             <Route
               path="/review/create-review/product/:id"

@@ -1,17 +1,20 @@
 import Axios from "axios";
 import {
+  REIVEWS_VOTE_HELPFUL_FAIL,
+  REIVEWS_VOTE_HELPFUL_REQUEST,
+  REIVEWS_VOTE_HELPFUL_SUCCESS,
   REVIEWS_CREATE_FAIL,
   REVIEWS_CREATE_REQUEST,
   REVIEWS_CREATE_SUCCESS,
   REVIEWS_DELETE_FAIL,
   REVIEWS_DELETE_REQUEST,
   REVIEWS_DELETE_SUCCESS,
+  REVIEWS_EDIT_FAIL,
+  REVIEWS_EDIT_REQUEST,
+  REVIEWS_EDIT_SUCCESS,
   REVIEWS_SEARCH_FAIL,
   REVIEWS_SEARCH_REQUEST,
   REVIEWS_SEARCH_SUCCESS,
-  REVIEWS_UPDATE_FAIL,
-  REVIEWS_UPDATE_REQUEST,
-  REVIEWS_UPDATE_SUCCESS,
 } from "../constants/reviewConstants";
 
 export const searchReviews =
@@ -64,8 +67,8 @@ export const createReview = (review) => async (dispatch, getState) => {
   }
 };
 
-export const updateReview = (review) => async (dispatch, getState) => {
-  dispatch({ type: REVIEWS_UPDATE_REQUEST, payload: review });
+export const editReview = (review) => async (dispatch, getState) => {
+  dispatch({ type: REVIEWS_EDIT_REQUEST, payload: review });
   const {
     userSignIn: { userInfo },
   } = getState();
@@ -76,10 +79,10 @@ export const updateReview = (review) => async (dispatch, getState) => {
       data: review,
       headers: { Authorization: "Basic " + userInfo.token },
     });
-    dispatch({ type: REVIEWS_UPDATE_SUCCESS, payload: data });
+    dispatch({ type: REVIEWS_EDIT_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
-      type: REVIEWS_UPDATE_FAIL,
+      type: REVIEWS_EDIT_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
@@ -87,6 +90,31 @@ export const updateReview = (review) => async (dispatch, getState) => {
     });
   }
 };
+
+export const voteHelpful = (review) => async (dispatch, getState) => {
+  dispatch({ type: REIVEWS_VOTE_HELPFUL_REQUEST, payload: review });
+  const {
+    userSignIn: { userInfo },
+  } = getState();
+  try {
+    const { data } = await Axios({
+      method: "put",
+      url: "/api/review/vote-helpful",
+      data: review,
+      headers: { Authorization: "Basic " + userInfo.token },
+    });
+    dispatch({ type: REIVEWS_VOTE_HELPFUL_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: REIVEWS_VOTE_HELPFUL_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
 export const deleteReview = (productId) => async (dispatch, getState) => {
   dispatch({ type: REVIEWS_DELETE_REQUEST, payload: { product: productId } });
   const {

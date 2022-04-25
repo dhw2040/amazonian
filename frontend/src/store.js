@@ -12,12 +12,13 @@ import {
   detailsReducer,
   listCategoriesReducer,
   reviewsReducer,
-  updateReviewReducer,
 } from "./reducers/productReducers";
 import {
   createReviewReducer,
   deleteReviewReducer,
+  editReviewReducer,
   searchReviewsReducer,
+  voteHelpfulReducer,
 } from "./reducers/reviewReducers";
 import {
   userRegisterReducer,
@@ -49,8 +50,9 @@ const reducer = combineReducers({
   productCategories: listCategoriesReducer,
   reviewsSearch: searchReviewsReducer,
   reviewCreate: createReviewReducer,
-  reviewUpdate: updateReviewReducer,
+  reviewEdit: editReviewReducer,
   reviewDelete: deleteReviewReducer,
+  reviewVote: voteHelpfulReducer,
   cart: cartReducer,
   userSignIn: userSigninReducer,
   userRegister: userRegisterReducer,

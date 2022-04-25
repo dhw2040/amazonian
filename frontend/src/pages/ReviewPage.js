@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
 import { Link } from "react-router-dom";
 import {
   detailsProduct,
@@ -11,11 +11,12 @@ import { deleteReview, searchReviews } from "../actions/reviewActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import Rating from "../components/Rating";
-import { generateRefineURL } from "../utils";
 
 export default function ReviewPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
+  const scrollTo = location.search.split("=")[1];
 
   const param = useParams();
   const {
@@ -125,6 +126,15 @@ export default function ReviewPage() {
         page,
       })
     );
+    if (scrollTo) {
+      console.log(scrollTo);
+      const anchor = document.querySelector(`#${scrollTo}`);
+      anchor.scrollIntoView({
+        behavior: "smooth",
+        block: "end",
+        inline: "nearest",
+      });
+    }
   }, [
     dispatch,
     newAvgDeleteReview,
@@ -135,6 +145,7 @@ export default function ReviewPage() {
     successDeleteReview,
     verifiedFilter,
     page,
+    scrollTo,
   ]);
 
   return (
@@ -267,15 +278,14 @@ export default function ReviewPage() {
                             <big>{topPositive.content}</big>
                           </p>
                         </li>
-                        {topPositive.helpful &&
-                          topPositive.helpful.count !== 0 && (
-                            <li>
-                              <small className="grey">
-                                {topPositive.helpful.count} people found this
-                                helpful
-                              </small>
-                            </li>
-                          )}
+                        {topPositive.helpful && topPositive.helpful.length > 0 && (
+                          <li>
+                            <small className="grey">
+                              {topPositive.helpful.length} people found this
+                              helpful
+                            </small>
+                          </li>
+                        )}
                       </ul>
                     </div>
                   )}
@@ -336,15 +346,14 @@ export default function ReviewPage() {
                             <big>{topCritical.content}</big>
                           </p>
                         </li>
-                        {topCritical.helpful &&
-                          topCritical.helpful.count !== 0 && (
-                            <li>
-                              <small className="grey">
-                                {topCritical.helpful.count} people found this
-                                helpful
-                              </small>
-                            </li>
-                          )}
+                        {topCritical.helpful && topCritical.helpful.length > 0 && (
+                          <li>
+                            <small className="grey">
+                              {topCritical.helpful.length} people found this
+                              helpful
+                            </small>
+                          </li>
+                        )}
                       </ul>
                     </div>
                   )}
@@ -460,8 +469,7 @@ export default function ReviewPage() {
               </div>
             </div>
           </div>
-
-          <div className="row top hr">
+          <div id="result" className="row top hr">
             <div className="col-100">
               <h1>From Canada</h1>
               <div>
@@ -515,10 +523,10 @@ export default function ReviewPage() {
                             <big>{r.content}</big>
                           </p>
                         </li>
-                        {r.helpful && r.helpful.count !== 0 && (
+                        {r.helpful && r.helpful.length > 0 && (
                           <li>
                             <small className="grey">
-                              {r.helpful.count} people found this helpful
+                              {r.helpful.length} people found this helpful
                             </small>
                           </li>
                         )}
@@ -568,6 +576,7 @@ export default function ReviewPage() {
               cols="35"
               name="comment"
               form="question"
+              placeholder={`What do you want to know about the product?`}
             ></textarea>
             <div>
               <Link className="question" to={`/question/product/${productId}`}>

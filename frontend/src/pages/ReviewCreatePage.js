@@ -3,13 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { detailsProduct, updateProductReview } from "../actions/productActions";
-import { createReview, updateReview } from "../actions/reviewActions";
+import { createReview, editReview } from "../actions/reviewActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
-import {
-  REVIEWS_CREATE_RESET,
-  REVIEWS_UPDATE_RESET,
-} from "../constants/reviewConstants";
 
 export default function ReviewCreatePage() {
   const navigate = useNavigate();
@@ -40,14 +36,14 @@ export default function ReviewCreatePage() {
     newNumReviews: newNumCreate,
   } = reviewCreate;
 
-  const reviewUpdate = useSelector((state) => state.reviewUpdate);
+  const reviewEdit = useSelector((state) => state.reviewEdit);
   const {
-    error: errorUpdate,
-    success: successUpdate,
-    message: messageUpdate,
-    newAvg: newAvgUpdate,
-    newNumReviews: newNumUpdate,
-  } = reviewUpdate;
+    error: errorEdit,
+    success: successEdit,
+    message: messageEdit,
+    newAvg: newAvgEdit,
+    newNumReviews: newNumEdit,
+  } = reviewEdit;
 
   useEffect(() => {
     if (!userInfo) {
@@ -64,13 +60,13 @@ export default function ReviewCreatePage() {
             })
           );
         }
-      } else if (successUpdate) {
-        if (newAvgUpdate && newNumUpdate) {
+      } else if (successEdit) {
+        if (newAvgEdit && newNumEdit) {
           dispatch(
             updateProductReview({
               product: productId,
-              avgRating: newAvgUpdate,
-              numReviews: newNumUpdate,
+              avgRating: newAvgEdit,
+              numReviews: newNumEdit,
             })
           );
         }
@@ -85,19 +81,16 @@ export default function ReviewCreatePage() {
     newAvgCreate,
     newNumCreate,
     successCreate,
-    successUpdate,
-    newAvgUpdate,
-    newNumUpdate,
+    successEdit,
+    newAvgEdit,
+    newNumEdit,
   ]);
-
-  // console.log(productCreate ? productCreate : "asd");
-  //
 
   const submitReviewHandler = (e) => {
     e.preventDefault();
     if (mode === "edit") {
       dispatch(
-        updateReview({
+        editReview({
           product: productId,
           title: title,
           rating: rating,
@@ -133,11 +126,11 @@ export default function ReviewCreatePage() {
               <MessageBox variants="success">{messageCreate}</MessageBox>
             )
           )}
-          {errorUpdate ? (
-            <MessageBox variants="danger">{errorUpdate}</MessageBox>
+          {errorEdit ? (
+            <MessageBox variants="danger">{errorEdit}</MessageBox>
           ) : (
-            successUpdate && (
-              <MessageBox variants="success">{messageUpdate} </MessageBox>
+            successEdit && (
+              <MessageBox variants="success">{messageEdit} </MessageBox>
             )
           )}
         </div>

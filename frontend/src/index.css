@@ -1,6 +1,7 @@
 html {
   font-size: 62.5%;
   box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -859,6 +860,11 @@ footer {
   background-color: #eeffe0;
 }
 
+.alert-amazonian {
+  color: #f19101;
+  background-color: #fff2e0;
+}
+
 .alert big {
   display: block;
 }
@@ -886,7 +892,13 @@ footer {
   color: #f19d01;
 }
 
-.fa-search {
+button.search > .fa-search {
+  position: absolute;
+  top: 1.5rem;
+  right: 2.5rem;
+}
+
+form.review > .fa-search {
   position: absolute;
   margin-left: 1rem;
   margin-top: 0.8rem;

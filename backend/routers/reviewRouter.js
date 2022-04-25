@@ -105,7 +105,10 @@ reviewRouter.post(
           const avgRating = existProduct.avgRating;
           const currentTotal = reviewCount * avgRating;
 
-          const newAvg = (currentTotal + req.body.rating) / (numReviews + 1);
+          const newAvg = (
+            (currentTotal + req.body.rating) /
+            (numReviews + 1)
+          ).toFixed(1);
           const newNumReviews = numReviews + 1;
 
           return res.status(201).send({
@@ -141,8 +144,10 @@ reviewRouter.put(
         const avgRating = existProduct.avgRating;
         const currentTotal = reviewCount * avgRating;
 
-        const newAvg =
-          (currentTotal - previousRating + req.body.rating) / numReviews;
+        const newAvg = (
+          (currentTotal - previousRating + req.body.rating) /
+          numReviews
+        ).toFixed(1);
 
         userReview.user = req.user._id;
         userReview.title = req.body.title;
@@ -177,6 +182,38 @@ reviewRouter.put(
   })
 );
 
+reviewRouter.put(
+  "/vote-helpful",
+  isAuth,
+  expressAsyncHandler(async (req, res) => {
+    const existReview = await Review.findById(req.body._id);
+    if (existReview) {
+      if (existReview.user === req.user._id) {
+        return res.status(400).send({
+          message: "You cannot vote for the review that you have written.",
+        });
+      } else {
+        existReview.helpful.push(req.user._id);
+        const updateReview = await existReview.save();
+
+        if (!updateReview) {
+          return res
+            .status(404)
+            .send({ message: "Voting helpful for this review has failed" });
+        } else {
+          return res.status(201).send({
+            success: true,
+            message: "Thank you for your vote :)",
+            review: updateReview,
+          });
+        }
+      }
+    } else {
+      return res.status(400).send({ message: "No review has been found." });
+    }
+  })
+);
+
 reviewRouter.delete(
   "/delete-review",
   isAuth,
@@ -200,6 +237,7 @@ reviewRouter.delete(
         } else {
           newAvg = (currentTotal - previousRating) / (numReviews - 1);
         }
+        newAvg = newAvg.toFixed(1);
 
         const removedReview = await userReview.remove();
         if (removedReview) {

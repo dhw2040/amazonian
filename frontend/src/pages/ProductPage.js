@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import Rating from "../components/Rating";
+import { useLocation } from "react-router";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import LoadingBox from "../components/LoadingBox";
@@ -9,12 +10,12 @@ import {
   listReviews,
   updateProductReview,
 } from "../actions/productActions";
-import { deleteReview } from "../actions/reviewActions";
-import { REVIEWS_DELETE_RESET } from "../constants/reviewConstants";
+import { deleteReview, voteHelpful } from "../actions/reviewActions";
 
 export default function ProductPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const param = useParams();
   let { id: productId } = param;
@@ -37,6 +38,14 @@ export default function ProductPage() {
     distribution,
   } = productReviews;
 
+  const reviewVote = useSelector((state) => state.reviewVote);
+  const {
+    error: errorReviewVote,
+    success: successReviewVote,
+    message: messageReviewVote,
+    review: votedReview,
+  } = reviewVote;
+
   // Review Delete & Update Product Rating
   const reviewDelete = useSelector((state) => state.reviewDelete);
   const {
@@ -55,7 +64,15 @@ export default function ProductPage() {
     navigate(`/cart/${productId}?qty=${qty}`);
   };
 
-  const helpfulHandler = () => {};
+  const helpfulHandler = (e, review) => {
+    e.preventDefault();
+    let returnVal = window.confirm(
+      "Would you like to vote helpful for this review?"
+    );
+    if (returnVal) {
+      dispatch(voteHelpful(review));
+    }
+  };
 
   const writeReviewHandler = (e) => {
     e.preventDefault();
@@ -283,93 +300,111 @@ export default function ProductPage() {
                 ) : reviews.length === 0 ? (
                   <h1>There is no review for this product.</h1>
                 ) : (
-                  reviews.map((r) => (
-                    <div key={r.title}>
-                      <ul className="no-list-style">
-                        <li className="mb-3">
-                          {r.user && r.user.name ? (
-                            <>
-                              <i src={r.user.img} alt="r.user.name"></i>
-                              <span>{r.user.name}</span>
-                            </>
-                          ) : (
-                            "Anonymous User"
-                          )}
-                        </li>
-                        <li>
-                          <Rating rating={r.rating} color="orange"></Rating>
-                          <h3>
-                            <Link to={`/review/${r._id}?product=${productId}`}>
-                              {r.title}
-                            </Link>
-                          </h3>
-                        </li>
-                        <li>
-                          <small className="grey">
-                            Reviewed in {r.location}
-                          </small>
-                        </li>
-                        {r.user && r.isVerified && (
-                          <li>
-                            <span
-                              className="price"
-                              style={{ fontSize: "1.5rem" }}
-                            >
-                              Verified Purchase
-                            </span>
+                  <>
+                    {reviews.map((r) => (
+                      <div key={r.title}>
+                        <ul className="no-list-style">
+                          <li className="mb-3">
+                            {r.user && r.user.name ? (
+                              <>
+                                <i src={r.user.img} alt="r.user.name"></i>
+                                <span>{r.user.name}</span>
+                              </>
+                            ) : (
+                              "Anonymous User"
+                            )}
                           </li>
-                        )}
-                        <li>
-                          <p>
-                            <big>{r.content}</big>
-                          </p>
-                        </li>
-                        {r.helpful && r.helpful.count !== 0 && (
+                          <li>
+                            <Rating rating={r.rating} color="orange"></Rating>
+                            <h3>
+                              <Link
+                                to={`/review/${r._id}?product=${productId}`}
+                              >
+                                {r.title}
+                              </Link>
+                            </h3>
+                          </li>
                           <li>
                             <small className="grey">
-                              {r.helpful.count} people found this helpful
+                              Reviewed in {r.location}
                             </small>
                           </li>
-                        )}
-                        <li>
-                          {userInfo && r.user === userInfo._id ? (
-                            <>
-                              <button
-                                className="review helpful"
-                                onClick={(e) => editReviewHandler(e)}
+                          {r.user && r.isVerified && (
+                            <li>
+                              <span
+                                className="price"
+                                style={{ fontSize: "1.5rem" }}
                               >
-                                Edit
-                              </button>
-                              <button
-                                className="review helpful vr"
-                                onClick={(e) => deleteReviewHandler(e)}
-                              >
-                                Delete
-                              </button>
-                            </>
-                          ) : (
-                            <>
-                              <button
-                                className="review helpful"
-                                onClick={helpfulHandler}
-                              >
-                                Helpful
-                              </button>
-                              <button className="review report vr">
-                                Report Abuse
-                              </button>
-                            </>
+                                Verified Purchase
+                              </span>
+                            </li>
                           )}
-                        </li>
-                      </ul>
-                      <hr />
-                      <div className="ml-2">
-                        <Link to={`/review/product/${productId}`}>
-                          <b>See all reviews</b>
-                        </Link>
+                          <li>
+                            <p>
+                              <big>{r.content}</big>
+                            </p>
+                          </li>
+                          {r.helpful && r.helpful.length > 0 && (
+                            <li>
+                              <small className="grey">
+                                {r.helpful.length}{" "}
+                                {r.helpful.length === 1 ? "person" : "people"}{" "}
+                                found this helpful
+                              </small>
+                            </li>
+                          )}
+                          <li>
+                            {userInfo && r.user === userInfo._id ? (
+                              <>
+                                <button
+                                  className="review helpful"
+                                  onClick={(e) => editReviewHandler(e)}
+                                >
+                                  Edit
+                                </button>
+                                <button
+                                  className="review helpful vr"
+                                  onClick={(e) => deleteReviewHandler(e)}
+                                >
+                                  Delete
+                                </button>
+                              </>
+                            ) : (
+                              <div className="row flex-start">
+                                {!votedReview || votedReview._id !== r._id ? (
+                                  <button
+                                    className="review helpful"
+                                    onClick={(e) => helpfulHandler(e, r)}
+                                  >
+                                    Helpful
+                                  </button>
+                                ) : errorReviewVote ? (
+                                  <MessageBox variants="danger">
+                                    {errorReviewVote}
+                                  </MessageBox>
+                                ) : (
+                                  successReviewVote && (
+                                    <MessageBox variants="helpful">
+                                      {messageReviewVote}
+                                    </MessageBox>
+                                  )
+                                )}
+                                <button className="review report vr">
+                                  Report Abuse
+                                </button>
+                              </div>
+                            )}
+                          </li>
+                        </ul>
+                        <hr />
                       </div>
+                    ))}
+                    <div className="ml-2">
+                      <Link to={`/review/product/${productId}`}>
+                        <b>See all reviews</b>
+                      </Link>
                     </div>
-                  ))
+                  </>
                 )}
               </div>
             </div>

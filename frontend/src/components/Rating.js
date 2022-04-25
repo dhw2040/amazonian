@@ -76,7 +76,7 @@ export default function Rating(props) {
           <>
             <big>
               <strong className="ml-2">
-                {rating !== undefined ? rating : ""} {label}
+                {rating !== undefined ? rating.toFixed(1) : ""} {label}
               </strong>
             </big>
             <div className="mt-2 mb-1 ">
@@ -89,7 +89,7 @@ export default function Rating(props) {
           <span>
             {label ? (
               <strong className="ml-2">
-                {rating !== undefined ? rating : ""} {label}
+                {rating !== undefined ? rating.toFixed(0) : ""} {label}
               </strong>
             ) : numReviews !== undefined ? (
               `${numReviews} ratings`
@@ -102,31 +102,31 @@ export default function Rating(props) {
       {bar && (
         <div>
           <div className="rating-progress-bar">
-            <Link to={`/review?product=${productId}&rating=5`}>
+            <Link to={`/review/product/${productId}/rating/5/?scrollTo=result`}>
               <span>5 star</span>
               <div className="rating-bar">
                 <div
-                  className={distribution[0] === 0 ? "zero" : ""}
-                  style={{ width: `${distribution[0]}%` }}
+                  className={distribution[4] === 0 ? "zero" : ""}
+                  style={{ width: `${distribution[4]}%` }}
                 ></div>
               </div>
-              <span>{distribution[0]}%</span>
+              <span>{distribution[4].toFixed(0)}%</span>
             </Link>
           </div>
           <div className="rating-progress-bar">
-            <Link to={`/review?product=${productId}&rating=4`}>
+            <Link to={`/review/product/${productId}/rating/4/?scrollTo=result`}>
               <span>4 star</span>
               <div className="rating-bar">
                 <div
-                  className={distribution[1] === 0 ? "zero" : ""}
-                  style={{ width: `${distribution[1]}%` }}
+                  className={distribution[3] === 0 ? "zero" : ""}
+                  style={{ width: `${distribution[3]}%` }}
                 ></div>
               </div>
-              <span>{distribution[1]}%</span>
+              <span>{distribution[3].toFixed(0)}%</span>
             </Link>
           </div>
           <div className="rating-progress-bar">
-            <Link to={`/review?product=${productId}&rating=3`}>
+            <Link to={`/review/product/${productId}/rating/3/?scrollTo=result`}>
               <span>3 star</span>
               <div className="rating-bar">
                 <div
@@ -134,31 +134,31 @@ export default function Rating(props) {
                   style={{ width: `${distribution[2]}%` }}
                 ></div>
               </div>
-              <span>{distribution[2]}%</span>
+              <span>{distribution[2].toFixed(0)}%</span>
             </Link>
           </div>
           <div className="rating-progress-bar">
-            <Link to={`/review?product=${productId}&rating=2`}>
+            <Link to={`/review/product/${productId}/rating/2/?scrollTo=result`}>
               <span>2 star</span>
               <div className="rating-bar">
                 <div
-                  className={distribution[3] === 0 ? "zero" : ""}
-                  style={{ width: `${distribution[3]}%` }}
+                  className={distribution[1] === 0 ? "zero" : ""}
+                  style={{ width: `${distribution[1]}%` }}
                 ></div>
               </div>
-              <span>{distribution[3]}%</span>
+              <span>{distribution[1].toFixed(0)}%</span>
             </Link>
           </div>
           <div className="rating-progress-bar">
-            <Link to={`/review?product=${productId}&rating=1`}>
+            <Link to={`/review/product/${productId}/rating/1?scrollTo=result`}>
               <span>1 star</span>
               <div className="rating-bar">
                 <div
-                  className={distribution[4] === 0 ? "zero" : ""}
-                  style={{ width: `${distribution[4]}%` }}
+                  className={distribution[0] === 0 ? "zero" : ""}
+                  style={{ width: `${distribution[0]}%` }}
                 ></div>
               </div>
-              <span>{distribution[4]}%</span>
+              <span>{distribution[0].toFixed(0)}%</span>
             </Link>
           </div>
         </div>

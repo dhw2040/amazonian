@@ -9,7 +9,7 @@ export default function MessageBox(props) {
             className={`fa ${
               props.variants === "danger"
                 ? "fa-exclamation-triangle"
-                : "fa-check"
+                : props.variants === "success" && "fa-check"
             } fa-2x`}
           ></i>
         </span>
@@ -19,10 +19,12 @@ export default function MessageBox(props) {
           <strong>
             {props.variants === "danger"
               ? "There was a problem..."
-              : "Success !"}
+              : props.variants === "success" && "Success !"}
           </strong>
         </big>
-        {props.children}
+        <span className={`${props.variants === "helpful" && "success"}`}>
+          {props.children}
+        </span>
       </div>
     </div>
   );

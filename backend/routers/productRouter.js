@@ -117,7 +117,7 @@ productRouter.get(
     let distribution = [0, 0, 0, 0, 0];
 
     if (numReviews === 1) {
-      let idx = reviews[0].rating.toFixed(2);
+      let idx = reviews[0].rating.toFixed(0);
       distribution[idx - 1] = 100;
     } else if (numReviews > 1) {
       let countRating = await Review.aggregate([
