@@ -68,6 +68,18 @@ reviewRouter.get(
   })
 );
 
+reviewRouter.get(
+  "/:id",
+  expressAsyncHandler(async (req, res) => {
+    const review = await Review.findById(req.params.id);
+    if (review) {
+      res.status(201).send(review);
+    } else {
+      return res.status(400).send({ message: "No review has been found." });
+    }
+  })
+);
+
 reviewRouter.post(
   "/create-review",
   isAuth,

@@ -9,6 +9,9 @@ import {
   REVIEWS_DELETE_FAIL,
   REVIEWS_DELETE_REQUEST,
   REVIEWS_DELETE_SUCCESS,
+  REVIEWS_DETAILS_FAIL,
+  REVIEWS_DETAILS_REQUEST,
+  REVIEWS_DETAILS_SUCCESS,
   REVIEWS_EDIT_FAIL,
   REVIEWS_EDIT_REQUEST,
   REVIEWS_EDIT_SUCCESS,
@@ -42,6 +45,22 @@ export const searchReviews =
       });
     }
   };
+
+export const listReviewDetails = (reviewId) => async (dispatch) => {
+  dispatch({ type: REVIEWS_DETAILS_REQUEST, payload: reviewId });
+  try {
+    const { data } = await Axios.get(`/api/review/${reviewId}`);
+    dispatch({ type: REVIEWS_DETAILS_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: REVIEWS_DETAILS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
 
 export const createReview = (review) => async (dispatch, getState) => {
   dispatch({ type: REVIEWS_CREATE_REQUEST, payload: review });

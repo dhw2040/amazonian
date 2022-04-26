@@ -7,7 +7,11 @@ import {
   listReviews,
   updateProductReview,
 } from "../actions/productActions";
-import { deleteReview, searchReviews } from "../actions/reviewActions";
+import {
+  deleteReview,
+  searchReviews,
+  voteHelpful,
+} from "../actions/reviewActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import Rating from "../components/Rating";
@@ -54,6 +58,14 @@ export default function ReviewPage() {
     searchCount,
   } = reviewsSearch;
 
+  const reviewVote = useSelector((state) => state.reviewVote);
+  const {
+    error: errorReviewVote,
+    success: successReviewVote,
+    message: messageReviewVote,
+    review: votedReview,
+  } = reviewVote;
+
   // Review Delete & Update Product Rating
   const reviewDelete = useSelector((state) => state.reviewDelete);
   const {
@@ -73,16 +85,24 @@ export default function ReviewPage() {
         : ratingFilter
       : "";
 
-  const helpfulHandler = () => {};
+  const helpfulHandler = (e, review) => {
+    e.preventDefault();
+    let returnVal = window.confirm(
+      "Would you like to vote helpful for this review?"
+    );
+    if (returnVal) {
+      dispatch(voteHelpful(review));
+    }
+  };
 
   const writeReviewHandler = (e) => {
     e.preventDefault();
-    navigate(`/review/create-review/product/${productId}`);
+    navigate(`/review/create-review`);
   };
 
   const editReviewHandler = (e) => {
     e.preventDefault();
-    navigate(`/review/create-review/product/${productId}/?mode=edit`);
+    navigate(`/review/create-review/?mode=edit`);
   };
 
   const deleteReviewHandler = (e) => {
@@ -100,7 +120,7 @@ export default function ReviewPage() {
     const refineVerifiedFilter = refineField.verifiedFilter || verifiedFilter;
     const refineRatingFilter = refineField.ratingFilter || ratingFilter;
 
-    return `/review/product/${productId}/sort/${refineSortOrder}/verified/${refineVerifiedFilter}/rating/${refineRatingFilter}`;
+    return `/review/sort/${refineSortOrder}/verified/${refineVerifiedFilter}/rating/${refineRatingFilter}`;
   };
 
   useEffect(() => {
@@ -231,7 +251,7 @@ export default function ReviewPage() {
                   </div>
                   {topPositive && (
                     <div>
-                      <ul className="no-list-style">
+                      <ul className="review no-list-style">
                         <li className="mb-3">
                           {topPositive.user && topPositive.user.name ? (
                             <>
@@ -249,14 +269,15 @@ export default function ReviewPage() {
                           <Rating
                             rating={topPositive.rating}
                             color="orange"
+                            inline={true}
                           ></Rating>
-                          <h3>
+                          <h2>
                             <Link
-                              to={`/review/${topPositive._id}?product=${productId}`}
+                              to={`/review/${topPositive._id}/product/${productId}`}
                             >
                               {topPositive.title}
                             </Link>
-                          </h3>
+                          </h2>
                         </li>
                         <li>
                           <small className="grey">
@@ -274,9 +295,7 @@ export default function ReviewPage() {
                           </li>
                         )}
                         <li>
-                          <p>
-                            <big>{topPositive.content}</big>
-                          </p>
+                          <p>{topPositive.content}</p>
                         </li>
                         {topPositive.helpful && topPositive.helpful.length > 0 && (
                           <li>
@@ -290,7 +309,7 @@ export default function ReviewPage() {
                     </div>
                   )}
                 </div>
-                <div className="col-1">
+                <div className="col-1 mb-2">
                   <h1>Top critical review</h1>
                   <div>
                     <Link to="#">
@@ -299,7 +318,7 @@ export default function ReviewPage() {
                   </div>
                   {topCritical && (
                     <div>
-                      <ul className="no-list-style">
+                      <ul className="review no-list-style">
                         <li className="mb-3">
                           {topCritical.user && topCritical.user.name ? (
                             <>
@@ -317,14 +336,15 @@ export default function ReviewPage() {
                           <Rating
                             rating={topCritical.rating}
                             color="orange"
+                            inline={true}
                           ></Rating>
-                          <h3>
+                          <h2>
                             <Link
-                              to={`/review/${topCritical._id}?product=${productId}`}
+                              to={`/review/${topCritical._id}/product/${productId}`}
                             >
                               {topCritical.title}
                             </Link>
-                          </h3>
+                          </h2>
                         </li>
                         <li>
                           <small className="grey">
@@ -342,9 +362,7 @@ export default function ReviewPage() {
                           </li>
                         )}
                         <li>
-                          <p>
-                            <big>{topCritical.content}</big>
-                          </p>
+                          <p>{topCritical.content}</p>
                         </li>
                         {topCritical.helpful && topCritical.helpful.length > 0 && (
                           <li>
@@ -484,7 +502,7 @@ export default function ReviewPage() {
                 ) : (
                   reviews.map((r) => (
                     <div key={r.title} className="mb-3">
-                      <ul className="no-list-style">
+                      <ul className="no-list-style review">
                         <li className="mb-3">
                           {r.user && r.user.name ? (
                             <>
@@ -496,12 +514,16 @@ export default function ReviewPage() {
                           )}
                         </li>
                         <li>
-                          <Rating rating={r.rating} color="orange"></Rating>
-                          <h3>
-                            <Link to={`/review/${r._id}?product=${productId}`}>
+                          <Rating
+                            rating={r.rating}
+                            color="orange"
+                            inline={true}
+                          ></Rating>
+                          <h2>
+                            <Link to={`/review/${r._id}/product/${productId}`}>
                               {r.title}
                             </Link>
-                          </h3>
+                          </h2>
                         </li>
                         <li>
                           <small className="grey">
@@ -519,9 +541,7 @@ export default function ReviewPage() {
                           </li>
                         )}
                         <li>
-                          <p>
-                            <big>{r.content}</big>
-                          </p>
+                          <p className="dark-grey">{r.content}</p>
                         </li>
                         {r.helpful && r.helpful.length > 0 && (
                           <li>
@@ -547,17 +567,29 @@ export default function ReviewPage() {
                               </button>
                             </>
                           ) : (
-                            <>
-                              <button
-                                className="review helpful"
-                                onClick={helpfulHandler}
-                              >
-                                Helpful
-                              </button>
+                            <div className="row flex-start">
+                              {!votedReview || votedReview._id !== r._id ? (
+                                <button
+                                  className="review helpful"
+                                  onClick={(e) => helpfulHandler(e, r)}
+                                >
+                                  Helpful
+                                </button>
+                              ) : errorReviewVote ? (
+                                <MessageBox variants="danger">
+                                  {errorReviewVote}
+                                </MessageBox>
+                              ) : (
+                                successReviewVote && (
+                                  <MessageBox variants="helpful">
+                                    {messageReviewVote}
+                                  </MessageBox>
+                                )
+                              )}
                               <button className="review report vr">
                                 Report Abuse
                               </button>
-                            </>
+                            </div>
                           )}
                         </li>
                       </ul>
@@ -579,7 +611,7 @@ export default function ReviewPage() {
               placeholder={`What do you want to know about the product?`}
             ></textarea>
             <div>
-              <Link className="question" to={`/question/product/${productId}`}>
+              <Link className="question" to={`/question`}>
                 <small>See all questions</small>
               </Link>
               <button className="review ask" type="submit">

@@ -11,12 +11,13 @@ export default function Rating(props) {
     bar,
     distribution,
     productId,
+    inline,
   } = props;
   const fas = size && size === "lg" ? "lg" : "";
 
   return (
     <>
-      <div className="rating">
+      <div className={`rating ${inline && "inline"}`}>
         <span>
           <i
             className={

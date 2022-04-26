@@ -17,6 +17,7 @@ import {
   createReviewReducer,
   deleteReviewReducer,
   editReviewReducer,
+  reviewDetailsReducer,
   searchReviewsReducer,
   voteHelpfulReducer,
 } from "./reducers/reviewReducers";
@@ -49,6 +50,7 @@ const reducer = combineReducers({
   productReviews: reviewsReducer,
   productCategories: listCategoriesReducer,
   reviewsSearch: searchReviewsReducer,
+  reviewDetails: reviewDetailsReducer,
   reviewCreate: createReviewReducer,
   reviewEdit: editReviewReducer,
   reviewDelete: deleteReviewReducer,

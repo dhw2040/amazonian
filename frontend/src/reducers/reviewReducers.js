@@ -10,6 +10,9 @@ import {
   REVIEWS_DELETE_REQUEST,
   REVIEWS_DELETE_RESET,
   REVIEWS_DELETE_SUCCESS,
+  REVIEWS_DETAILS_FAIL,
+  REVIEWS_DETAILS_REQUEST,
+  REVIEWS_DETAILS_SUCCESS,
   REVIEWS_EDIT_FAIL,
   REVIEWS_EDIT_REQUEST,
   REVIEWS_EDIT_RESET,
@@ -40,6 +43,29 @@ export const searchReviewsReducer = (
         searchCount: action.payload.searchCount,
       };
     case REVIEWS_SEARCH_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const reviewDetailsReducer = (
+  state = { loading: true, review: {} },
+  action
+) => {
+  switch (action.type) {
+    case REVIEWS_DETAILS_REQUEST:
+      return { loading: true };
+    case REVIEWS_DETAILS_SUCCESS:
+      return {
+        loading: false,
+        review: action.payload,
+      };
+    case REVIEWS_DETAILS_FAIL:
       return {
         loading: false,
         error: action.payload,

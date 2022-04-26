@@ -22,6 +22,7 @@ import SearchResultPage from "./pages/SearchResultPage";
 import AdminDashboardPage from "./pages/Admin/AdminDashboardPage";
 import ReviewPage from "./pages/ReviewPage";
 import ReviewCreatePage from "./pages/ReviewCreatePage";
+import ReviewCustomerPage from "./pages/ReviewCustomerPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -282,6 +283,10 @@ function App() {
               element={<ReviewPage />}
               exact
             />
+            <Route
+              path="/review/:reviewId/product/:productId"
+              element={<ReviewCustomerPage />}
+            ></Route>
             <Route
               path="/review/create-review/product/:id"
               element={<ReviewCreatePage />}

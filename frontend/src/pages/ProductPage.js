@@ -76,12 +76,12 @@ export default function ProductPage() {
 
   const writeReviewHandler = (e) => {
     e.preventDefault();
-    navigate(`/review/create-review/product/${productId}`);
+    navigate(`/review/create-review`);
   };
 
   const editReviewHandler = (e) => {
     e.preventDefault();
-    navigate(`/review/create-review/product/${productId}/?mode=edit`);
+    navigate(`/review/create-review/?mode=edit`);
   };
 
   const deleteReviewHandler = (e) => {
@@ -303,8 +303,8 @@ export default function ProductPage() {
                   <>
                     {reviews.map((r) => (
                       <div key={r.title}>
-                        <ul className="no-list-style">
-                          <li className="mb-3">
+                        <ul className="review no-list-style ">
+                          <li>
                             {r.user && r.user.name ? (
                               <>
                                 <i src={r.user.img} alt="r.user.name"></i>
@@ -315,14 +315,18 @@ export default function ProductPage() {
                             )}
                           </li>
                           <li>
-                            <Rating rating={r.rating} color="orange"></Rating>
-                            <h3>
+                            <Rating
+                              rating={r.rating}
+                              color="orange"
+                              inline={true}
+                            ></Rating>
+                            <h2>
                               <Link
-                                to={`/review/${r._id}?product=${productId}`}
+                                to={`/review/${r._id}/product/${productId}`}
                               >
                                 {r.title}
                               </Link>
-                            </h3>
+                            </h2>
                           </li>
                           <li>
                             <small className="grey">
@@ -340,9 +344,7 @@ export default function ProductPage() {
                             </li>
                           )}
                           <li>
-                            <p>
-                              <big>{r.content}</big>
-                            </p>
+                            <p>{r.content}</p>
                           </li>
                           {r.helpful && r.helpful.length > 0 && (
                             <li>
@@ -400,7 +402,7 @@ export default function ProductPage() {
                       </div>
                     ))}
                     <div className="ml-2">
-                      <Link to={`/review/product/${productId}`}>
+                      <Link to={`/review`}>
                         <b>See all reviews</b>
                       </Link>
                     </div>
